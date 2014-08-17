@@ -27,7 +27,12 @@
         <link rel="stylesheet" href="./css/demo.css">
         <link rel="stylesheet" href="./prettify/prettify.css">
     </head>
-    <body>
+    <body
+		data-multibackground="debug"
+		data-multibackground-layer-0-type="image"
+		data-multibackground-layer-0-attachment="parallax"
+		data-multibackground-layer-0-offsetfactor="-100"
+		data-multibackground-layer-0-url="./assets/birds.jpg">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -49,8 +54,8 @@
                             <a href="examples-color.html" class="dropdown-toggle" data-toggle="dropdown">Examples <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="./examples-color.html">Solid color &amp; gradients</a></li>
-                                <li><a href="./examples-page-background.html">Page background</a></li>
-                                <li class="active"><a href="./examples-image.html">Images</a></li>
+                                <li class="active"><a href="./examples-page-background.html">Page background</a></li>
+                                <li><a href="./examples-image.html">Images</a></li>
                                 <li><a href="./examples-pattern.html">Patterns</a></li>
                                 <li><a href="./examples-video.html">HTML5 videos</a></li>
                                 <li><a href="./examples-youtube.html">YouTube videos</a></li>
@@ -66,53 +71,41 @@
             </div>
         </nav>
 
-        <div class="container">
-            <h1>Examples &ndash; Images</h1>
+        <div class="container" style="background:#fff;">
+            <h1>Examples &ndash; Page background</h1>
             <hr />
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div
-                            class="demo-multibackground"
-                            data-multibackground="debug"
-                            data-multibackground-layer-0-type="image"
-                            data-multibackground-layer-0-attachment="fixed"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Fixed image
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div
-                            class="demo-multibackground"
-                            data-multibackground="debug"
-                            data-multibackground-layer-0-type="image"
-                            data-multibackground-layer-0-attachment="static"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Static image
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div
-                            class="demo-multibackground"
-                            data-multibackground="debug"
-                            data-multibackground-layer-0-type="image"
-                            data-multibackground-layer-0-attachment="parallax"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Parallax image
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div
-                            class="demo-multibackground"
-                            data-multibackground="debug"
-                            data-multibackground-layer-0-type="image"
-                            data-multibackground-layer-0-attachment="parallax"
-                            data-multibackground-layer-0-offsetfactor="-1.0"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Reverse parallax image
-                    </div>
-                </div>
-            </div>
+            <p>Yes, it is possible to create a background on the <code>body</code> tag. You will, however, have problems if you have something likes this in your CSS: <code>body > .class {...}</code>, because the plugin will wrap all of the body content in a div.</p>
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<h3>HTML only code:</h3>
+					<pre><code class="prettyprint lang-html linenums">&lt;body
+    data-multibackground="debug"
+    data-multibackground-layer-0-type="image"
+    data-multibackground-layer-0-attachment="parallax"
+    data-multibackground-layer-0-offsetfactor="-100"
+    data-multibackground-layer-0-url="./assets/birds.jpg"&gt;
+        ...
+&lt;/body&gt;</code></pre>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-6">
+					<h3>JavaScript only code:</h3>
+					<pre><code class="prettyprint lang-js linenums">$("body").multiBackground({"type": "image", "attachment": "offsetfactor": -30, "parallax", "url": "./assets/birds.jpg"});</code></pre>
+				</div>
+			</div>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <br />
         </div>
+        <br />
+        <br />
 
         <!-- JS libraries and scripts -->
         <script type="text/javascript" src="../plugin/requirements/jquery-1.11.1.min.js"></script>

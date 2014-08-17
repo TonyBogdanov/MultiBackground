@@ -33,7 +33,7 @@
     }
 
     $(document).ready(function() {
-        $("[data-multibackground]").each(function() {
+        $("[data-multibackground]:not(body)").each(function() {
             var $this   = $(this);
             var $parent = $this.parent();
             $parent.append("<div class=\"demo-code\"><h3>HTML only code:</h3><pre><code class=\"prettyprint linenums lang-html\">" + beautify($parent.html()) + "</code></pre><h3>JavaScript only code:</h3><pre><code class=\"prettyprint lang-javascript\">$(\"#element\").multiBackground(" + JSON.stringify($.fn.multiBackground._extractOptions($this)) + ", false);</code></pre></div>");
