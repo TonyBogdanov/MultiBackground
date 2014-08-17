@@ -1,6 +1,7 @@
 /**
  * MultiBackground v1.0
  *  - http://multibackground.tonybogdanov.com
+ *  - https://github.com/TonyBogdanov/MultiBackground
  *
  * Contributors:
  *  - http://www.tonybogdanov.com
