@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta UTF8 charset -->
+        <meta charset="utf-8">
+        
+        <!-- Viewport specification for mobile devices -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Basic page information -->
+        <meta name="author" content="http://tonybogdanov.com">
+        <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
+        <title>MultiBackground</title>
+
+        <!-- Favicons -->
+        <link rel="shortcut icon" href="./img/favicon.ico">
+        
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="./js/html5shiv.js"></script>
+            <script src="./js/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- CSS styles -->
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="./css/demo.css">
+        <link rel="stylesheet" href="./prettify/prettify.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="./">MultiBackground</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="./">Introduction</a></li>
+                        <li><a href="./documentation.html">Documentation</a></li>
+                        <li><a href="./examples.html">Examples</a></li>
+                        <li><a href="../plugin/jquery.multibackground.min.js" target="_blank">Download</a></li>
+                        <li><a href="" target="_blank">GitHub project</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1>Introduction</h1>
+            <hr />
+            <h3>Overview</h3>
+            <p><strong>MultiBackground</strong> is a lightweight and flexible jQuery plugin for creation and manipulation of powerful and beautiful backgrounds. It supports various background types such as a solid color, gradient, image, pattern, video, google maps etc. Furthermore it allows some background types to react to events, such as scrolling, which results in various interesting effects like parallax. It is supported by most major browsers and mobile devices.</p>
+            <p>The background technique is straightforward &amp; pretty simple and can be used for background for almost any type of content.</p>
+            <p>One of the best features is support for multiple background layers of different types (see the examples section).</p>
+            <p>The plugin is originally designed and written by <a href="http://tonybogdanov.com" target="_blank">www.tonybogdanov.com</a> and has it's own <a href="http://github.com" target="_blank">GitHub page available here</a>.</p>
+            <h3>Browser compatibility</h3>
+            <p>The plugin is supported by the latest versions of all major browsers. However, you are always encouraged to test it yourself before heavily relying on the plugin.</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Background type</th>
+                        <th>Chrome 36</th>
+                        <th>Firefox 29</th>
+                        <th>Opera 23</th>
+                        <th>Safari 5 (windows)</th>
+                        <th>IE 11</th>
+                        <th>IE 10</th>
+                        <th>IE 9</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Solid</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Horizontal gradient</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Vertical gradient</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Diagonal gradient</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Radial gradient</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Image</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Pattern</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>HTML5 video</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="danger">No</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="danger">No</td>
+                    </tr>
+                    <tr>
+                        <td>YouTube video</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="danger">No</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Vimeo video</td>
+                        <td class="success">Yes</td>
+                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Vimeo JavaScript API does not seem to work with Firefox, e.g. you can autoplay and loop a video, but you cannot make API calls after the video has started playing and you cannot make it start muted, as it is only possible via an API call"></i></td>
+                        <td class="danger">No</td>
+                        <td class="danger">No</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="danger">No</td>
+                    </tr>
+                    <tr>
+                        <td>iframe</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Google map</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                        <td class="success">Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>Requirements</h3>
+            <ul>
+                <li><a href="http://jquery.com" target="_blank"><strong>jQuery 1.11.1</strong></a> &ndash; The plugin was developed and tested on this version, but might also work on lower ones.</li>
+            </ul>
+
+            <h3>Installation</h3>
+            <p>In order to use the plugin you need to include the plugin and all of it's requirements in the page you are going to use it. The plugin should be included <em>after</em> all requirements:</p>
+            <pre><code class="prettyprint linenums lang-html">&lt;script type="text/javascript" src="../plugin/requirements/jquery-1.11.1.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="../plugin/jquery.multibackground.js"&gt;&lt;/script&gt;</code></pre>
+
+            <h3>Changelog</h3>
+            <ul>
+                <li><strong>1.0</strong> &ndash; This is the initial release of the plugin.</li>
+            </ul>
+            <br />
+        </div>
+
+        <!-- JS libraries and scripts -->
+        <script type="text/javascript" src="../plugin/requirements/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/demo.js"></script>
+        <script type="text/javascript" src="../plugin/jquery.multibackground.min.js"></script>
+    </body>
+</html>

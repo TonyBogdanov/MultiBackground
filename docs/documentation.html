@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta UTF8 charset -->
+        <meta charset="utf-8">
+        
+        <!-- Viewport specification for mobile devices -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Basic page information -->
+        <meta name="author" content="http://tonybogdanov.com">
+        <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
+        <title>MultiBackground</title>
+
+        <!-- Favicons -->
+        <link rel="shortcut icon" href="./img/favicon.ico">
+        
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="./js/html5shiv.js"></script>
+            <script src="./js/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- CSS styles -->
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="./css/demo.css">
+        <link rel="stylesheet" href="./prettify/prettify.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="./">MultiBackground</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="./">Introduction</a></li>
+                        <li class="active"><a href="./documentation.html">Documentation</a></li>
+                        <li><a href="./examples.html">Examples</a></li>
+                        <li><a href="../plugin/jquery.multibackground.min.js" target="_blank">Download</a></li>
+                        <li><a href="" target="_blank">GitHub project</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1>Documentation</h1>
+            <hr />
+            <h3>Overview</h3>
+            <p>There are 2 ways you can use the plugin, either through (<em>Method 1</em>) JavaScript calls, or (<em>Method 2</em>) using HTML attributes. When you use HTML attributes, those attributes and their values are translated into JavaScript objects which are then passed to the plugin as in <em>Method 1</em>. This means that anything you can achieve using <em>Method 2</em> can also be achieved using <em>Method 1</em>. The opposite, however, is not true. You can only specify options which require static values e.g. strings, numbers etc. It is not possible to pass an anonymous function f.e. using HTML attributes, but in the general case you won't need to.</p>
+            <p>All examples shown in this manual are achieved using <em>Method 2</em> for clarity, but there is also a source code for each of them, showing the same example using JavaScript.</p>
+            <h3>JavaScript (<em>Method 1</em>)</h3>
+            <p>As most jQuery plugins, <strong>MultiBackground</strong> can be called directly on a jQuery object or a collection of elements:</p>
+            <pre><code class="prettyprint linenums lang-js">$('#element').multiBackground(); // Applied to element with id="element"
+$('.element').multiBackground(); // Applied to all elements with class="element"</code></pre>
+            <p>Once executed, the plugin returns a reference to the same jQuery object, which means you can chain whatever you want after it:</p>
+            <pre><code class="prettyprint linenums lang-js">$('#element').multiBackground().css("background", "#fff");</code></pre>
+            <p>The plugin accepts 2 input parameters.</p>
+            <ul>
+                <li>
+                    <p>The first argument: <code>options</code> must be an object of options to specify what should the plugin do, or an array of such objects. If an array is supplied, each element of the array is passed as a separate call as if you are chaining calls to the plugin on the same jQuery object.</p>
+                    <pre><code class="prettyprint linenums lang-js">// The following two lines do the same thing
+$("#element").multiBackground([{"a": "b"}, {"c": "d"}]);
+$("#element").multiBackground({"a": "b"}).multiBackground({"c": "d"});</code></pre>
+                    <p>As the default operation of the plugin is to add a background layer, the first approach is used to simultaneously create multiple background layers in a single call.</p>
+                </li>
+                <li>
+                    <p>The second argument: <code>silent</code> must be of type <code>boolean</code> and specify if the plugin should be silent about any fatal errors and just fail silently. If this parameter is set to <code>true</code> and a fatal errors occures it will be logged in the console and the script will stop. If the parameter is set to <code>false</code> the error will also be passed to the function <code>alert</code> and displayed in the browser.</p>
+                    <p>This argument is not required and is set to <code>false</code> by default.</p>
+                </li>
+            </ul>
+            <h3>HTML attributes (<em>Method 2</em>)</h3>
+            <p>The plugin has an ability to automatically parse HTML attributes and make the corresponding plugin calls for certain elements. This happens on jQuery's event <code>$(document).ready();</code>.</code></p>
+            <p>To benefit from this ability you must mark your elements and add the appropriate attributes for the plugin to use. First step is to mark an element as a <strong>MultiBackground</strong> element. This is done by adding the attribute <code>data-multibackground</code> to the element like this:</p>
+            <pre><code class="prettyprint linenums lang-html">&lt;div data-multibackground&gt;&lt;/div&gt;</code></pre>
+            <p>Generally you don't need to specify a value for this attribute, but you can use anything you want. If, however, you set the value to <code>debug</code>, then the plugin will be run with <code>silent = false</code> as second argument, e.g. NOT in the default silent mode. Look at the example below to better understand the difference.</p>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <h4>Method 1</h4>
+                    <pre><code class="prettyprint linenums lang-html">&lt;div data-multibackground&gt;&lt;/div&gt;
+&lt;div data-multibackground="debug"&gt;&lt;/div&gt;</code></pre>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <h4>Method 2</h4>
+                    <pre><code class="prettyprint linenums lang-js">$(...).multiBackground({}, true);
+$(...).multiBackground({}, false);</code></pre>
+                </div>
+            </div>
+            <p>The first argument of the plugin, or the <em>options</em>, is parsed and extracted from the element arguments using a strict scheme of rules:</p>
+            <blockquote>
+                <ol>
+                    <li>Each value of the <em>options</em> object, no matter how deep, is represented by a single HTML attribute. The attribute name determines the key in the <em>options</em> object and the value of the attributes is used as the value for that key.</li>
+                    <li>Each attribute must be prefixed by <code>data-multibackground-layer-[layer index]-</code> where <code>[layer index]</code> is the index of the background layer for which this attribute applies. The count starts from <code>0</code>.</li>
+                    <li>The prefix is followed by 1 or more character combinations (usually small letters and numbers) divided by <code>-</code>. Each of these combinations represent an object key. If there is more than one such key, then the resulting value will be another object with the next key, achieving deep object structure.</li>
+                    <li>Each value is parsed as string without any validation, but is then re-parsed and validated when used by the plugin (which is also true for the JavaScript method).</li>
+                    <li>When all attributes are parsed, if there is an object, all of which' keys are consecutive numbers starting from 0, the object is converted to an array.</li>
+                </ol>
+            </blockquote>
+            <p>Here are a few examples that illustrate the above rules (on the left is the HTML structure and on the right is the parsed <em>options</em> object):</p>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-html">&lt;div data-multibackground
+    data-multibackground-layer-0-type="solid"
+    data-multibackground-layer-0-color="#f98"&gt;
+    Content
+&lt;/div&gt;</code></pre>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-js">$(...).multiBackground({"type": "solid", "color": "#f98"});</code></pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-html">&lt;div data-multibackground
+    data-multibackground-layer-0-type="solid"
+    data-multibackground-layer-0-color="#fff9"
+    data-multibackground-layer-1-type="solid"
+    data-multibackground-layer-1-color="#0009"&gt;
+    Content
+&lt;/div&gt;</code></pre>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-js">$(...).multiBackground([{"type": "solid", "color": "#fff9"}, {"type": "solid", "color": "#0009"}]);</code></pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-html">&lt;div data-multibackground
+    data-multibackground-layer-0-now-this-is-some-deep-value="yep"&gt;
+    Content
+&lt;/div&gt;</code></pre>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-js">$(...).multiBackground({"now": {"this": {"is": {"some": {"deep": {"value": "yep"}}}}}});</code></pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-html">&lt;div data-multibackground
+    data-multibackground-layer-0-an-array-0-itis="a"
+    data-multibackground-layer-0-an-array-1-indeed="b"
+    data-multibackground-layer-0-an-object="c"&gt;
+    Content
+&lt;/div&gt;</code></pre>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <pre><code class="prettyprint linenums lang-js">$(...).multiBackground({"an": {"array": [{"itis": "a", "indeed": "b"}], "object": "c"}});</code></pre>
+                </div>
+            </div>
+            <h3>The <em>options</em> object</h3>
+            <p>This is the object that carries all information used by the plugin.</p>
+            <p>When constructing this object you can pass a string value to the key <code>action</code> to specify an action to be performed. By default this option is omitted and the value <code>append</code> is used as default.</p>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Action</th>
+                        <th>Additional options</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>prepend</code></td>
+                        <td>Prepends a new layer to the background layers for this element.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>append</code></td>
+                        <td>Appends a new layer to the background layers for this element.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>remove</code></td>
+                        <td>Removes a background layer with the given index.</td>
+                        <td>
+                            <code>index</code> &ndash; specifies the index of the layer to be removed (starting from 0)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>destroy</code></td>
+                        <td>Destroys all <strong>MultiBackground</strong> structures and restores the element to the initial state.</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><code>playVideo</code></td>
+                        <td>Attempts to play the video found on the layer specified by the given index.</td>
+                        <td>
+                            <code>index</code> &ndash; specifies the index of the layer of the video to be controlled
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>pauseVideo</code></td>
+                        <td>Attempts to pause the video found on the layer specified by the given index.</td>
+                        <td>
+                            <code>index</code> &ndash; specifies the index of the layer of the video to be controlled
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>stopVideo</code></td>
+                        <td>Attempts to stop the video found on the layer specified by the given index.</td>
+                        <td>
+                            <code>index</code> &ndash; specifies the index of the layer of the video to be controlled
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>muteVideo</code></td>
+                        <td>Attempts to mute the video found on the layer specified by the given index.</td>
+                        <td>
+                            <code>index</code> &ndash; specifies the index of the layer of the video to be controlled
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><code>unMuteVideo</code></td>
+                        <td>Attempts to unmute the video found on the layer specified by the given index.</td>
+                        <td>
+                            <code>index</code> &ndash; specifies the index of the layer of the video to be controlled
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>The next most important option key is <code>type</code>, which is used to specify the type of the background layer you want to <code>prepend</code> or <code>append</code>. Here is a list of all supported background types and their specifications:</p>
+
+            <h3>Background type: Solid <code>"type": "solid"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a simple background type, which uses a solid color as a background. The color must be in short HEX, full HEX, RGB or RGBA format: <code>#fff</code>, <code>#fff9</code>, <code>#ffffff</code>, <code>#ffffff99</code>, <code>rgb(255, 255, 255)</code>, <code>rgb(255, 255, 255, 153)</code>.</code></p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>color</code></td>
+                    <td><code>string</code></td>
+                    <td>A short/full HEX, RGB or RGBA color, e.g. <code>#09f9</code></td>
+                    <td>Yes</td>
+                    <td>This specifies the color to be used.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: Gradient <code>"type": "gradient"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a simple background type, which uses a collection of points for which you specify position and color to achieve a gradient effect. All colors must be in short HEX, full HEX, RGB or RGBA format: <code>#fff</code>, <code>#fff9</code>, <code>#ffffff</code>, <code>#ffffff99</code>, <code>rgb(255, 255, 255)</code>, <code>rgb(255, 255, 255, 153)</code>.</code></p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>direction</code></td>
+                    <td><code>string</code></td>
+                    <td><code>horizontal</code>, <code>vertical</code>, <code>diagonalUp</code>, <code>diagonalDown</code> or <code>radial</code></td>
+                    <td>Yes</td>
+                    <td>This specifies the type/direction of the gradient.</td>
+                </tr>
+                <tr>
+                    <td><code>points</code></td>
+                    <td><code>array</code></td>
+                    <td>An array of objects</td>
+                    <td>Yes</td>
+                    <td>This specifies an array of objects, each of which describes the position and color of a certain point on the gradient. There must be at least one object in the array.</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Structure of <code>"points": [{...} ... ]</code></code></h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>position</code></td>
+                    <td><code>float</code></td>
+                    <td>A float from 0.0 to 1.0</td>
+                    <td>Yes</td>
+                    <td>Specifies the position of this point from 0 to 1.</td>
+                </tr>
+                <tr>
+                    <td><code>color</code></td>
+                    <td><code>string</code></td>
+                    <td>A short/full HEX, RGB or RGBA color, e.g. <code>#09f9</code></td>
+                    <td>Yes</td>
+                    <td>This specifies the color to be used for this point.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: Movable</h3>
+            <h4>Overview</h4>
+            <p>This is a special type of background, which is used as an extension of types like <code>image</code>, <code>pattern</code> or <code>video</code>. It supplies those background types with the ability to be sized and positioned differently according to the parent element size, window scroll position and the type of relation to those environment properties. All background types that extend this one are marked as <code>Movable</code> in this documentation and inherit all <code>Movable</code> properties and features.</p>
+            <p>The main property of this type allows the element being used as a background layer to be centered horizontally and vertically relative to the container element. It is also resized in a way that will always keep the aspect ratio of the element, and will fill the entire visible space of the containing element (the containing element is assigned <code>overflow: hidden;</code> to hide the extra parts of the background element).</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>attachment</code></td>
+                    <td><code>string</code></td>
+                    <td><code>fixed</code>, <code>static</code>, <code>parallax</code></td>
+                    <td>Yes</td>
+                    <td>
+                        This specifies the attachment of the element, e.g. how it will react to scrolling the window.<br />
+                        <code>fixed</code> scrolls the element along with the container.<br />
+                        <code>static</code> will resize the element to fit height of the browser window, not the container element. The element will stay static relative to the browser window and will not scroll along with the container element, as if you are looking through a hole/window.<br />
+                        <code>parallax</code> is similar to <code>fixed</code>, but offsets the element while you scroll according to the <code>offsetfactor</code>.
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>offsetfactor</code> (available only for <code>"attachment": "parallax"</code>)</td>
+                    <td><code>float</code></td>
+                    <td>A float, ideally from -1.0 to 1.0</td>
+                    <td>Yes</td>
+                    <td>This specifies the amount of vertical offset, that will be applied while scrolling. 0.0 means no offset, in this case, however, you should use <code>"attachment": "fixed"</code> for performance reasons. Negative value will result in opposite offset direction. Larger values will result in bigger offset distance. If you need to use values larger than 1.0 or -1.0 it is better to leave them at 1.0 and increase the <code>sizefactor</code> instead, otherwise upon scrolling the background element will offset too much and will not fill the entire visible part of the container element.</td>
+                </tr>
+                <tr>
+                    <td><code>sizefactor</code> (available only for <code>"attachment": "parallax"</code>)</td>
+                    <td><code>float</code></td>
+                    <td>A float, ideally larger than 1.0 (default is: 1.0)</td>
+                    <td>No</td>
+                    <td>This specifies the multiplication factor, that will be used to resize the element. 1.0 means no resizing, lower values will result in the background element not filling the entire visible part of the container element.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: Image (is Movable) <code>"type": "image"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a background type which displays an image. It is sized and positioned according to the size of the container, so that it will always fill the entire background space. The image is centered both horizontally and vertically.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>url</code></td>
+                    <td><code>string</code></td>
+                    <td>The URL of the image.</td>
+                    <td>Yes</td>
+                    <td>This specifies the URL of the image.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: Pattern (is Movable) <code>"type": "pattern"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a background type which displays a pattern (a single image repeated both horizontally and vertically until it fills the entire element). It is positioned according to the size of the container, so that it will always fill the entire background space.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>url</code></td>
+                    <td><code>string</code></td>
+                    <td>The URL of the pattern image.</td>
+                    <td>Yes</td>
+                    <td>This specifies the URL of the pattern image.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: Video (is Movable)</h3>
+            <h4>Overview</h4>
+            <p>Just like <em>Movable</em> this is a special type of background, which is used as an extension of types like <code>youtube</code> or <code>vimeo</code>. It defines those background types as video objects and supplies several standardized methods and features.</p>
+            <p>Each background type which is defined as <em>Video</em> type also supplies an API for controlling the created video object after the initialization of the plugin has finished. The API is rather simple and supplies methods able to play, pause, stop, mute, unmute etc. the video objects. Once a video object is created on a layer of a certain element, just call <code>.multiBackground({...});</code> on that element, and supply the action you would like to perform on the video in the <code>"action"</code> key. The possible calls and required parameters were already covered in this documentation in the section: <strong>The <em>options</em> object</strong>.</p>
+            <p>Each background type which is defined as <em>Video</em> also inherits all features of the <em>Movable</em> type.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>video</code></td>
+                    <td><code>object</code></td>
+                    <td>An object with additional options</td>
+                    <td>No</td>
+                    <td>An object to specify advanced video options</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Structure of <code>"video": {...}</code></h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>autoplay</code></td>
+                    <td><code>boolean</code></td>
+                    <td><code>true</code> or <code>false</code> (default: <code>true</code>)</td>
+                    <td>No</td>
+                    <td>This specifies if the video should start playing automatically once loaded.</td>
+                </tr>
+                <tr>
+                    <td><code>loop</code></td>
+                    <td><code>boolean</code></td>
+                    <td><code>true</code> or <code>false</code> (default: <code>true</code>)</td>
+                    <td>No</td>
+                    <td>This specifies if the video should re-start playing automatically once ended.</td>
+                </tr>
+                <tr>
+                    <td><code>mute</code></td>
+                    <td><code>boolean</code></td>
+                    <td><code>true</code> or <code>false</code> (default: <code>true</code>)</td>
+                    <td>No</td>
+                    <td>This specifies if the video should be muted.</td>
+                </tr>
+                <tr>
+                    <td><code>width</code></td>
+                    <td><code>integer</code></td>
+                    <td>Number of pixels (default: <code>16</code>)</td>
+                    <td>No</td>
+                    <td>This specifies the width of the video in pixels. Note, that the HTML5 Video type does not take this into account and uses the native video size instead. In other video types such as YouTube or Vimeo, this is only used for aspect ratio calculation and will not be the actual size of the video box.</td>
+                </tr>
+                <tr>
+                    <td><code>height</code></td>
+                    <td><code>integer</code></td>
+                    <td>Number of pixels (default: <code>9</code>)</td>
+                    <td>No</td>
+                    <td>This specifies the height of the video in pixels. Note, that the HTML5 Video type does not take this into account and uses the native video size instead. In other video types such as YouTube or Vimeo, this is only used for aspect ratio calculation and will not be the actual size of the video box.</td>
+                </tr>
+                <tr>
+                    <td><code>nohtml5support</code></td>
+                    <td><code>string</code></td>
+                    <td>Text (default: <code>Your browser does not support HTML5 video</code>)</td>
+                    <td>No</td>
+                    <td>This specifies the string to be displayed for HTML5 Videos in browsers that do not support HTML5 Video elements.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: HTML5 Video (is Video) <code>"type": "video"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a background type which displays an HTML5 Video. It is sized and positioned according to the size of the container, so that it will always fill the entire background space.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>url</code></td>
+                    <td><code>object</code></td>
+                    <td>An object with additional options</td>
+                    <td>Yes</td>
+                    <td>This specifies the URL from which to load the video.</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Structure of <code>"url": {...}</code></h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>mp4</code></td>
+                    <td><code>string</code></td>
+                    <td>An URL</td>
+                    <td>No (at least one must be set)</td>
+                    <td>This specifies the URL of a MP4 file.</td>
+                </tr>
+                <tr>
+                    <td><code>webm</code></td>
+                    <td><code>string</code></td>
+                    <td>An URL</td>
+                    <td>No (at least one must be set)</td>
+                    <td>This specifies the URL of a WEBM file.</td>
+                </tr>
+                <tr>
+                    <td><code>ogg</code></td>
+                    <td><code>string</code></td>
+                    <td>An URL</td>
+                    <td>No (at least one must be set)</td>
+                    <td>This specifies the URL of an OGG file.</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: YouTube Video (is Video) <code>"type": "youtube"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a background type which displays a YouTube Video. It is sized and positioned according to the size of the container, so that it will always fill the entire background space.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>id</code></td>
+                    <td><code>string</code></td>
+                    <td>The YouTube video ID</td>
+                    <td>Yes</td>
+                    <td>This specifies the YouTube ID of the video: <em>https://www.youtube.com/watch?v=<code>pQVIYstU54s</code></em></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: Vimeo Video (is Video) <code>"type": "vimeo"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a background type which displays a Vimeo Video. It is sized and positioned according to the size of the container, so that it will always fill the entire background space.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>id</code></td>
+                    <td><code>string</code></td>
+                    <td>The Vimeo video ID</td>
+                    <td>Yes</td>
+                    <td>This specifies the Vimeo ID of the video: <em>https://vimeo.com/<code>103344490</code></em></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: iFrame <code>"type": "iframe"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a background type which displays a page inside a custom iFrame. It is always 100% the width and height of the container element.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>url</code></td>
+                    <td><code>string</code></td>
+                    <td>The iFrame page URL</td>
+                    <td>Yes</td>
+                    <td>This specifies the URL to be loaded in the iFrame</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Background type: Google Map <code>"type": "gmap"</code></h3>
+            <h4>Overview</h4>
+            <p>This is a background type which displays a Google Map. It is always 100% the width and height of the container element.</p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>apikey</code></td>
+                    <td><code>string</code></td>
+                    <td>The Google API key</td>
+                    <td>Yes</td>
+                    <td>This specifies the Google API v3 key obtained for the service Google Maps from here: <a href="https://developers.google.com/maps/documentation/javascript/tutorial#api_key" target="_blank">https://developers.google.com/maps/documentation/javascript/tutorial#api_key</a></td>
+                </tr>
+                <tr>
+                    <td><code>latitude</code></td>
+                    <td><code>float</code></td>
+                    <td>Float coordinate</td>
+                    <td>Yes</td>
+                    <td>This specifies the location latitude coordinate</td>
+                </tr>
+                <tr>
+                    <td><code>longitude</code></td>
+                    <td><code>float</code></td>
+                    <td>Float coordinate</td>
+                    <td>Yes</td>
+                    <td>This specifies the location longitude coordinate</td>
+                </tr>
+                <tr>
+                    <td><code>gmap</code></td>
+                    <td><code>object</code></td>
+                    <td>An object with additional options</td>
+                    <td>No</td>
+                    <td>This specifies additional (optional) Google Maps options</td>
+                </tr>
+                </tbody>
+            </table>
+            <h4>Structure of <code>"gmap": {...}</code></h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>zoom</code></td>
+                    <td><code>integer</code></td>
+                    <td>The map zoom (default: <code>15</code>)</td>
+                    <td>No</td>
+                    <td>This specifies the Google Maps zoom level</td>
+                </tr>
+                <tr>
+                    <td><code>language</code></td>
+                    <td><code>string</code></td>
+                    <td>The map language (default: <code>en</code>)</td>
+                    <td>No</td>
+                    <td>This specifies the Google Maps language</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h3>Advanced options</h3>
+            <h4><code>loadedshowcallback</code></h4>
+            <p>Every element, once loaded is displayed with a transition effect. This effect is a callback function specified in the <em>options</em> object under: <code>{"loadedshowcallback": function($element) { ... }}</code></p>
+            <p>The function accepts the jQuery object of the element being shown.</p>
+            <p>By default this function would <code>.animate()</code> the opacity of the element from <code>0</code> to <code>1</code> in <code>500ms</code>, but you can replace it with whatever you want.</p>
+            <p>As this is a function you cannot pass the implementation using HTML attributes, you must use JavaScript. However, you can define a global function and simply pass it's name as a string on the element as an HTML attribute: <code>data-multibackground-layer-0-loadedshowcallback="myGlobalAnimationFunction"</code>.</p>
+            <br />
+        </div>
+
+        <!-- JS libraries and scripts -->
+        <script type="text/javascript" src="../plugin/requirements/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/demo.js"></script>
+        <script type="text/javascript" src="../plugin/jquery.multibackground.min.js"></script>
+    </body>
+</html>
