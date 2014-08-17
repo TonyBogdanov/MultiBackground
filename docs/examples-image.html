@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta UTF8 charset -->
+        <meta charset="utf-8">
+        
+        <!-- Viewport specification for mobile devices -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Basic page information -->
+        <meta name="author" content="http://tonybogdanov.com">
+        <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
+        <title>MultiBackground</title>
+
+        <!-- Favicons -->
+        <link rel="shortcut icon" href="./img/favicon.ico">
+        
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="./js/html5shiv.js"></script>
+            <script src="./js/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- CSS styles -->
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="./css/demo.css">
+        <link rel="stylesheet" href="./prettify/prettify.css">
+    </head>
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="./">MultiBackground</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="./">Introduction</a></li>
+                        <li><a href="./documentation.html">Documentation</a></li>
+                        <li class="active dropdown">
+                            <a href="examples-color.html" class="dropdown-toggle" data-toggle="dropdown">Examples <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="./examples-color.html">Solid color &amp; gradients</a></li>
+                                <li class="active"><a href="./examples-image.html">Images</a></li>
+                                <li><a href="./examples-pattern.html">Patterns</a></li>
+                                <li><a href="./examples-video.html">HTML5 videos</a></li>
+                                <li><a href="./examples-youtube.html">YouTube videos</a></li>
+                                <li><a href="./examples-vimeo.html">Vimeo videos</a></li>
+                                <li><a href="./examples-iframe.html">iFrames</a></li>
+                                <li><a href="./examples-gmap.html">Google Maps</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="../plugin/jquery.multibackground.min.js" target="_blank">Download</a></li>
+                        <li><a href="https://github.com/TonyBogdanov/MultiBackground" target="_blank">GitHub project</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1>Examples &ndash; Images</h1>
+            <hr />
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div
+                            class="demo-multibackground"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg">
+                        Fixed image
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div
+                            class="demo-multibackground"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="static"
+                            data-multibackground-layer-0-url="./assets/birds.jpg">
+                        Static image
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div
+                            class="demo-multibackground"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="parallax"
+                            data-multibackground-layer-0-url="./assets/birds.jpg">
+                        Parallax image
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div
+                            class="demo-multibackground"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="parallax"
+                            data-multibackground-layer-0-offsetfactor="-1.0"
+                            data-multibackground-layer-0-url="./assets/birds.jpg">
+                        Reverse parallax image
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JS libraries and scripts -->
+        <script type="text/javascript" src="../plugin/requirements/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./js/demo.js"></script>
+        <script type="text/javascript" src="../plugin/jquery.multibackground.min.js"></script>
+    </body>
+</html>
