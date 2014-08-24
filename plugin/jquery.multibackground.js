@@ -1,5 +1,5 @@
 /**
- * MultiBackground v1.0
+ * MultiBackground v1.0.1
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -392,15 +392,7 @@ function onGoogleMapsAPIReady() {
 
         // Create element and apply background gradient CSS
         var $element = $("<div/>");
-        $element.css({"width": "100%", "height": "100%", "opacity": 0});
-        $element.css("background", colors[0].getRGB());
-        $element.css("background", "-moz-" + gType + "-gradient(" + gMoz + ", " + stopsSimple.join(", ") + ")");
-        $element.css("background", "-webkit-gradient(" + gWebkit + ", " + stopsFull.join(", "));
-        $element.css("background", "-webkit-" + gType + "-gradient(" + gWebkitR + ", " + stopsSimple.join(", ") + ")");
-        $element.css("background", "-o-" + gType + "-gradient(" + gO + ", " + stopsSimple.join(", ") + ")");
-        $element.css("background", "-ms-" + gType + "-gradient(" + gMs + ", " + stopsSimple.join(", ") + ")");
-        $element.css("background", gType + "-gradient(" + gW3 + ", " + stopsSimple.join(", ") + ")");
-        $element.css("background", "progid:DXImageTransform.Microsoft.gradient(startColorstr='" + colors[0].getHEX() + "', endColorstr='" + colors[colors.length - 1].getHEX() + "', GradientType=" + gIE + ")");
+        $element.attr("style", "width:100%;height:100%;opacity:0;background:" + colors[0].getRGB() + ";background:-moz-" + gType + "-gradient(" + gMoz + "," + stopsSimple.join(",") + ");background:-webkit-gradient(" + gWebkit + "," + stopsFull.join(",") + ");background:-webkit-" + gType + "-gradient(" + gWebkitR + "," + stopsSimple.join(",") + ");background:-o-" + gType + "-gradient(" + gO + "," + stopsSimple.join(",") + ");background:-ms-" + gType + "-gradient(" + gMs + "," + stopsSimple.join(",") + ");background:" + gType + "-gradient(" + gW3 + "," + stopsSimple.join(",") + ");background:progid:DXImageTransform.Microsoft.gradient(startColorstr='" + colors[0].getHEX() + "',endColorstr='" + colors[colors.length - 1].getHEX() + "',GradientType=" + gIE + ")" + ";");
         $.fn.multiBackground._defaultOptions["loadedshowcallback"]($element);
         return $element;
     };
