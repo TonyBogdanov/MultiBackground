@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.0.1 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.0.2 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -721,11 +721,18 @@ $(...).multiBackground({}, false);</code></pre>
             <p>The function accepts the jQuery object of the element being shown.</p>
             <p>By default this function would <code>.animate()</code> the opacity of the element from <code>0</code> to <code>1</code> in <code>500ms</code>, but you can replace it with whatever you want.</p>
             <p>As this is a function you cannot pass the implementation using HTML attributes, you must use JavaScript. However, you can define a global function and simply pass it's name as a string on the element as an HTML attribute: <code>data-multibackground-layer-0-loadedshowcallback="myGlobalAnimationFunction"</code>.</p>
+
+            <h4><code>data-multibackground-integrator</code></h4>
+            <p>There is a third way of initializing the plugin, that was developed for the WordPress version of the plugin. It combines an HTML attribute approach using JSON structure being passed directly to the JavaScript plugin.</p>
+            <p>To initialize the plugin using this "integrator" approach simply create a new hidden element like so: <code>&lt;div style="display:none;"&gt;&lt;/div&gt;</code> in the document and set 3 attributes: <code>data-multibackground-integrator</code>, <code>data-multibackground-integrator-selector</code> and <code>data-multibackground-integrator-options</code></p>
+            <p>The first one just marks the element as an integrator element and does not require a value. You can optionally set the value to <code>debug</code> to enable the debug mode of the plugin.</p>
+            <p>The second must contain a valid jQuery selector of the element(s) in the DOM, on which you want to apply the plugin.</p>
+            <p>The third must contain a serialized JSON string with all the options, that will be passed to the MultiBackground plugin.</p>
             <br />
         </div>
 
         <!-- JS libraries and scripts -->
-        <script type="text/javascript" src="../plugin/requirements/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="../plugin/requirements/jquery-1.8.3.min.js"></script>
         <script type="text/javascript" src="./prettify/run_prettify.js"></script>
         <script type="text/javascript" src="./js/bootstrap.min.js"></script>
         <script type="text/javascript" src="./js/demo.js"></script>

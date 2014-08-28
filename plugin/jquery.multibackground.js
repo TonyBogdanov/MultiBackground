@@ -1,5 +1,5 @@
 /**
- * MultiBackground v1.0.1
+ * MultiBackground v1.0.2
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -11,11 +11,12 @@
  * You can include it in any packages or projects being sold, but you cannot charge for the plugin or sell it separately.
  * Attribution is appreciated, but not required :)
  */
+var mb_YouTubeAPIReady = false, mb_GoogleMapsAPIReady = false;
 function onYouTubePlayerAPIReady() {
-    $.fn.multiBackground._YouTubeAPIReadyCallback();
+    mb_YouTubeAPIReady = true;
 }
 function onGoogleMapsAPIReady() {
-    $.fn.multiBackground._GoogleMapsAPIReadyCallback();
+    mb_GoogleMapsAPIReady = true;
 }
 (function($) {
 	"use strict";
@@ -26,210 +27,205 @@ function onGoogleMapsAPIReady() {
 	// NOTE: This function set "position: relative" to the parent element(s), to which it is applied and will prepend all background layer elements before any content. Call {action: destroy} to restore the element.
 	$.fn.multiBackground = function(options, silent) {
 		try {
-			// Reference to the parent element
-			var $this = $(this);
-			
-			// If the parent is a collection of elements, walk through them and call the plugin for each of them
-			if($this.length > 1) {
-				$this.each(function() {
-					$(this).multiBackground(options, silent);
-				});
-				return $this;
-			}
-			
-			// At this point, the plugin will only be run for single parent elements in $this
-			// Test type of options variable
-			switch(true) {
-                // If the param is an array, walk each element and call the plugin for it (this will, in the default case, create multiple layers)
-                case "object" === typeof options && "[object Array]" === Object.prototype.toString.call(options):
-                    if(0 === options.length) {
-                        throw "First argument cannot be an empty array";
-                    }
-                    for(var key in options) {
-                        $this.multiBackground(options[key], silent);
-                    }
-                    return $this;
+            return $(this).each(function() {
+                // Reference to the parent element
+                var $this = $(this);
 
-                // If the param is an object, continue algorithm
-                case "object" === typeof options:
-                    break;
-
-                // If nothing matched up till here, the argument is not supported
-                default:
-                    throw "Unsupported type of first argument: \"" + typeof options + "\"";
-			}
-
-            // Extend default plugin options with passed
-            options = $.extend(true, {}, $.fn.multiBackground._defaultOptions, options);
-
-            // Check action, prepare parent & create layer
-            if("string" !== typeof options["action"]) {
-                throw "Plugin options must specify a \"action\" param with a value of type \"string\"";
-            }
-            switch(options["action"]) {
-                // Prepend layer (put under all other)
-                case "prepend":
-                    // Prepare parent
-                    if(true !== $this.data("multibackground-prepared")) {
-                        $this.data("multibackground-prepared", true);
-                        $this.data("multibackground-original-position", $this.css("position"));
-                        $this.css("position", "relative");
-                    }
-
-                    // Create layer element
-                    var $element = $.fn.multiBackground._createLayer(options);
-
-                    // Put as first layer
-                    var $layers = $this.find('> [data-multibackground-layer]');
-                    if(0 === $layers.length) {
-                        $this.wrapInner("<div data-multibackground-content style=\"position: relative;\"/>");
-                    }
-                    $element.attr("data-multibackground-layer", 0);
-                    $this.prepend($element);
-                    if(0 < $layers.length) {
-                        $layers.each(function(i) {
-                            $(this).attr("data-multibackground-layer", i + 1);
-                        });
-                    }
-                    break;
-
-                // Append layer (put above all other)
-                case "append":
-                    // Prepare parent
-                    if(true !== $this.data("multibackground-prepared")) {
-                        $this.data("multibackground-prepared", true);
-                        $this.data("multibackground-original-position", $this.css("position"));
-                        $this.css("position", "relative");
-                    }
-
-                    // Create layer element
-                    var $element = $.fn.multiBackground._createLayer(options);
-
-                    // Find last layer in parent and push after it, or put as first layer
-                    var $layers = $this.find('> [data-multibackground-layer]');
-                    if(0 === $layers.length) {
-                        $this.wrapInner("<div data-multibackground-content style=\"position: relative;\"/>");
-                        $element.attr('data-multibackground-layer', 0);
-                        $this.prepend($element);
-                    } else {
-                        $element.attr('data-multibackground-layer', $layers.length);
-                        $layers.last().after($element);
-                    }
-                    break;
-
-                // Remove layer by index
-                case "remove":
-                    // Get layer index
-                    var index = parseInt(options["index"]);
-                    if(isNaN(index)) {
-                        throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
-                    }
-
-                    // Find layer by the given index, deregister callbacks and remove it
-                    var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                    if(0 === $layer.length) {
-                        throw "There is no MultiBackground layer for index: " + index;
-                    }
-                    if("function" === typeof $layer.data("multibackground-refresh")) {
-                        $(window).unbind("resize scroll", $layer.data("multibackground-refresh"));
-                    }
-                    $layer.remove();
-
-                    // Reindex remaining layers
-                    $this.find("> [data-multibackground-layer]").each(function(i) {
-                        $(this).attr('data-multibackground-layer', i);
-                    });
-                    break;
-
-                // Destroy MultiBackground structure and restore original schema
-                case "destroy":
-                    // Deregister all layer callbacks & remove layers
-                    $this.find("> [data-multibackground-layer]").each(function() {
-                        if("function" === typeof $(this).data("multibackground-refresh")) {
-                            $(window).unbind("resize scroll", $(this).data("multibackground-refresh"));
+                // Test type of options variable
+                switch(true) {
+                    // If the param is an array, walk each element and call the plugin for it (this will, in the default case, create multiple layers)
+                    case "object" === typeof options && "[object Array]" === Object.prototype.toString.call(options):
+                        if(0 === options.length) {
+                            throw "First argument cannot be an empty array";
                         }
-                        $(this).remove();
-                    });
+                        for(var key in options) {
+                            $this.multiBackground(options[key], silent);
+                        }
+                        return $this;
 
-                    // Unwrap content
-                    $this.find("> [data-multibackground-content]").contents().unwrap();
+                    // If the param is an object, continue algorithm
+                    case "object" === typeof options:
+                        break;
 
-                    // Restore parent
-                    $this.css("position", $this.data("multibackground-original-position"));
-                    $this.removeAttr("data-multibackground-content");
-                    $this.data("multibackground-prepared", false);
-                    break;
+                    // If nothing matched up till here, the argument is not supported
+                    default:
+                        throw "Unsupported type of first argument: \"" + typeof options + "\"";
+                }
 
-                // Start video playback
-                case "playVideo":
-                    // Get layer index
-                    var index = parseInt(options["index"]);
-                    if(isNaN(index)) {
-                        throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
-                    }
+                // Extend default plugin options with passed
+                options = $.extend(true, {}, $.fn.multiBackground._defaultOptions, options);
+                if(!silent) {
+                    console.log("MBINFO: The plugin will be run for the following element and options", $this, options);
+                }
 
-                    // Find layer by the given index and signal attached player
-                    var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                    $layer.data("multibackground-video-player").play();
-                    break;
+                // Check action, prepare parent & create layer
+                if("string" !== typeof options["action"]) {
+                    throw "Plugin options must specify a \"action\" param with a value of type \"string\"";
+                }
+                switch(options["action"]) {
+                    // Prepend layer (put under all other)
+                    case "prepend":
+                        // Prepare parent
+                        if(true !== $this.data("multibackground-prepared")) {
+                            $this.data("multibackground-prepared", true);
+                            $this.data("multibackground-original-position", $this.css("position"));
+                            $this.css("position", "relative");
+                        }
 
-                // Pause video playback
-                case "pauseVideo":
-                    // Get layer index
-                    var index = parseInt(options["index"]);
-                    if(isNaN(index)) {
-                        throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
-                    }
+                        // Create layer element
+                        var $element = $.fn.multiBackground._createLayer(options);
 
-                    // Find layer by the given index and signal attached player
-                    var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                    $layer.data("multibackground-video-player").pause();
-                    break;
+                        // Put as first layer
+                        var $layers = $this.find('> [data-multibackground-layer]');
+                        if(0 === $layers.length) {
+                            $this.wrapInner("<div data-multibackground-content style=\"position: relative;\"/>");
+                        }
+                        $element.attr("data-multibackground-layer", 0);
+                        $this.prepend($element);
+                        if(0 < $layers.length) {
+                            $layers.each(function(i) {
+                                $(this).attr("data-multibackground-layer", i + 1);
+                            });
+                        }
+                        break;
 
-                // Stop video playback
-                case "stopVideo":
-                    // Get layer index
-                    var index = parseInt(options["index"]);
-                    if(isNaN(index)) {
-                        throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
-                    }
+                    // Append layer (put above all other)
+                    case "append":
+                        // Prepare parent
+                        if(true !== $this.data("multibackground-prepared")) {
+                            $this.data("multibackground-prepared", true);
+                            $this.data("multibackground-original-position", $this.css("position"));
+                            $this.css("position", "relative");
+                        }
 
-                    // Find layer by the given index and signal attached player
-                    var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                    $layer.data("multibackground-video-player").stop();
-                    break;
+                        // Create layer element
+                        var $element = $.fn.multiBackground._createLayer(options);
 
-                // Mute video playback
-                case "muteVideo":
-                    // Get layer index
-                    var index = parseInt(options["index"]);
-                    if(isNaN(index)) {
-                        throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
-                    }
+                        // Find last layer in parent and push after it, or put as first layer
+                        var $layers = $this.find('> [data-multibackground-layer]');
+                        if(0 === $layers.length) {
+                            $this.wrapInner("<div data-multibackground-content style=\"position: relative;\"/>");
+                            $element.attr('data-multibackground-layer', 0);
+                            $this.prepend($element);
+                        } else {
+                            $element.attr('data-multibackground-layer', $layers.length);
+                            $layers.last().after($element);
+                        }
+                        break;
 
-                    // Find layer by the given index and signal attached player
-                    var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                    $layer.data("multibackground-video-player").mute();
-                    break;
+                    // Remove layer by index
+                    case "remove":
+                        // Get layer index
+                        var index = parseInt(options["index"]);
+                        if(isNaN(index)) {
+                            throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
+                        }
 
-                // Unmute video playback
-                case "unMuteVideo":
-                    // Get layer index
-                    var index = parseInt(options["index"]);
-                    if(isNaN(index)) {
-                        throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
-                    }
+                        // Find layer by the given index, deregister callbacks and remove it
+                        var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
+                        if(0 === $layer.length) {
+                            throw "There is no MultiBackground layer for index: " + index;
+                        }
+                        if("function" === typeof $layer.data("multibackground-refresh")) {
+                            $(window).unbind("resize scroll", $layer.data("multibackground-refresh"));
+                        }
+                        $layer.remove();
 
-                    // Find layer by the given index and signal attached player
-                    var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                    $layer.data("multibackground-video-player").unMute();
-                    break;
+                        // Reindex remaining layers
+                        $this.find("> [data-multibackground-layer]").each(function(i) {
+                            $(this).attr('data-multibackground-layer', i);
+                        });
+                        break;
 
-                // Unsupported action
-                default:
-                    throw "Unsupported action: \"" + options["action"] + "\"";
-            }
-            return $this;
+                    // Destroy MultiBackground structure and restore original schema
+                    case "destroy":
+                        // Deregister all layer callbacks & remove layers
+                        $this.find("> [data-multibackground-layer]").each(function() {
+                            if("function" === typeof $(this).data("multibackground-refresh")) {
+                                $(window).unbind("resize scroll", $(this).data("multibackground-refresh"));
+                            }
+                            $(this).remove();
+                        });
+
+                        // Unwrap content
+                        $this.find("> [data-multibackground-content]").contents().unwrap();
+
+                        // Restore parent
+                        $this.css("position", $this.data("multibackground-original-position"));
+                        $this.removeAttr("data-multibackground-content");
+                        $this.data("multibackground-prepared", false);
+                        break;
+
+                    // Start video playback
+                    case "playVideo":
+                        // Get layer index
+                        var index = parseInt(options["index"]);
+                        if(isNaN(index)) {
+                            throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
+                        }
+
+                        // Find layer by the given index and signal attached player
+                        var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
+                        $layer.data("multibackground-video-player").play();
+                        break;
+
+                    // Pause video playback
+                    case "pauseVideo":
+                        // Get layer index
+                        var index = parseInt(options["index"]);
+                        if(isNaN(index)) {
+                            throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
+                        }
+
+                        // Find layer by the given index and signal attached player
+                        var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
+                        $layer.data("multibackground-video-player").pause();
+                        break;
+
+                    // Stop video playback
+                    case "stopVideo":
+                        // Get layer index
+                        var index = parseInt(options["index"]);
+                        if(isNaN(index)) {
+                            throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
+                        }
+
+                        // Find layer by the given index and signal attached player
+                        var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
+                        $layer.data("multibackground-video-player").stop();
+                        break;
+
+                    // Mute video playback
+                    case "muteVideo":
+                        // Get layer index
+                        var index = parseInt(options["index"]);
+                        if(isNaN(index)) {
+                            throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
+                        }
+
+                        // Find layer by the given index and signal attached player
+                        var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
+                        $layer.data("multibackground-video-player").mute();
+                        break;
+
+                    // Unmute video playback
+                    case "unMuteVideo":
+                        // Get layer index
+                        var index = parseInt(options["index"]);
+                        if(isNaN(index)) {
+                            throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
+                        }
+
+                        // Find layer by the given index and signal attached player
+                        var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
+                        $layer.data("multibackground-video-player").unMute();
+                        break;
+
+                    // Unsupported action
+                    default:
+                        throw "Unsupported action: \"" + options["action"] + "\"";
+                }
+            });
 		} catch(e) {
 			if(false === silent) {
 				alert("MBERROR: " + e);
@@ -237,6 +233,41 @@ function onGoogleMapsAPIReady() {
 			console.log("MBERROR: " + e);
 		}
 	};
+    
+    // Initialize the plugin using values extracted from the HTML attributes of the element
+    $.fn.multiBackgroundFromAttributes = function() {
+        return $(this).each(function() {
+            var $this   = $(this);
+            var debug   = "debug" === $this.attr("data-multibackground");
+            try {
+                var options = $.fn.multiBackground._extractOptions($this);
+                $this.multiBackground(options, !debug);
+            } catch(e) {
+                if(debug) {
+                    alert("MBERROR: " + e);
+                }
+                console.log("MBERROR: " + e);
+            }
+        });
+    };
+    
+    // Initialize the plugin using values extracted from the HTML attributes of an integrator element
+    $.fn.multiBackgroundFromIntegrator = function() {
+        return $(this).each(function() {
+            var $this   = $(this);
+            var debug   = "debug" === $this.attr("data-multibackground-integrator");
+            try {
+                var selector    = $this.attr('data-multibackground-integrator-selector');
+                var options     = $.parseJSON($this.attr('data-multibackground-integrator-options'));
+                $(selector).multiBackground(options, !debug);
+            } catch(e) {
+                if(debug) {
+                    alert("MBERROR: " + e);
+                }
+                console.log("MBERROR: " + e);
+            }
+        });
+    };
 
     // Creates a new layer element for the given options for use in the main plugin definition
     $.fn.multiBackground._createLayer = function(options) {
@@ -525,7 +556,7 @@ function onGoogleMapsAPIReady() {
         }
 
         // Create video element
-        var $video  = $("<video" + (true === options["video"]["autoplay"] ? " autoplay" : "") + (true === options["video"]["loop"] ? " loop" : "") + (true === options["video"]["muted"] ? " muted" : "") + " data-multibackground-inner>" + ("string" === typeof options["url"]["mp4"] ? "<source src=\"" + options["url"]["mp4"] + "\" type=\"video/mp4\">" : "") + ("string" === typeof options["url"]["webm"] ? "<source src=\"" + options["url"]["webm"] + "\" type=\"video/webm\">" : "") + ("string" === typeof options["url"]["ogg"] ? "<source src=\"" + options["url"]["ogg"] + "\" type=\"video/ogg\">" : "") + "</video>");
+        var $video  = $("<video" + ($.fn.multiBackground._isTrue(options["video"]["autoplay"]) ? " autoplay" : "") + ($.fn.multiBackground._isTrue(options["video"]["loop"]) ? " loop" : "") + ($.fn.multiBackground._isTrue(options["video"]["muted"]) ? " muted" : "") + " data-multibackground-inner>" + ("string" === typeof options["url"]["mp4"] ? "<source src=\"" + options["url"]["mp4"] + "\" type=\"video/mp4\">" : "") + ("string" === typeof options["url"]["webm"] ? "<source src=\"" + options["url"]["webm"] + "\" type=\"video/webm\">" : "") + ("string" === typeof options["url"]["ogg"] ? "<source src=\"" + options["url"]["ogg"] + "\" type=\"video/ogg\">" : "") + "</video>");
 
         // Load video & trigger background refresh once metadata has been loaded
         $video.bind("loadedmetadata", function() {
@@ -580,7 +611,7 @@ function onGoogleMapsAPIReady() {
                         $element.data("multibackground-ready", true);
                         $element.data("multibackground-width", options["video"]["width"]);
                         $element.data("multibackground-height", options["video"]["height"]);
-                        if(options["video"]["autoplay"]) {
+                        if($.fn.multiBackground._isTrue(options["video"]["autoplay"])) {
                             e.target.playVideo()
                         } else {
                             e.target.stop();
@@ -594,18 +625,18 @@ function onGoogleMapsAPIReady() {
                         $.fn.multiBackground._defaultOptions["loadedshowcallback"]($video);
                     },
                     "onStateChange": function(e) {
-                        if(e.data === YT.PlayerState.ENDED && options["video"]["loop"]) {
+                        if(e.data === YT.PlayerState.ENDED && $.fn.multiBackground._isTrue(options["video"]["loop"])) {
                             e.target.playVideo();
                         }
                     }
                 }
             })));
         };
-        if($.fn.multiBackground._YouTubeAPIReady) {
+        if(mb_YouTubeAPIReady) {
             apiLoaded();
         } else {
             var interval = setInterval(function() {
-                if($.fn.multiBackground._YouTubeAPIReady) {
+                if(mb_YouTubeAPIReady) {
                     clearInterval(interval);
                     apiLoaded();
                 }
@@ -629,13 +660,13 @@ function onGoogleMapsAPIReady() {
         }
 
         // Create video element
-        var $video  = $("<iframe src=\"http://player.vimeo.com/video/" + options["id"] + "?api=1&badge=0&byline=0&title=0&autoplay=" + (true === options["video"]["autoplay"] ? 1 : 0) + "&loop=" + (true === options["video"]["loop"] ? 1 : 0) + "\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen data-multibackground-inner/>");
+        var $video  = $("<iframe src=\"http://player.vimeo.com/video/" + options["id"] + "?api=1&badge=0&byline=0&title=0&autoplay=" + ($.fn.multiBackground._isTrue(options["video"]["autoplay"]) ? 1 : 0) + "&loop=" + ($.fn.multiBackground._isTrue(options["video"]["loop"]) ? 1 : 0) + "\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen data-multibackground-inner/>");
 
         // Attach listeners
         var onMessageReceived = function(e) {
             var data = JSON.parse(e.data);
             if("ready" === data.event && true !== $element.data("multibackground-ready")) {
-                $video.get(0).contentWindow.postMessage({"method": "setVolume", "value": true === options["video"]["muted"] ? 0 : 1}, "*");
+                $video.get(0).contentWindow.postMessage({"method": "setVolume", "value": $.fn.multiBackground._isTrue(options["video"]["muted"]) ? 0 : 1}, "*");
                 $element.data("multibackground-ready", true);
                 $element.data("multibackground-width", options["video"]["width"]);
                 $element.data("multibackground-height", options["video"]["height"]);
@@ -724,11 +755,11 @@ function onGoogleMapsAPIReady() {
             }
             $.fn.multiBackground._defaultOptions["loadedshowcallback"]($element);
         };
-        if($.fn.multiBackground._GoogleMapsAPIReady) {
+        if(mb_GoogleMapsAPIReady) {
             apiLoaded();
         } else {
             var interval = setInterval(function() {
-                if($.fn.multiBackground._GoogleMapsAPIReady) {
+                if(mb_GoogleMapsAPIReady) {
                     clearInterval(interval);
                     apiLoaded();
                 }
@@ -739,18 +770,6 @@ function onGoogleMapsAPIReady() {
         var $element  = $("<div/>");
         $element.css({"width": "100%", "height": "100%", "opacity": 0});
         return $element;
-    };
-
-    // A flag to determine when the YouTube API loads and is ready to be used
-    $.fn.multiBackground._YouTubeAPIReady = false;
-    $.fn.multiBackground._YouTubeAPIReadyCallback = function() {
-        $.fn.multiBackground._YouTubeAPIReady = true;
-    };
-
-    // A flag to determine when the Google Maps API loads and is ready to be used
-    $.fn.multiBackground._GoogleMapsAPIReady = false;
-    $.fn.multiBackground._GoogleMapsAPIReadyCallback = function() {
-        $.fn.multiBackground._GoogleMapsAPIReady = true;
     };
 
     // Calculates new bounds to fit element inside a parent box (touch from inside)
@@ -825,6 +844,11 @@ function onGoogleMapsAPIReady() {
             index++;
         }
         return found ? array : object;
+    };
+
+    // Checks if the given value can be evaluated to boolean true
+    $.fn.multiBackground._isTrue = function(value) {
+        return true === value || "true" === value || 1 === parseInt(value);
     };
 
     // Video player controls wrapper for HTML5 videos
@@ -998,20 +1022,9 @@ function onGoogleMapsAPIReady() {
         }
     };
 
-    // Parse and apply plugin from attributes
-    $(document).ready(function() {
-        $("[data-multibackground]").each(function() {
-            var $this = $(this);
-            var debug = "debug" === $this.attr("data-multibackground");
-            try {
-                var options = $.fn.multiBackground._extractOptions($this);
-                $this.multiBackground(options, !debug);
-            } catch(e) {
-                if(debug) {
-                    alert("MBERROR: " + e);
-                }
-                console.log("MBERROR: " + e);
-            }
-        });
+    // Parse and apply plugin from attributes & hidden integrators
+    $(function() {
+        $("[data-multibackground]").multiBackgroundFromAttributes();
+        $("[data-multibackground-integrator]").multiBackgroundFromIntegrator();
     });
 }(jQuery));
