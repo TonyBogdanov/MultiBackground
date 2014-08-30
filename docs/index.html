@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.0.2 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.0.3 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -44,7 +44,27 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="./">Introduction</a></li>
-                        <li><a href="./documentation.html">Documentation</a></li>
+                        <li class="dropdown">
+                            <a href="./documentation.html" class="dropdown-toggle" data-toggle="dropdown">Documentation <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="./documentation.html#overview">Overview</a></li>
+                                <li><a href="./documentation.html#method1">JavaScript (<em>Method 1</em>)</a></li>
+                                <li><a href="./documentation.html#method2">HTML attributes (<em>Method 2</em>)</a></li>
+                                <li><a href="./documentation.html#options-object">The <em>options</em> object</a></li>
+                                <li><a href="./documentation.html#bg-solid">Background type: <em>Solid</em></a></li>
+                                <li><a href="./documentation.html#bg-gradient">Background type: <em>Gradient</em></a></li>
+                                <li><a href="./documentation.html#bg-movable">Background type: <em>Movable</em> (special)</a></li>
+                                <li><a href="./documentation.html#bg-image">Background type: <em>Image</em></a></li>
+                                <li><a href="./documentation.html#bg-pattern">Background type: <em>Pattern</em></a></li>
+                                <li><a href="./documentation.html#bg-video">Background type: <em>Video</em> (special)</a></li>
+                                <li><a href="./documentation.html#bg-html5-video">Background type: <em>HTML5 Video</em></a></li>
+                                <li><a href="./documentation.html#bg-youtube-video">Background type: <em>YouTube Video</em></a></li>
+                                <li><a href="./documentation.html#bg-vimeo-video">Background type: <em>Vimeo Video</em></a></li>
+                                <li><a href="./documentation.html#bg-iframe">Background type: <em>iFrame</em></a></li>
+                                <li><a href="./documentation.html#bg-gmap">Background type: <em>Google Map</em></a></li>
+                                <li><a href="./documentation.html#advanced">Advanced options</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="examples-color.html" class="dropdown-toggle" data-toggle="dropdown">Examples <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
@@ -59,7 +79,7 @@
                                 <li><a href="./examples-gmap.html">Google Maps</a></li>
                             </ul>
                         </li>
-                        <li><a href="../plugin/jquery.multibackground.min.js" target="_blank">Download</a></li>
+                        <li><a href="../download.php" target="_blank">Download</a></li>
                         <li><a href="https://github.com/TonyBogdanov/MultiBackground" target="_blank">GitHub repository</a></li>
                     </ul>
                 </div>
@@ -76,142 +96,170 @@
             <p>The plugin is originally designed and written by <a href="http://tonybogdanov.com" target="_blank">www.tonybogdanov.com</a> and has it's own <a href="https://github.com/TonyBogdanov/MultiBackground" target="_blank">GitHub page available here</a>.</p>
             <h3>Browser compatibility</h3>
             <p>The plugin is supported by the latest versions of all major browsers. However, you are always encouraged to test it yourself before heavily relying on the plugin.</p>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Background type</th>
-                        <th>Chrome 36</th>
-                        <th>Firefox 29</th>
-                        <th>Opera 23</th>
-                        <th>Safari 5 (windows)</th>
-                        <th>IE 11</th>
-                        <th>IE 10</th>
-                        <th>IE 9</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Solid</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Horizontal gradient</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Vertical gradient</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Diagonal gradient</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Radial gradient</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Image</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Pattern</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>HTML5 video</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="danger">No</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="danger">No</td>
-                    </tr>
-                    <tr>
-                        <td>YouTube video</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="danger">No</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Vimeo video</td>
-                        <td class="success">Yes</td>
-                        <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Vimeo JavaScript API does not seem to work with Firefox, e.g. you can autoplay and loop a video, but you cannot make API calls after the video has started playing and you cannot make it start muted, as it is only possible via an API call"></i></td>
-                        <td class="danger">No</td>
-                        <td class="danger">No</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="danger">No</td>
-                    </tr>
-                    <tr>
-                        <td>iframe</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                    </tr>
-                    <tr>
-                        <td>Google map</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                        <td class="success">Yes</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Background type</th>
+                            <th>Chrome 36</th>
+                            <th>Firefox 31</th>
+                            <th>Opera 23</th>
+                            <th>Safari 5 (Windows 7)</th>
+                            <th>IE 11</th>
+                            <th>IE 10</th>
+                            <th>IE 9</th>
+                            <th>Chrome 36 (Android)</th>
+                            <th>Firefox 31 (Android)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Solid</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Horizontal gradient</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Vertical gradient</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Diagonal gradient</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Radial gradient</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Image</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Pattern</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>HTML5 video</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support HTML5 video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
+                            <td class="success">Yes <i class="glyphicon glyphicon-question-sign" title="Seems to be unstable in some cases."></i></td>
+                        </tr>
+                        <tr>
+                            <td>YouTube video</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support YouTube video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Vimeo video <i class="glyphicon glyphicon-question-sign" title="It is currently not possible to have more than one video on a single page autoplay simultaneously. This is a Vimeo player policy and is irrelevant to browser version or OS."></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="danger">No</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="danger">No</td>
+                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support Vimeo video, but it is impossible to autostart the video (even through the API) without an user interaction due to Vimeo player policy."></i></td>
+                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support Vimeo video, but it is impossible to autostart the video (even through the API) without an user interaction due to Vimeo player policy."></i></td>
+                        </tr>
+                        <tr>
+                            <td>iFrame</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                        <tr>
+                            <td>Google map</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <h3>Requirements</h3>
             <ul>
                 <li><a href="http://jquery.com" target="_blank"><strong>jQuery 1.8.3</strong></a> &ndash; The plugin was developed and tested on this version, but might also work on lower ones.</li>
@@ -225,11 +273,19 @@
             <h3>Changelog</h3>
             <ul>
                 <li>
+                    <strong>1.0.3</strong>
+                    <ul>
+                        <li>Improved docs, demos &amp; more testing.</li>
+                        <li>Various bug fixes and improvements.</li>
+                        <li>Improved loadedshowcallback.</li>
+                    </ul>
+                </li>
+                <li>
                     <strong>1.0.2</strong>
                     <ul>
                         <li>Updated docs.</li>
                         <li>Prepared for unit testing.</li>
-                        <li>Compatible with jQuery 1.8.3</li>
+                        <li>Compatible with jQuery 1.8.3.</li>
                         <li>Various bug fixes and improvements.</li>
                         <li>Improvements for integration with an upcoming WordPress plugin.</li>
                     </ul>
@@ -252,10 +308,10 @@
 
         <!-- JS libraries and scripts -->
         <script type="text/javascript" src="../plugin/requirements/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
         <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
         <script type="text/javascript" src="./js/demo.js"></script>
-        <script type="text/javascript" src="../plugin/jquery.multibackground.min.js"></script>
+        <script type="text/javascript" src="../plugin/jquery.multibackground.js"></script>
 		
 		<script type="text/javascript">
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

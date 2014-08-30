@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.0.2 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.0.3 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -44,7 +44,27 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="./">Introduction</a></li>
-                        <li class="active"><a href="./documentation.html">Documentation</a></li>
+                        <li class="dropdown active">
+                            <a href="./documentation.html" class="dropdown-toggle" data-toggle="dropdown">Documentation <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="./documentation.html#overview">Overview</a></li>
+                                <li><a href="./documentation.html#method1">JavaScript (<em>Method 1</em>)</a></li>
+                                <li><a href="./documentation.html#method2">HTML attributes (<em>Method 2</em>)</a></li>
+                                <li><a href="./documentation.html#options-object">The <em>options</em> object</a></li>
+                                <li><a href="./documentation.html#bg-solid">Background type: <em>Solid</em></a></li>
+                                <li><a href="./documentation.html#bg-gradient">Background type: <em>Gradient</em></a></li>
+                                <li><a href="./documentation.html#bg-movable">Background type: <em>Movable</em> (special)</a></li>
+                                <li><a href="./documentation.html#bg-image">Background type: <em>Image</em></a></li>
+                                <li><a href="./documentation.html#bg-pattern">Background type: <em>Pattern</em></a></li>
+                                <li><a href="./documentation.html#bg-video">Background type: <em>Video</em> (special)</a></li>
+                                <li><a href="./documentation.html#bg-html5-video">Background type: <em>HTML5 Video</em></a></li>
+                                <li><a href="./documentation.html#bg-youtube-video">Background type: <em>YouTube Video</em></a></li>
+                                <li><a href="./documentation.html#bg-vimeo-video">Background type: <em>Vimeo Video</em></a></li>
+                                <li><a href="./documentation.html#bg-iframe">Background type: <em>iFrame</em></a></li>
+                                <li><a href="./documentation.html#bg-gmap">Background type: <em>Google Map</em></a></li>
+                                <li><a href="./documentation.html#advanced">Advanced options</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown">
                             <a href="examples-color.html" class="dropdown-toggle" data-toggle="dropdown">Examples <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
@@ -59,7 +79,7 @@
                                 <li><a href="./examples-gmap.html">Google Maps</a></li>
                             </ul>
                         </li>
-                        <li><a href="../plugin/jquery.multibackground.min.js" target="_blank">Download</a></li>
+                        <li><a href="../download.php" target="_blank">Download</a></li>
                         <li><a href="https://github.com/TonyBogdanov/MultiBackground" target="_blank">GitHub repository</a></li>
                     </ul>
                 </div>
@@ -69,10 +89,31 @@
         <div class="container">
             <h1>Documentation</h1>
             <hr />
-            <h3>Overview</h3>
+            <div class="alert alert-info pull-right" style="margin-left:30px;">
+                <h4 style="margin-bottom:15px">Table of contents</h4>
+                <ol style="margin-bottom:5px;">
+                    <li><a href="./documentation.html#overview">Overview</a></li>
+                    <li><a href="./documentation.html#method1">JavaScript (<em>Method 1</em>)</a></li>
+                    <li><a href="./documentation.html#method2">HTML attributes (<em>Method 2</em>)</a></li>
+                    <li><a href="./documentation.html#options-object">The <em>options</em> object</a></li>
+                    <li><a href="./documentation.html#bg-solid">Background type: <em>Solid</em></a></li>
+                    <li><a href="./documentation.html#bg-gradient">Background type: <em>Gradient</em></a></li>
+                    <li><a href="./documentation.html#bg-movable">Background type: <em>Movable</em> (special)</a></li>
+                    <li><a href="./documentation.html#bg-image">Background type: <em>Image</em></a></li>
+                    <li><a href="./documentation.html#bg-pattern">Background type: <em>Pattern</em></a></li>
+                    <li><a href="./documentation.html#bg-video">Background type: <em>Video</em> (special)</a></li>
+                    <li><a href="./documentation.html#bg-html5-video">Background type: <em>HTML5 Video</em></a></li>
+                    <li><a href="./documentation.html#bg-youtube-video">Background type: <em>YouTube Video</em></a></li>
+                    <li><a href="./documentation.html#bg-vimeo-video">Background type: <em>Vimeo Video</em></a></li>
+                    <li><a href="./documentation.html#bg-iframe">Background type: <em>iFrame</em></a></li>
+                    <li><a href="./documentation.html#bg-gmap">Background type: <em>Google Map</em></a></li>
+                    <li><a href="./documentation.html#advanced">Advanced options</a></li>
+                </ol>
+            </div>
+            <h3 id="overview">Overview</h3>
             <p>There are 2 ways you can use the plugin, either through (<em>Method 1</em>) JavaScript calls, or (<em>Method 2</em>) using HTML attributes. When you use HTML attributes, those attributes and their values are translated into JavaScript objects which are then passed to the plugin as in <em>Method 1</em>. This means that anything you can achieve using <em>Method 2</em> can also be achieved using <em>Method 1</em>. The opposite, however, is not true. You can only specify options which require static values e.g. strings, numbers etc. It is not possible to pass an anonymous function f.e. using HTML attributes, but in the general case you won't need to.</p>
             <p>All examples shown in this manual are achieved using <em>Method 2</em> for clarity, but there is also a source code for each of them, showing the same example using JavaScript.</p>
-            <h3>JavaScript (<em>Method 1</em>)</h3>
+            <h3 id="method1">JavaScript (<em>Method 1</em>)</h3>
             <p>As most jQuery plugins, <strong>MultiBackground</strong> can be called directly on a jQuery object or a collection of elements:</p>
             <pre><code class="prettyprint linenums lang-js">$('#element').multiBackground(); // Applied to element with id="element"
 $('.element').multiBackground(); // Applied to all elements with class="element"</code></pre>
@@ -92,7 +133,7 @@ $("#element").multiBackground({"a": "b"}).multiBackground({"c": "d"});</code></p
                     <p>This argument is not required and is set to <code>false</code> by default.</p>
                 </li>
             </ul>
-            <h3>HTML attributes (<em>Method 2</em>)</h3>
+            <h3 id="method2">HTML attributes (<em>Method 2</em>)</h3>
             <p>The plugin has an ability to automatically parse HTML attributes and make the corresponding plugin calls for certain elements. This happens on jQuery's event <code>$(document).ready();</code>.</code></p>
             <p>To benefit from this ability you must mark your elements and add the appropriate attributes for the plugin to use. First step is to mark an element as a <strong>MultiBackground</strong> element. This is done by adding the attribute <code>data-multibackground</code> to the element like this:</p>
             <pre><code class="prettyprint linenums lang-html">&lt;div data-multibackground&gt;&lt;/div&gt;</code></pre>
@@ -170,7 +211,7 @@ $(...).multiBackground({}, false);</code></pre>
                     <pre><code class="prettyprint linenums lang-js">$(...).multiBackground({"an": {"array": [{"itis": "a", "indeed": "b"}], "object": "c"}});</code></pre>
                 </div>
             </div>
-            <h3>The <em>options</em> object</h3>
+            <h3 id="options-object">The <em>options</em> object</h3>
             <p>This is the object that carries all information used by the plugin.</p>
             <p>When constructing this object you can pass a string value to the key <code>action</code> to specify an action to be performed. By default this option is omitted and the value <code>append</code> is used as default.</p>
             <table class="table table-bordered table-striped">
@@ -243,7 +284,7 @@ $(...).multiBackground({}, false);</code></pre>
             </table>
             <p>The next most important option key is <code>type</code>, which is used to specify the type of the background layer you want to <code>prepend</code> or <code>append</code>. Here is a list of all supported background types and their specifications:</p>
 
-            <h3>Background type: Solid <code>"type": "solid"</code></h3>
+            <h3 id="bg-solid">Background type: Solid <code>"type": "solid"</code></h3>
             <h4>Overview</h4>
             <p>This is a simple background type, which uses a solid color as a background. The color must be in short HEX, full HEX, RGB or RGBA format: <code>#fff</code>, <code>#fff9</code>, <code>#ffffff</code>, <code>#ffffff99</code>, <code>rgb(255, 255, 255)</code>, <code>rgb(255, 255, 255, 153)</code>.</code></p>
             <h4>Options</h4>
@@ -268,7 +309,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: Gradient <code>"type": "gradient"</code></h3>
+            <h3 id="bg-gradient">Background type: Gradient <code>"type": "gradient"</code></h3>
             <h4>Overview</h4>
             <p>This is a simple background type, which uses a collection of points for which you specify position and color to achieve a gradient effect. All colors must be in short HEX, full HEX, RGB or RGBA format: <code>#fff</code>, <code>#fff9</code>, <code>#ffffff</code>, <code>#ffffff99</code>, <code>rgb(255, 255, 255)</code>, <code>rgb(255, 255, 255, 153)</code>.</code></p>
             <h4>Options</h4>
@@ -328,7 +369,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: Movable</h3>
+            <h3 id="bg-movable">Background type: Movable</h3>
             <h4>Overview</h4>
             <p>This is a special type of background, which is used as an extension of types like <code>image</code>, <code>pattern</code> or <code>video</code>. It supplies those background types with the ability to be sized and positioned differently according to the parent element size, window scroll position and the type of relation to those environment properties. All background types that extend this one are marked as <code>Movable</code> in this documentation and inherit all <code>Movable</code> properties and features.</p>
             <p>The main property of this type allows the element being used as a background layer to be centered horizontally and vertically relative to the container element. It is also resized in a way that will always keep the aspect ratio of the element, and will fill the entire visible space of the containing element (the containing element is assigned <code>overflow: hidden;</code> to hide the extra parts of the background element).</p>
@@ -373,7 +414,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: Image (is Movable) <code>"type": "image"</code></h3>
+            <h3 id="bg-image">Background type: Image (is Movable) <code>"type": "image"</code></h3>
             <h4>Overview</h4>
             <p>This is a background type which displays an image. It is sized and positioned according to the size of the container, so that it will always fill the entire background space. The image is centered both horizontally and vertically.</p>
             <h4>Options</h4>
@@ -398,7 +439,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: Pattern (is Movable) <code>"type": "pattern"</code></h3>
+            <h3 id="bg-pattern">Background type: Pattern (is Movable) <code>"type": "pattern"</code></h3>
             <h4>Overview</h4>
             <p>This is a background type which displays a pattern (a single image repeated both horizontally and vertically until it fills the entire element). It is positioned according to the size of the container, so that it will always fill the entire background space.</p>
             <h4>Options</h4>
@@ -423,7 +464,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: Video (is Movable)</h3>
+            <h3 id="bg-video">Background type: Video (is Movable)</h3>
             <h4>Overview</h4>
             <p>Just like <em>Movable</em> this is a special type of background, which is used as an extension of types like <code>youtube</code> or <code>vimeo</code>. It defines those background types as video objects and supplies several standardized methods and features.</p>
             <p>Each background type which is defined as <em>Video</em> type also supplies an API for controlling the created video object after the initialization of the plugin has finished. The API is rather simple and supplies methods able to play, pause, stop, mute, unmute etc. the video objects. Once a video object is created on a layer of a certain element, just call <code>.multiBackground({...});</code> on that element, and supply the action you would like to perform on the video in the <code>"action"</code> key. The possible calls and required parameters were already covered in this documentation in the section: <strong>The <em>options</em> object</strong>.</p>
@@ -506,7 +547,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: HTML5 Video (is Video) <code>"type": "video"</code></h3>
+            <h3 id="bg-html5-video">Background type: HTML5 Video (is Video) <code>"type": "video"</code></h3>
             <h4>Overview</h4>
             <p>This is a background type which displays an HTML5 Video. It is sized and positioned according to the size of the container, so that it will always fill the entire background space.</p>
             <h4>Options</h4>
@@ -566,7 +607,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: YouTube Video (is Video) <code>"type": "youtube"</code></h3>
+            <h3 id="bg-youtube-video">Background type: YouTube Video (is Video) <code>"type": "youtube"</code></h3>
             <h4>Overview</h4>
             <p>This is a background type which displays a YouTube Video. It is sized and positioned according to the size of the container, so that it will always fill the entire background space.</p>
             <h4>Options</h4>
@@ -591,7 +632,8 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: Vimeo Video (is Video) <code>"type": "vimeo"</code></h3>
+            <h3 id="bg-vimeo-video">Background type: Vimeo Video (is Video) <code>"type": "vimeo"</code></h3>
+            <div class="alert alert-danger"><strong>Note:</strong> It is currently not possible to have more than one Vimeo video on a single page due to Vimeo Player rules, that prevent autoplaying of multiple videos at the same time. Attempting to do this will result in "weird" player behavior.</div>
             <h4>Overview</h4>
             <p>This is a background type which displays a Vimeo Video. It is sized and positioned according to the size of the container, so that it will always fill the entire background space.</p>
             <h4>Options</h4>
@@ -616,7 +658,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: iFrame <code>"type": "iframe"</code></h3>
+            <h3 id="bg-iframe">Background type: iFrame <code>"type": "iframe"</code></h3>
             <h4>Overview</h4>
             <p>This is a background type which displays a page inside a custom iFrame. It is always 100% the width and height of the container element.</p>
             <h4>Options</h4>
@@ -641,7 +683,7 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Background type: Google Map <code>"type": "gmap"</code></h3>
+            <h3 id="bg-gmap">Background type: Google Map <code>"type": "gmap"</code></h3>
             <h4>Overview</h4>
             <p>This is a background type which displays a Google Map. It is always 100% the width and height of the container element.</p>
             <h4>Options</h4>
@@ -715,12 +757,14 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
-            <h3>Advanced options</h3>
+            <h3 id="advanced">Advanced options</h3>
             <h4><code>loadedshowcallback</code></h4>
             <p>Every element, once loaded is displayed with a transition effect. This effect is a callback function specified in the <em>options</em> object under: <code>{"loadedshowcallback": function($element) { ... }}</code></p>
             <p>The function accepts the jQuery object of the element being shown.</p>
             <p>By default this function would <code>.animate()</code> the opacity of the element from <code>0</code> to <code>1</code> in <code>500ms</code>, but you can replace it with whatever you want.</p>
             <p>As this is a function you cannot pass the implementation using HTML attributes, you must use JavaScript. However, you can define a global function and simply pass it's name as a string on the element as an HTML attribute: <code>data-multibackground-layer-0-loadedshowcallback="myGlobalAnimationFunction"</code>.</p>
+            <p>If all you need is a simple animation and you do not want to write your own functions, you can just pass a special string, which will be used by the plugin to construct an animation.</p>
+            <p>The string should look like this: <code>linear,500</code>, where <code>linear</code> is a jQuery easing name and <code>500</code> is the desired duration of your animation in milliseconds. Please note, that the minimum required version of jQuery is 1.8.3, which only includes 2 easing types: <code>linear</code> and <code>swing</code>. If you want to use more you need to either use a newer jQuery version, or load the <a href="http://plugins.jquery.com/jquery.easing/" target="_blank">jQuery Easing Plugin</a>.</p>
 
             <h4><code>data-multibackground-integrator</code></h4>
             <p>There is a third way of initializing the plugin, that was developed for the WordPress version of the plugin. It combines an HTML attribute approach using JSON structure being passed directly to the JavaScript plugin.</p>
@@ -733,10 +777,10 @@ $(...).multiBackground({}, false);</code></pre>
 
         <!-- JS libraries and scripts -->
         <script type="text/javascript" src="../plugin/requirements/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
         <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
         <script type="text/javascript" src="./js/demo.js"></script>
-        <script type="text/javascript" src="../plugin/jquery.multibackground.min.js"></script>
+        <script type="text/javascript" src="../plugin/jquery.multibackground.js"></script>
 		
 		<script type="text/javascript">
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

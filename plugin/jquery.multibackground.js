@@ -1,5 +1,5 @@
 /**
- * MultiBackground v1.0.2
+ * MultiBackground v1.0.3
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -11,6 +11,7 @@
  * You can include it in any packages or projects being sold, but you cannot charge for the plugin or sell it separately.
  * Attribution is appreciated, but not required :)
  */
+// API lifecycle flags
 var mb_YouTubeAPIReady = false, mb_GoogleMapsAPIReady = false;
 function onYouTubePlayerAPIReady() {
     mb_YouTubeAPIReady = true;
@@ -18,15 +19,17 @@ function onYouTubePlayerAPIReady() {
 function onGoogleMapsAPIReady() {
     mb_GoogleMapsAPIReady = true;
 }
-(function($) {
-	"use strict";
 
-	// Main plugin definition
-	// Accepts a single options object or an array of option objects (if one wants to create multiple background layers) as first argument.
-	// Accepts a boolean, true (default) if the plugin should run in silent mode, e.g. all errors should be only logged in the console log, or false if all errors should be "alert"-ed to the browser, as second argument.
-	// NOTE: This function set "position: relative" to the parent element(s), to which it is applied and will prepend all background layer elements before any content. Call {action: destroy} to restore the element.
-	$.fn.multiBackground = function(options, silent) {
-		try {
+// Plugin
+(function($) {
+    "use strict";
+
+    // Main plugin definition
+    // Accepts a single options object or an array of option objects (if one wants to create multiple background layers) as first argument.
+    // Accepts a boolean, true (default) if the plugin should run in silent mode, e.g. all errors should be only logged in the console log, or false if all errors should be "alert"-ed to the browser, as second argument.
+    // NOTE: This function set "position: relative" to the parent element(s), to which it is applied and will prepend all background layer elements before any content. Call {action: destroy} to restore the element.
+    $.fn.multiBackground = function(options, silent) {
+        try {
             return $(this).each(function() {
                 // Reference to the parent element
                 var $this = $(this);
@@ -226,14 +229,15 @@ function onGoogleMapsAPIReady() {
                         throw "Unsupported action: \"" + options["action"] + "\"";
                 }
             });
-		} catch(e) {
-			if(false === silent) {
-				alert("MBERROR: " + e);
-			}
-			console.log("MBERROR: " + e);
-		}
-	};
-    
+        } catch(e) {
+            if(false === silent) {
+                alert("MBERROR: " + e);
+            }
+            console.log("MBERROR: " + e);
+            console.trace();
+        }
+    };
+
     // Initialize the plugin using values extracted from the HTML attributes of the element
     $.fn.multiBackgroundFromAttributes = function() {
         return $(this).each(function() {
@@ -247,10 +251,11 @@ function onGoogleMapsAPIReady() {
                     alert("MBERROR: " + e);
                 }
                 console.log("MBERROR: " + e);
+                console.trace();
             }
         });
     };
-    
+
     // Initialize the plugin using values extracted from the HTML attributes of an integrator element
     $.fn.multiBackgroundFromIntegrator = function() {
         return $(this).each(function() {
@@ -265,6 +270,7 @@ function onGoogleMapsAPIReady() {
                     alert("MBERROR: " + e);
                 }
                 console.log("MBERROR: " + e);
+                console.trace();
             }
         });
     };
@@ -325,8 +331,8 @@ function onGoogleMapsAPIReady() {
 
         // Create solid color element
         var $element = $('<div/>');
-        $element.css({"width": "100%", "height": "100%", "background": color.getRGBA(), "opacity": 0});
-        $.fn.multiBackground._defaultOptions["loadedshowcallback"]($element);
+        $element.css({"width": "100%", "height": "100%", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none", "opacity": 0, "background": color.getRGBA()});
+        $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
         return $element;
     };
 
@@ -423,8 +429,8 @@ function onGoogleMapsAPIReady() {
 
         // Create element and apply background gradient CSS
         var $element = $("<div/>");
-        $element.attr("style", "width:100%;height:100%;opacity:0;background:" + colors[0].getRGB() + ";background:-moz-" + gType + "-gradient(" + gMoz + "," + stopsSimple.join(",") + ");background:-webkit-gradient(" + gWebkit + "," + stopsFull.join(",") + ");background:-webkit-" + gType + "-gradient(" + gWebkitR + "," + stopsSimple.join(",") + ");background:-o-" + gType + "-gradient(" + gO + "," + stopsSimple.join(",") + ");background:-ms-" + gType + "-gradient(" + gMs + "," + stopsSimple.join(",") + ");background:" + gType + "-gradient(" + gW3 + "," + stopsSimple.join(",") + ");background:progid:DXImageTransform.Microsoft.gradient(startColorstr='" + colors[0].getHEX() + "',endColorstr='" + colors[colors.length - 1].getHEX() + "',GradientType=" + gIE + ")" + ";");
-        $.fn.multiBackground._defaultOptions["loadedshowcallback"]($element);
+        $element.attr("style", "width:100%;height:100%;min-width:0;max-width:none;min-height:0;max-height:none;opacity:0;background:" + colors[0].getRGB() + ";background:-moz-" + gType + "-gradient(" + gMoz + "," + stopsSimple.join(",") + ");background:-webkit-gradient(" + gWebkit + "," + stopsFull.join(",") + ");background:-webkit-" + gType + "-gradient(" + gWebkitR + "," + stopsSimple.join(",") + ");background:-o-" + gType + "-gradient(" + gO + "," + stopsSimple.join(",") + ");background:-ms-" + gType + "-gradient(" + gMs + "," + stopsSimple.join(",") + ");background:" + gType + "-gradient(" + gW3 + "," + stopsSimple.join(",") + ");background:progid:DXImageTransform.Microsoft.gradient(startColorstr='" + colors[0].getHEX() + "',endColorstr='" + colors[colors.length - 1].getHEX() + "',GradientType=" + gIE + ")" + ";");
+        $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
         return $element;
     };
 
@@ -459,7 +465,7 @@ function onGoogleMapsAPIReady() {
         // Create and prepare element
         var $element = $("<div/>");
         var $window  = $(window);
-        $element.css({"width": "100%", "height": "100%", "overflow": "hidden"});
+        $element.css({"width": "100%", "height": "100%", "overflow": "hidden", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none"});
 
         // Attach background refresh events
         $element.data("multibackground-refresh", function() {
@@ -469,7 +475,7 @@ function onGoogleMapsAPIReady() {
             var $inner = $element.find("> [data-multibackground-inner]");
             var offset = ($window.scrollTop() + $window.height() - $element.offset().top) / ($window.height() + $element.height());
             var bounds = $.fn.multiBackground._calculateBounds($element.width(), $element.height(), $element.data("multibackground-width"), $element.data("multibackground-height"), $element.offset().top, 2 * Math.max(0, Math.min(1, offset)) - 1, offsetfactor, sizefactor, "fixed" === options["attachment"], "static" === options["attachment"]);
-            $inner.css({"width": bounds["width"], "height": bounds["height"], "left": bounds["left"], "top": bounds["top"]});
+            $inner.css({"width": Math.round(bounds["width"]) + "px", "height": Math.round(bounds["height"]) + "px", "left": Math.round(bounds["left"]) + "px", "top": Math.round(bounds["top"]) + "px", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none"});
         });
         $element.bind("multibackground-refresh", $element.data("multibackground-refresh"));
 
@@ -507,7 +513,7 @@ function onGoogleMapsAPIReady() {
             $element.data("multibackground-height", image.height);
             $element.append($image);
             $element.triggerHandler("multibackground-refresh");
-            $.fn.multiBackground._defaultOptions["loadedshowcallback"]($image);
+            $.fn.multiBackground._lsc(options["loadedshowcallback"], $image);
         });
         image.src = options["url"];
         return $element;
@@ -536,7 +542,7 @@ function onGoogleMapsAPIReady() {
             $element.data("multibackground-height", image.height);
             $element.append($pattern);
             $element.triggerHandler("multibackground-refresh");
-            $.fn.multiBackground._defaultOptions["loadedshowcallback"]($pattern);
+            $.fn.multiBackground._lsc(options["loadedshowcallback"], $pattern);
         });
         image.src = options["url"];
         return $element;
@@ -555,21 +561,44 @@ function onGoogleMapsAPIReady() {
             throw "Plugin options must specify an \"url\" param (of type \"object\") with a value of type \"string\" for at least one of the following keys: \"mp4\", \"ogg\" or \"webm\", preferable for all";
         }
 
+        // Flags
+        var autoplay    = $.fn.multiBackground._isTrue(options["video"]["autoplay"]);
+        var loop        = $.fn.multiBackground._isTrue(options["video"]["loop"]);
+        var muted       = $.fn.multiBackground._isTrue(options["video"]["muted"]);
+
         // Create video element
-        var $video  = $("<video" + ($.fn.multiBackground._isTrue(options["video"]["autoplay"]) ? " autoplay" : "") + ($.fn.multiBackground._isTrue(options["video"]["loop"]) ? " loop" : "") + ($.fn.multiBackground._isTrue(options["video"]["muted"]) ? " muted" : "") + " data-multibackground-inner>" + ("string" === typeof options["url"]["mp4"] ? "<source src=\"" + options["url"]["mp4"] + "\" type=\"video/mp4\">" : "") + ("string" === typeof options["url"]["webm"] ? "<source src=\"" + options["url"]["webm"] + "\" type=\"video/webm\">" : "") + ("string" === typeof options["url"]["ogg"] ? "<source src=\"" + options["url"]["ogg"] + "\" type=\"video/ogg\">" : "") + "</video>");
+        var $video  = $("<video preload=\"metadata\"" + (autoplay ? " autoplay=\"autoplay\"" : "") + (loop ? " loop=\"loop\"" : "") + (muted ? " muted=\"muted\"" : "") + " data-multibackground-inner>" + ("string" === typeof options["url"]["mp4"] ? "<source src=\"" + options["url"]["mp4"] + "\" type=\"video/mp4\">" : "") + ("string" === typeof options["url"]["webm"] ? "<source src=\"" + options["url"]["webm"] + "\" type=\"video/webm\">" : "") + ("string" === typeof options["url"]["ogg"] ? "<source src=\"" + options["url"]["ogg"] + "\" type=\"video/ogg\">" : "") + "</video>");
+        if(autoplay) {
+            $video.prop("autoplay", true);
+        }
+        if(loop) {
+            $video.prop("loop", true);
+        }
+        if(muted) {
+            $video.prop("muted", true);
+        }
 
         // Load video & trigger background refresh once metadata has been loaded
-        $video.bind("loadedmetadata", function() {
-            $video.unbind("loadedmetadata");
+        $video.bind("loadedmetadata canplay", function() {
+            $video.unbind("loadedmetadata canplay");
             $element.data("multibackground-ready", true);
             $element.data("multibackground-width", this.videoWidth);
             $element.data("multibackground-height", this.videoHeight);
             $element.triggerHandler("multibackground-refresh");
-            $.fn.multiBackground._defaultOptions["loadedshowcallback"]($video);
+            $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
+            if(loop) {
+                $video.get(0).loop  = true;
+            }
+            if(muted) {
+                $video.get(0).muted = true;
+            }
+            if(autoplay) {
+                $video.get(0).play();
+            }
         });
 
         // Prepare video & attach to element
-        $video.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0});
+        $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
         $video.append(options["video"]["nohtml5support"]);
         $element.data("multibackground-video-player", new MultiBackgroundHTML5PlayerWrapper($video.get(0)));
         $element.append($video);
@@ -622,7 +651,7 @@ function onGoogleMapsAPIReady() {
                             e.target.unMute();
                         }
                         $element.triggerHandler("multibackground-refresh");
-                        $.fn.multiBackground._defaultOptions["loadedshowcallback"]($video);
+                        $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
                     },
                     "onStateChange": function(e) {
                         if(e.data === YT.PlayerState.ENDED && $.fn.multiBackground._isTrue(options["video"]["loop"])) {
@@ -644,7 +673,7 @@ function onGoogleMapsAPIReady() {
         }
 
         // Prepare video & attach to element
-        $video.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0});
+        $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
         $element.append($video);
         return $element;
     };
@@ -671,7 +700,7 @@ function onGoogleMapsAPIReady() {
                 $element.data("multibackground-width", options["video"]["width"]);
                 $element.data("multibackground-height", options["video"]["height"]);
                 $element.triggerHandler("multibackground-refresh");
-                $.fn.multiBackground._defaultOptions["loadedshowcallback"]($video);
+                $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
             }
         };
         if(window.addEventListener) {
@@ -681,7 +710,7 @@ function onGoogleMapsAPIReady() {
         }
 
         // Prepare video & attach to element
-        $video.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0});
+        $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
         $element.append($video);
         $element.data("multibackground-video-player", new MultiBackgroundVimeoPlayerWrapper($video.get(0)));
         return $element;
@@ -697,11 +726,10 @@ function onGoogleMapsAPIReady() {
         }
 
         // Create and prepare the iframe
-        var $element  = $("<iframe src=\"" + options["url"] + "\"/>");
-        $element.css({"width": "100%", "height": "100%", "border": 0, "opacity": 0});
+        var $element  = $("<iframe src=\"" + options["url"] + "\" scrolling=\"no\" style=\"width:100%;height:100%;border:0;opacity:0;min-width:0;max-width:none;min-height:0;max-height:none;overflow:hidden\"/>");
         $element.bind("load", function() {
             $element.unbind("load");
-            $.fn.multiBackground._defaultOptions["loadedshowcallback"]($element);
+            $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
         });
         return $element;
     };
@@ -753,7 +781,7 @@ function onGoogleMapsAPIReady() {
                 }
                 var marker = new google.maps.Marker(markerOptions);
             }
-            $.fn.multiBackground._defaultOptions["loadedshowcallback"]($element);
+            $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
         };
         if(mb_GoogleMapsAPIReady) {
             apiLoaded();
@@ -768,7 +796,7 @@ function onGoogleMapsAPIReady() {
 
         // Create and prepare the element
         var $element  = $("<div/>");
-        $element.css({"width": "100%", "height": "100%", "opacity": 0});
+        $element.attr("style", "width:100%;height:100%;opacity:0;min-width:0;max-width:none;min-height:0;max-height:none");
         return $element;
     };
 
@@ -776,13 +804,13 @@ function onGoogleMapsAPIReady() {
     $.fn.multiBackground._calculateBounds = function(boxWidth, boxHeight, elementWidth, elementHeight, elementOffsetTop, offset, offsetfactor, sizefactor, fixedAttachment, staticAttachment) {
         var $window = $(window);
         var width   = boxWidth;
-        var height  = boxWidth / (elementWidth / elementHeight);
+        var height  = width / (elementWidth / elementHeight);
         if(height < boxHeight) {
             height  = boxHeight;
-            width   = boxWidth * (elementWidth / elementHeight);
+            width   = height * (elementWidth / elementHeight);
         }
         if(staticAttachment && height * sizefactor < $(window).height()) {
-            sizefactor  = $window.height() / height;
+            sizefactor = $window.height() / height;
         }
         width       *= sizefactor;
         height      *= sizefactor;
@@ -844,6 +872,36 @@ function onGoogleMapsAPIReady() {
             index++;
         }
         return found ? array : object;
+    };
+
+    // loadedshowcallback animator
+    $.fn.multiBackground._lsc = function(animator, $element) {
+        switch(typeof animator) {
+            case "function":
+                animator($element);
+                return;
+            case "string":
+                if("function" === typeof window[animator]) {
+                    window[animator]($element);
+                    return;
+                }
+                var easing, duration;
+                animator = animator.split(",");
+                if(
+                    2 != animator.length ||
+                        "string" !== typeof (easing = animator[0]) ||
+                        isNaN(duration = parseInt(animator[1]))
+                    ) {
+                    break;
+                }
+                if("undefined" === typeof $.easing[easing]) {
+                    console.log("MBWARNING: Easing: " + easing + " is not defined");
+                    break;
+                }
+                $element.stop().animate({"opacity": 1}, {"duration": duration, "easing": easing});
+                return;
+        }
+        $element.css("opacity", 1);
     };
 
     // Checks if the given value can be evaluated to boolean true
@@ -1017,9 +1075,7 @@ function onGoogleMapsAPIReady() {
             "zoom": 15,
             "language": "en"
         },
-        "loadedshowcallback": function($element) {
-            $element.stop().animate({"opacity": 1}, 500);
-        }
+        "loadedshowcallback": "linear,500"
     };
 
     // Parse and apply plugin from attributes & hidden integrators

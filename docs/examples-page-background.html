@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.0.2 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.0.3 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -26,12 +26,26 @@
         <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="./css/demo.css">
         <link rel="stylesheet" href="./prettify/prettify.css">
+
+        <!-- JS libraries and scripts -->
+        <script type="text/javascript" src="../plugin/requirements/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
+        <script type="text/javascript" src="./js/demo.js"></script>
+        <script type="text/javascript" src="../plugin/jquery.multibackground.js"></script>
+        <script type="text/javascript">
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+            ga('create', 'UA-43866318-8', 'auto');
+            ga('send', 'pageview');
+        </script>
     </head>
     <body
 		data-multibackground="debug"
 		data-multibackground-layer-0-type="image"
-		data-multibackground-layer-0-attachment="parallax"
-		data-multibackground-layer-0-offsetfactor="-1"
+		data-multibackground-layer-0-attachment="static"
 		data-multibackground-layer-0-url="./assets/birds.jpg">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
@@ -49,7 +63,27 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="./">Introduction</a></li>
-                        <li><a href="./documentation.html">Documentation</a></li>
+                        <li class="dropdown">
+                            <a href="./documentation.html" class="dropdown-toggle" data-toggle="dropdown">Documentation <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="./documentation.html#overview">Overview</a></li>
+                                <li><a href="./documentation.html#method1">JavaScript (<em>Method 1</em>)</a></li>
+                                <li><a href="./documentation.html#method2">HTML attributes (<em>Method 2</em>)</a></li>
+                                <li><a href="./documentation.html#options-object">The <em>options</em> object</a></li>
+                                <li><a href="./documentation.html#bg-solid">Background type: <em>Solid</em></a></li>
+                                <li><a href="./documentation.html#bg-gradient">Background type: <em>Gradient</em></a></li>
+                                <li><a href="./documentation.html#bg-movable">Background type: <em>Movable</em> (special)</a></li>
+                                <li><a href="./documentation.html#bg-image">Background type: <em>Image</em></a></li>
+                                <li><a href="./documentation.html#bg-pattern">Background type: <em>Pattern</em></a></li>
+                                <li><a href="./documentation.html#bg-video">Background type: <em>Video</em> (special)</a></li>
+                                <li><a href="./documentation.html#bg-html5-video">Background type: <em>HTML5 Video</em></a></li>
+                                <li><a href="./documentation.html#bg-youtube-video">Background type: <em>YouTube Video</em></a></li>
+                                <li><a href="./documentation.html#bg-vimeo-video">Background type: <em>Vimeo Video</em></a></li>
+                                <li><a href="./documentation.html#bg-iframe">Background type: <em>iFrame</em></a></li>
+                                <li><a href="./documentation.html#bg-gmap">Background type: <em>Google Map</em></a></li>
+                                <li><a href="./documentation.html#advanced">Advanced options</a></li>
+                            </ul>
+                        </li>
                         <li class="active dropdown">
                             <a href="examples-color.html" class="dropdown-toggle" data-toggle="dropdown">Examples <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
@@ -64,7 +98,7 @@
                                 <li><a href="./examples-gmap.html">Google Maps</a></li>
                             </ul>
                         </li>
-                        <li><a href="../plugin/jquery.multibackground.min.js" target="_blank">Download</a></li>
+                        <li><a href="../download.php" target="_blank">Download</a></li>
                         <li><a href="https://github.com/TonyBogdanov/MultiBackground" target="_blank">GitHub repository</a></li>
                     </ul>
                 </div>
@@ -74,15 +108,14 @@
         <div class="container" style="background:#fff;">
             <h1>Examples &ndash; Page background</h1>
             <hr />
-            <p>Yes, it is possible to create a background on the <code>body</code> tag. You will, however, have problems if you have something likes this in your CSS: <code>body > .class {...}</code>, because the plugin will wrap all of the body content in a div.</p>
-			<div class="row">
+            <div class="alert alert-danger"><strong>Note:</strong> Please keep in mind, that if you want to place a background for the entire page (the <code>body</code> tag), that might break your page in peculiar ways as the plugin will wrap all of the <code>body</code> content in two additional <code>div</code> elements. This can cause loss of styling for elements which' CSS selectors look like this: <code>body > .class {&hellip;}</code>, or even broken JavaScript functionality. Still, if you insist on using the body background, make sure you do all of your JavaScript files inclusions in the <code>head</code> section of your page instead of in the <code>body</code>, or they will be loaded twice.</div>
+            <div class="row">
 				<div class="col-lg-6 col-md-6 col-sm-6">
 					<h3>HTML only code:</h3>
 					<pre><code class="prettyprint lang-html linenums">&lt;body
     data-multibackground="debug"
     data-multibackground-layer-0-type="image"
-    data-multibackground-layer-0-attachment="parallax"
-    data-multibackground-layer-0-offsetfactor="-1"
+    data-multibackground-layer-0-attachment="static"
     data-multibackground-layer-0-url="./assets/birds.jpg"&gt;
         ...
 &lt;/body&gt;</code></pre>
@@ -92,35 +125,14 @@
 					<pre><code class="prettyprint lang-js linenums">$("body").multiBackground({"type": "image", "attachment": "offsetfactor": -1, "parallax", "url": "./assets/birds.jpg"});</code></pre>
 				</div>
 			</div>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
-            <p>Now, here is some content just so there is something to scroll and see the parallax effect.</p>
+            <p>Here is some sample content to make the page longer, so you can see the scroll effect :)</p>
+            <p>Here is some sample content to make the page longer, so you can see the scroll effect :)</p>
+            <p>Here is some sample content to make the page longer, so you can see the scroll effect :)</p>
+            <p>Here is some sample content to make the page longer, so you can see the scroll effect :)</p>
+            <p>Here is some sample content to make the page longer, so you can see the scroll effect :)</p>
             <br />
         </div>
         <br />
         <br />
-
-        <!-- JS libraries and scripts -->
-        <script type="text/javascript" src="../plugin/requirements/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="./prettify/run_prettify.js"></script>
-        <script type="text/javascript" src="./js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="./js/demo.js"></script>
-        <script type="text/javascript" src="../plugin/jquery.multibackground.min.js"></script>
-		
-		<script type="text/javascript">
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			ga('create', 'UA-43866318-8', 'auto');
-			ga('send', 'pageview');
-		</script>
     </body>
 </html>
