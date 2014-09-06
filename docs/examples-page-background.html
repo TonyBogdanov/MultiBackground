@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.0.3 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.0.4 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -45,7 +45,7 @@
     <body
 		data-multibackground="debug"
 		data-multibackground-layer-0-type="image"
-		data-multibackground-layer-0-attachment="static"
+		data-multibackground-layer-0-attachment="parallax"
 		data-multibackground-layer-0-url="./assets/birds.jpg">
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
@@ -115,14 +115,14 @@
 					<pre><code class="prettyprint lang-html linenums">&lt;body
     data-multibackground="debug"
     data-multibackground-layer-0-type="image"
-    data-multibackground-layer-0-attachment="static"
+    data-multibackground-layer-0-attachment="parallax"
     data-multibackground-layer-0-url="./assets/birds.jpg"&gt;
         ...
 &lt;/body&gt;</code></pre>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6">
 					<h3>JavaScript only code:</h3>
-					<pre><code class="prettyprint lang-js linenums">$("body").multiBackground({"type": "image", "attachment": "offsetfactor": -1, "parallax", "url": "./assets/birds.jpg"});</code></pre>
+					<pre><code class="prettyprint lang-js linenums">$("body").multiBackground({"type": "image", "attachment": "parallax", "url": "./assets/birds.jpg"});</code></pre>
 				</div>
 			</div>
             <p>Here is some sample content to make the page longer, so you can see the scroll effect :)</p>

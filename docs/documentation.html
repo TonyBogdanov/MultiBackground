@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.0.3 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.0.4 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -394,22 +394,15 @@ $(...).multiBackground({}, false);</code></pre>
                         This specifies the attachment of the element, e.g. how it will react to scrolling the window.<br />
                         <code>fixed</code> scrolls the element along with the container.<br />
                         <code>static</code> will resize the element to fit height of the browser window, not the container element. The element will stay static relative to the browser window and will not scroll along with the container element, as if you are looking through a hole/window.<br />
-                        <code>parallax</code> is similar to <code>fixed</code>, but offsets the element while you scroll according to the <code>offsetfactor</code>.
+                        <code>parallax</code> is similar to <code>fixed</code>, but offsets the element while you scroll according to the <code>parallaxspeed</code>.
                     </td>
                 </tr>
                 <tr>
-                    <td><code>offsetfactor</code> (available only for <code>"attachment": "parallax"</code>)</td>
+                    <td><code>parallaxspeed</code> (available only for <code>"attachment": "parallax"</code>)</td>
                     <td><code>float</code></td>
-                    <td>A float, ideally from -1.0 to 1.0</td>
+                    <td>A float number (positive or negative)</td>
                     <td>No</td>
-                    <td>This specifies the amount of vertical offset, that will be applied while scrolling. 0.0 means no offset, in this case, however, you should use <code>"attachment": "fixed"</code> for performance reasons. Negative value will result in opposite offset direction. Larger values will result in bigger offset distance. If you need to use values larger than 1.0 or -1.0 it is better to leave them at 1.0 and increase the <code>sizefactor</code> instead, otherwise upon scrolling the background element will offset too much and will not fill the entire visible part of the container element.</td>
-                </tr>
-                <tr>
-                    <td><code>sizefactor</code> (available only for <code>"attachment": "parallax"</code>)</td>
-                    <td><code>float</code></td>
-                    <td>A float, ideally larger than 1.0 (default is: 1.0)</td>
-                    <td>No</td>
-                    <td>This specifies the multiplication factor, that will be used to resize the element. 1.0 means no resizing, lower values will result in the background element not filling the entire visible part of the container element.</td>
+                    <td>This specifies the amount of vertical offset, that will be applied while scrolling. 0 means no offset, in this case, however, you should use <code>"attachment": "fixed"</code> for performance reasons. Negative value will result in opposite offset direction. Larger values will result in bigger offset distance.</td>
                 </tr>
                 </tbody>
             </table>

@@ -1,5 +1,5 @@
 /**
- * MultiBackground v1.0.3
+ * MultiBackground v1.0.4
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -28,6 +28,7 @@ function onGoogleMapsAPIReady() {
     // Accepts a single options object or an array of option objects (if one wants to create multiple background layers) as first argument.
     // Accepts a boolean, true (default) if the plugin should run in silent mode, e.g. all errors should be only logged in the console log, or false if all errors should be "alert"-ed to the browser, as second argument.
     // NOTE: This function set "position: relative" to the parent element(s), to which it is applied and will prepend all background layer elements before any content. Call {action: destroy} to restore the element.
+    // TODO Unit tests
     $.fn.multiBackground = function(options, silent) {
         try {
             return $(this).each(function() {
@@ -57,9 +58,6 @@ function onGoogleMapsAPIReady() {
 
                 // Extend default plugin options with passed
                 options = $.extend(true, {}, $.fn.multiBackground._defaultOptions, options);
-                if(!silent) {
-                    console.log("MBINFO: The plugin will be run for the following element and options", $this, options);
-                }
 
                 // Check action, prepare parent & create layer
                 if("string" !== typeof options["action"]) {
@@ -69,9 +67,9 @@ function onGoogleMapsAPIReady() {
                     // Prepend layer (put under all other)
                     case "prepend":
                         // Prepare parent
-                        if(true !== $this.data("multibackground-prepared")) {
-                            $this.data("multibackground-prepared", true);
-                            $this.data("multibackground-original-position", $this.css("position"));
+                        if(true !== $this.data("mb-prepared")) {
+                            $this.data("mb-prepared", true);
+                            $this.data("mb-original-position", $this.css("position"));
                             $this.css("position", "relative");
                         }
 
@@ -95,9 +93,9 @@ function onGoogleMapsAPIReady() {
                     // Append layer (put above all other)
                     case "append":
                         // Prepare parent
-                        if(true !== $this.data("multibackground-prepared")) {
-                            $this.data("multibackground-prepared", true);
-                            $this.data("multibackground-original-position", $this.css("position"));
+                        if(true !== $this.data("mb-prepared")) {
+                            $this.data("mb-prepared", true);
+                            $this.data("mb-original-position", $this.css("position"));
                             $this.css("position", "relative");
                         }
 
@@ -129,8 +127,8 @@ function onGoogleMapsAPIReady() {
                         if(0 === $layer.length) {
                             throw "There is no MultiBackground layer for index: " + index;
                         }
-                        if("function" === typeof $layer.data("multibackground-refresh")) {
-                            $(window).unbind("resize scroll", $layer.data("multibackground-refresh"));
+                        if("function" === typeof $layer.data("mb-refresh")) {
+                            $(window).unbind("resize scroll", $layer.data("mb-refresh"));
                         }
                         $layer.remove();
 
@@ -144,8 +142,8 @@ function onGoogleMapsAPIReady() {
                     case "destroy":
                         // Deregister all layer callbacks & remove layers
                         $this.find("> [data-multibackground-layer]").each(function() {
-                            if("function" === typeof $(this).data("multibackground-refresh")) {
-                                $(window).unbind("resize scroll", $(this).data("multibackground-refresh"));
+                            if("function" === typeof $(this).data("mb-refresh")) {
+                                $(window).unbind("resize scroll", $(this).data("mb-refresh"));
                             }
                             $(this).remove();
                         });
@@ -154,9 +152,9 @@ function onGoogleMapsAPIReady() {
                         $this.find("> [data-multibackground-content]").contents().unwrap();
 
                         // Restore parent
-                        $this.css("position", $this.data("multibackground-original-position"));
+                        $this.css("position", $this.data("mb-original-position"));
                         $this.removeAttr("data-multibackground-content");
-                        $this.data("multibackground-prepared", false);
+                        $this.data("mb-prepared", false);
                         break;
 
                     // Start video playback
@@ -169,7 +167,7 @@ function onGoogleMapsAPIReady() {
 
                         // Find layer by the given index and signal attached player
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                        $layer.data("multibackground-video-player").play();
+                        $layer.data("mb-video-player").play();
                         break;
 
                     // Pause video playback
@@ -182,7 +180,7 @@ function onGoogleMapsAPIReady() {
 
                         // Find layer by the given index and signal attached player
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                        $layer.data("multibackground-video-player").pause();
+                        $layer.data("mb-video-player").pause();
                         break;
 
                     // Stop video playback
@@ -195,7 +193,7 @@ function onGoogleMapsAPIReady() {
 
                         // Find layer by the given index and signal attached player
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                        $layer.data("multibackground-video-player").stop();
+                        $layer.data("mb-video-player").stop();
                         break;
 
                     // Mute video playback
@@ -208,7 +206,7 @@ function onGoogleMapsAPIReady() {
 
                         // Find layer by the given index and signal attached player
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                        $layer.data("multibackground-video-player").mute();
+                        $layer.data("mb-video-player").mute();
                         break;
 
                     // Unmute video playback
@@ -221,7 +219,7 @@ function onGoogleMapsAPIReady() {
 
                         // Find layer by the given index and signal attached player
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
-                        $layer.data("multibackground-video-player").unMute();
+                        $layer.data("mb-video-player").unMute();
                         break;
 
                     // Unsupported action
@@ -239,6 +237,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Initialize the plugin using values extracted from the HTML attributes of the element
+    // TODO Unit tests
     $.fn.multiBackgroundFromAttributes = function() {
         return $(this).each(function() {
             var $this   = $(this);
@@ -257,6 +256,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Initialize the plugin using values extracted from the HTML attributes of an integrator element
+    // TODO Unit tests
     $.fn.multiBackgroundFromIntegrator = function() {
         return $(this).each(function() {
             var $this   = $(this);
@@ -276,6 +276,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Creates a new layer element for the given options for use in the main plugin definition
+    // TODO Unit tests
     $.fn.multiBackground._createLayer = function(options) {
         // Check background type
         if("string" !== typeof options["type"]) {
@@ -322,6 +323,7 @@ function onGoogleMapsAPIReady() {
     // Plugin definition for type: Solid
     // Available options params and structures are as follows:
     // "color": A parseable string color representation
+    // TODO Unit tests
     $.fn.multiBackground._createSolid = function(options) {
         // Check and create a color
         if("string" !== typeof options["color"]) {
@@ -342,6 +344,7 @@ function onGoogleMapsAPIReady() {
     // "points": An array of point objects, each of which have the following structure:
     // "position": A float from 0 to 1, which defines the position of the point (will be converted to %)
     // "color": A MultiBackgroundColor object
+    // TODO Unit tests
     $.fn.multiBackground._createGradient = function(options) {
         // Check direction
         if("string" !== typeof options["direction"]) {
@@ -437,53 +440,54 @@ function onGoogleMapsAPIReady() {
     // Plugin definition for type: Movable
     // Available options params and structures are as follows:
     // "attachment": A string value to specify attachment type, possible values are: "fixed", "static", "parallax"
-    // "sizefactor": A float value to specify a size multiplier, if omitted, the default is used: 1
-    // "offsetfactor" (only for "attachment": "parallax"): A float value to specify parallax offset factor (ideally from -1 to 1), 0 means no movement (if 0 works for you, do not use parallax attachment!), if omitted, the default is used: 1
+    // "parallaxspeed" (only for "attachment": "parallax"): A float value to specify parallax speed (negative values will reverse the parallax direction) - 0 means no movement (if 0 works for you, do not use parallax attachment, use fixed!), if omitted, the default is used: 1
+    // TODO Unit tests
     $.fn.multiBackground._createMovable = function(options, innerGenerator) {
         // Check attachment & offsets
-        var offsetfactor, sizefactor;
         if("string" !== typeof options["attachment"]) {
             throw "Plugin options must specify an \"attachment\" param with a value of type \"string\"";
         }
-        switch(options["attachment"]) {
-            case "fixed":
-            case "static":
-            case "parallax":
-                offsetfactor        = parseFloat(options["offsetfactor"]);
-                if(isNaN(offsetfactor)) {
-                    offsetfactor    = 1;
-                }
-                sizefactor          = parseFloat(options["sizefactor"]);
-                if(isNaN(sizefactor)) {
-                    sizefactor      = 1;
-                }
-                break;
-            default:
-                throw "Unsupported attachment: \"" + options["attachment"] + "\"";
-        }
 
-        // Create and prepare element
+        // Prepare initial requirements
         var $element = $("<div/>");
         var $window  = $(window);
         $element.css({"width": "100%", "height": "100%", "overflow": "hidden", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none"});
 
-        // Attach background refresh events
-        $element.data("multibackground-refresh", function() {
-            if(true !== $element.data("multibackground-ready")) {
-                return;
-            }
-            var $inner = $element.find("> [data-multibackground-inner]");
-            var offset = ($window.scrollTop() + $window.height() - $element.offset().top) / ($window.height() + $element.height());
-            var bounds = $.fn.multiBackground._calculateBounds($element.width(), $element.height(), $element.data("multibackground-width"), $element.data("multibackground-height"), $element.offset().top, 2 * Math.max(0, Math.min(1, offset)) - 1, offsetfactor, sizefactor, "fixed" === options["attachment"], "static" === options["attachment"]);
-            $inner.css({"width": Math.round(bounds["width"]) + "px", "height": Math.round(bounds["height"]) + "px", "left": Math.round(bounds["left"]) + "px", "top": Math.round(bounds["top"]) + "px", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none"});
-        });
-        $element.bind("multibackground-refresh", $element.data("multibackground-refresh"));
-
-        // Refresh the background on window resize, scroll (except for "fixed" attachment)
-        if("fixed" === options["attachment"]) {
-            $window.bind("resize", $element.data("multibackground-refresh"));
-        } else {
-            $window.bind("resize scroll", $element.data("multibackground-refresh"));
+        // Attachment based resizers
+        switch(options["attachment"]) {
+            case "fixed":
+                var refresh = function() {
+                    $.fn.multiBackground._refreshFixed($element);
+                    return true;
+                };
+                $element.data("mb-refresh", refresh);
+                $element.bind("mb-refresh", refresh);
+                $window.bind("resize", refresh);
+                break;
+            case "static":
+                var refresh = function() {
+                    $.fn.multiBackground._refreshStatic($element);
+                    return true;
+                };
+                $element.data("mb-refresh", refresh);
+                $element.bind("mb-refresh", refresh);
+                $window.bind("resize scroll", refresh);
+                break;
+            case "parallax":
+                var parallaxSpeed   = parseFloat(options["parallaxspeed"]);
+                if(isNaN(parallaxSpeed)) {
+                    parallaxSpeed   = 1;
+                }
+                var refresh = function() {
+                    $.fn.multiBackground._refreshParallax($element, parallaxSpeed);
+                    return true;
+                };
+                $element.data("mb-refresh", refresh);
+                $element.bind("mb-refresh", refresh);
+                $window.bind("resize scroll", refresh);
+                break;
+            default:
+                throw "Unsupported attachment: \"" + options["attachment"] + "\"";
         }
 
         // Return element
@@ -493,6 +497,7 @@ function onGoogleMapsAPIReady() {
     // Plugin definition for type: Image
     // Available options params and structures are as follows:
     // "url": A string value to specify source image URL
+    // TODO Unit tests
     $.fn.multiBackground._createImage = function($element, options) {
         // Check URL
         if("string" !== typeof options["url"]) {
@@ -508,11 +513,11 @@ function onGoogleMapsAPIReady() {
             }
             var $image = $("<img src=\"" + options["url"] + "\" alt=\"\" data-multibackground-inner/>");
             $image.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0});
-            $element.data("multibackground-ready", true);
-            $element.data("multibackground-width", image.width);
-            $element.data("multibackground-height", image.height);
+            $element.data("mb-ready", true);
+            $element.data("mb-width", image.width);
+            $element.data("mb-height", image.height);
             $element.append($image);
-            $element.triggerHandler("multibackground-refresh");
+            $element.triggerHandler("mb-refresh");
             $.fn.multiBackground._lsc(options["loadedshowcallback"], $image);
         });
         image.src = options["url"];
@@ -522,6 +527,7 @@ function onGoogleMapsAPIReady() {
     // Plugin definition for type: Pattern
     // Available options params and structures are as follows:
     // "url": A string value to specify source image URL
+    // TODO Unit tests
     $.fn.multiBackground._createPattern = function($element, options) {
         // Check URL
         if("string" !== typeof options["url"]) {
@@ -537,11 +543,11 @@ function onGoogleMapsAPIReady() {
             }
             var $pattern = $("<div style=\"background:url(" + options["url"] + ")\" data-multibackground-inner/>");
             $pattern.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0});
-            $element.data("multibackground-ready", true);
-            $element.data("multibackground-width", image.width);
-            $element.data("multibackground-height", image.height);
+            $element.data("mb-ready", true);
+            $element.data("mb-width", image.width);
+            $element.data("mb-height", image.height);
             $element.append($pattern);
-            $element.triggerHandler("multibackground-refresh");
+            $element.triggerHandler("mb-refresh");
             $.fn.multiBackground._lsc(options["loadedshowcallback"], $pattern);
         });
         image.src = options["url"];
@@ -552,6 +558,7 @@ function onGoogleMapsAPIReady() {
     // Available options params and structures are as follows:
     // "url": An object value to specify source video URLs, keys can be "mp4", "ogg" or "webm", at least one should be present
     // "video": An object value to specify video specific options
+    // TODO Unit tests
     $.fn.multiBackground._createVideo = function($element, options) {
         // Check URL
         if("object" !== typeof options["url"]) {
@@ -581,10 +588,10 @@ function onGoogleMapsAPIReady() {
         // Load video & trigger background refresh once metadata has been loaded
         $video.bind("loadedmetadata canplay", function() {
             $video.unbind("loadedmetadata canplay");
-            $element.data("multibackground-ready", true);
-            $element.data("multibackground-width", this.videoWidth);
-            $element.data("multibackground-height", this.videoHeight);
-            $element.triggerHandler("multibackground-refresh");
+            $element.data("mb-ready", true);
+            $element.data("mb-width", this.videoWidth);
+            $element.data("mb-height", this.videoHeight);
+            $element.triggerHandler("mb-refresh");
             $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
             if(loop) {
                 $video.get(0).loop  = true;
@@ -600,7 +607,7 @@ function onGoogleMapsAPIReady() {
         // Prepare video & attach to element
         $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
         $video.append(options["video"]["nohtml5support"]);
-        $element.data("multibackground-video-player", new MultiBackgroundHTML5PlayerWrapper($video.get(0)));
+        $element.data("mb-video-player", new MultiBackgroundHTML5PlayerWrapper($video.get(0)));
         $element.append($video);
         return $element;
     };
@@ -609,6 +616,7 @@ function onGoogleMapsAPIReady() {
     // Available options params and structures are as follows:
     // "id": A string value to specify source YouTube video ID
     // "video": An object value to specify video specific options
+    // TODO Unit tests
     $.fn.multiBackground._createYouTube = function($element, options) {
         // Check video id
         if("string" !== typeof options["id"]) {
@@ -625,7 +633,7 @@ function onGoogleMapsAPIReady() {
             $("script").first().before($script);
         }
         var apiLoaded = function() {
-            $element.data("multibackground-video-player", new MultiBackgroundYouTubePlayerWrapper(new YT.Player(id, {
+            $element.data("mb-video-player", new MultiBackgroundYouTubePlayerWrapper(new YT.Player(id, {
                 "width": options["video"]["width"],
                 "height": options["video"]["height"],
                 "videoId": options["id"],
@@ -637,9 +645,9 @@ function onGoogleMapsAPIReady() {
                     "onReady": function(e) {
                         var $video = $("#" + id);
                         $video.attr("data-multibackground-inner", "")
-                        $element.data("multibackground-ready", true);
-                        $element.data("multibackground-width", options["video"]["width"]);
-                        $element.data("multibackground-height", options["video"]["height"]);
+                        $element.data("mb-ready", true);
+                        $element.data("mb-width", options["video"]["width"]);
+                        $element.data("mb-height", options["video"]["height"]);
                         if($.fn.multiBackground._isTrue(options["video"]["autoplay"])) {
                             e.target.playVideo()
                         } else {
@@ -650,7 +658,7 @@ function onGoogleMapsAPIReady() {
                         } else {
                             e.target.unMute();
                         }
-                        $element.triggerHandler("multibackground-refresh");
+                        $element.triggerHandler("mb-refresh");
                         $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
                     },
                     "onStateChange": function(e) {
@@ -682,6 +690,7 @@ function onGoogleMapsAPIReady() {
     // Available options params and structures are as follows:
     // "id": A string value to specify source Vimeo video ID
     // "video": An object value to specify video specific options
+    // TODO Unit tests
     $.fn.multiBackground._createVimeo = function($element, options) {
         // Check video id
         if("string" !== typeof options["id"]) {
@@ -694,12 +703,12 @@ function onGoogleMapsAPIReady() {
         // Attach listeners
         var onMessageReceived = function(e) {
             var data = JSON.parse(e.data);
-            if("ready" === data.event && true !== $element.data("multibackground-ready")) {
+            if("ready" === data.event && true !== $element.data("mb-ready")) {
                 $video.get(0).contentWindow.postMessage({"method": "setVolume", "value": $.fn.multiBackground._isTrue(options["video"]["muted"]) ? 0 : 1}, "*");
-                $element.data("multibackground-ready", true);
-                $element.data("multibackground-width", options["video"]["width"]);
-                $element.data("multibackground-height", options["video"]["height"]);
-                $element.triggerHandler("multibackground-refresh");
+                $element.data("mb-ready", true);
+                $element.data("mb-width", options["video"]["width"]);
+                $element.data("mb-height", options["video"]["height"]);
+                $element.triggerHandler("mb-refresh");
                 $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
             }
         };
@@ -712,13 +721,14 @@ function onGoogleMapsAPIReady() {
         // Prepare video & attach to element
         $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
         $element.append($video);
-        $element.data("multibackground-video-player", new MultiBackgroundVimeoPlayerWrapper($video.get(0)));
+        $element.data("mb-video-player", new MultiBackgroundVimeoPlayerWrapper($video.get(0)));
         return $element;
     };
 
     // Plugin definition for type: iframe
     // Available options params and structures are as follows:
     // "url": A string value to specify source iframe URL
+    // TODO Unit tests
     $.fn.multiBackground._createIFrame = function(options) {
         // Check URL
         if("string" !== typeof options["url"]) {
@@ -741,6 +751,7 @@ function onGoogleMapsAPIReady() {
     // "longitude": A float value to specify location longitude
     // "gmap": An object value to specify google map specific options, which (if omitted) use the default values, which are:
     // "zoom": An integer value to specify map zoom
+    // TODO Unit tests
     $.fn.multiBackground._createGMap = function(options) {
         // Check API key
         if("string" !== typeof options["apikey"]) {
@@ -800,26 +811,155 @@ function onGoogleMapsAPIReady() {
         return $element;
     };
 
-    // Calculates new bounds to fit element inside a parent box (touch from inside)
-    $.fn.multiBackground._calculateBounds = function(boxWidth, boxHeight, elementWidth, elementHeight, elementOffsetTop, offset, offsetfactor, sizefactor, fixedAttachment, staticAttachment) {
-        var $window = $(window);
-        var width   = boxWidth;
-        var height  = width / (elementWidth / elementHeight);
-        if(height < boxHeight) {
-            height  = boxHeight;
-            width   = height * (elementWidth / elementHeight);
+    // Refresh position and size for all attachment types
+    // TODO Unit tests
+    $.fn.multiBackground._refreshAttachment = function($element, isFixed, isStatic, isParallax, parallaxSpeed) {
+        if(true !== $element.data("mb-ready") || !$.fn.multiBackground._isVisible($element)) {
+            return;
         }
-        if(staticAttachment && height * sizefactor < $(window).height()) {
-            sizefactor = $window.height() / height;
+
+        var $window         = $(window),
+            windowWidth     = $window.width(),
+            windowHeight    = $window.height(),
+            viewportWidth   = $element.width(),
+            viewportHeight  = $element.height(),
+            elementRatio    = $element.data("mb-width") / $element.data("mb-height"),
+            elementWidth    = viewportWidth,
+            elementHeight   = Math.round(elementWidth / elementRatio);
+
+        if(isParallax) {
+            if(elementHeight < viewportHeight) {
+                elementHeight   = viewportHeight;
+                elementWidth    = elementHeight * elementRatio;
+            }
+            elementHeight       = Math.round(Math.max(elementHeight, viewportHeight * (1 + Math.abs(parallaxSpeed))));
+            elementWidth        = Math.round(elementHeight * elementRatio);
+        } else {
+            if(elementHeight < windowHeight) {
+                elementHeight   = windowHeight;
+                elementWidth    = Math.round(elementHeight * elementRatio);
+            }
         }
-        width       *= sizefactor;
-        height      *= sizefactor;
-        var left    = (boxWidth - width) / 2;
-        var top     = staticAttachment ? $window.scrollTop() - elementOffsetTop - height / 2 + $window.height() / 2 : (fixedAttachment ? (boxHeight - height) / 2 : ((boxHeight - height) / 2) * (1 + offset * offsetfactor));
-        return {"width": width, "height": height, "left": left, "top": top};
+
+        var positionLeft    = Math.round((viewportWidth - elementWidth) / 2),
+            positionTop     = 0;
+
+        if(isParallax) {
+            var offset      = $element.offset().top,
+                min         = offset - $window.height(),
+                max         = offset + viewportHeight,
+                current     = Math.min(1, Math.max(0, ($window.scrollTop() - min) / (max - min)));
+            positionTop     = Math.round((viewportHeight - elementHeight) * (0 > parallaxSpeed ? current : 1 - current));
+        } else if(isStatic) {
+            positionTop     = Math.round((windowHeight - elementHeight) / 2) - $element.offset().top + $window.scrollTop();
+        } else {
+            positionTop     = Math.round((windowHeight - elementHeight) / 2) - $element.offset().top;
+        }
+
+        $element.find("> [data-multibackground-inner]").css({"width": elementWidth + "px", "height": elementHeight + "px", "left": positionLeft + "px", "top": positionTop + "px"});
+    };
+
+    // Refresh position and size for attachment type: fixed
+    // TODO Unit tests
+    $.fn.multiBackground._refreshFixed = function($element) {
+        $.fn.multiBackground._refreshAttachment($element, true, false, false, 0);
+    };
+
+    // Refresh position and size for attachment type: static
+    // TODO Unit tests
+    $.fn.multiBackground._refreshStatic = function($element) {
+        $.fn.multiBackground._refreshAttachment($element, false, true, false, 0);
+    };
+
+    // Refresh position and size for attachment type: parallax
+    // TODO Unit tests
+    $.fn.multiBackground._refreshParallax = function($element, parallaxSpeed) {
+        $.fn.multiBackground._refreshAttachment($element, false, false, true, parallaxSpeed);
+    };
+
+    // Determines if the given element is currently visible
+    // Visible means, that all of the following conditions must be met:
+    // 1. It should not be :hidden or opacity: 0.
+    // 2. It should not be completely outside of the viewport, where the viewport is defined by the window, or any parent element with overflow: hidden.
+    // 3. There should not be any visible elements completely overlaying the current one (as this is extremely heavy to calculate, it is only checked if strict is set to true).
+    $.fn.multiBackground._isVisible = function($element, strict) {
+        var overlap = function($element, $canvas, contained) {
+            var ax1 = 0,
+                ax2 = 0,
+                ay1 = 0,
+                ay2 = 0,
+                bx1 = 0,
+                bx2 = 0,
+                by1 = 0,
+                by2 = 0;
+            if("undefined" !== typeof $element.offset()) {
+                ax1 = $element.offset().left;
+                ay1 = $element.offset().top;
+            }
+            if($canvas.get(0) === window) {
+                bx1 = $canvas.scrollLeft();
+                by1 = $canvas.scrollTop();
+            } else if("undefined" !== typeof $canvas.offset()) {
+                bx1 = $canvas.offset().left;
+                by1 = $canvas.offset().top;
+            }
+            ax2 = ax1 + $element.width();
+            ay2 = ay1 + $element.height();
+            bx2 = bx1 + $canvas.width();
+            by2 = by1 + $canvas.height();
+            if(true === contained) {
+                return (ax1 >= bx1 && ax2 <= bx2 && ay1 >= by1 && by2 <= by2);
+            } else {
+                return !(ax1 >= bx2 || ax2 <= bx1 || ay1 >= by2 || ay2 <= by1);
+            }
+        };
+
+        var visible = function($element) {
+            if('none' === $element.css('display')) {
+                return false;
+            }
+            if(0 === parseInt($element.css('opacity'))) {
+                return false;
+            }
+            var canvas  = [$(window)];
+            var $parent = $element.parent();
+            while(0 !== $parent.length && $parent.get(0) !== document) {
+                if('hidden' === $parent.css('overflow')) {
+                    canvas.push($parent);
+                }
+                $parent = $parent.parent();
+            }
+            for(var i = 0; i < canvas.length; i++) {
+                if(!overlap($element, canvas[i], false)) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+        if(!visible($element)) {
+            return false;
+        }
+
+//        if(true === strict) {
+//            var array   = $element.parent().find('*').toArray(),
+//                element = $element.get(0),
+//                idx     = array.indexOf(element),
+//                $i;
+//            for(var i = 0; i < array.length; i++) {
+//                if(idx < i && visible($i = $(array[i]))) {
+//                    if(overlap($element, $i, true)) {
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+
+        return true;
     };
 
     // Parses the given HTML attribute name substring and value map to a structured tree object
+    // TODO Unit tests
     $.fn.multiBackground._parseMap = function(map) {
         var tree = {};
         for(var key in map) {
@@ -836,6 +976,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Extracts a structured options object from the HTML attributes of the given element
+    // TODO Unit tests
     $.fn.multiBackground._extractOptions = function($element) {
         var regex   = new RegExp("^data\\-multibackground\\-layer\\-(.*)$");
         var map     = {};
@@ -855,6 +996,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Parses the given object (recursively) and converts objects into arrays where possible
+    // TODO Unit tests
     $.fn.multiBackground._parseObjectIntoArray = function(object) {
         if("object" !== typeof object) {
             return object;
@@ -875,6 +1017,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // loadedshowcallback animator
+    // TODO Unit tests
     $.fn.multiBackground._lsc = function(animator, $element) {
         switch(typeof animator) {
             case "function":
@@ -905,11 +1048,13 @@ function onGoogleMapsAPIReady() {
     };
 
     // Checks if the given value can be evaluated to boolean true
+    // TODO Unit tests
     $.fn.multiBackground._isTrue = function(value) {
         return true === value || "true" === value || 1 === parseInt(value);
     };
 
     // Video player controls wrapper for HTML5 videos
+    // TODO Unit tests
     function MultiBackgroundHTML5PlayerWrapper(element) {
         MultiBackgroundHTML5PlayerWrapper.prototype.element = element;
     }
@@ -934,6 +1079,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Video player controls wrapper for YouTube videos
+    // TODO Unit tests
     function MultiBackgroundYouTubePlayerWrapper(player) {
         MultiBackgroundYouTubePlayerWrapper.prototype.player = player;
     }
@@ -957,6 +1103,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Video player controls wrapper for Vimeo videos
+    // TODO Unit tests
     function MultiBackgroundVimeoPlayerWrapper(element) {
         this.element = element;
     }
@@ -978,6 +1125,7 @@ function onGoogleMapsAPIReady() {
     };
 
     // Parses a string color representation into a usable color object
+    // TODO Unit tests
     function MultiBackgroundColor(value) {
         // Value should be a parse-able string
         if("string" !== typeof value) {
