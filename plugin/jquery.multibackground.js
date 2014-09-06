@@ -814,7 +814,7 @@ function onGoogleMapsAPIReady() {
     // Refresh position and size for all attachment types
     // TODO Unit tests
     $.fn.multiBackground._refreshAttachment = function($element, isFixed, isStatic, isParallax, parallaxSpeed) {
-        if(true !== $element.data("mb-ready") || !$.fn.multiBackground._isVisible($element)) {
+        if(true !== $element.data("mb-ready") || !$.fn.multiBackground._isVisible($element, true)) {
             return;
         }
 
@@ -918,7 +918,7 @@ function onGoogleMapsAPIReady() {
             if('none' === $element.css('display')) {
                 return false;
             }
-            if(0 === parseInt($element.css('opacity'))) {
+            if(1 > parseFloat($element.css('opacity'))) {
                 return false;
             }
             var canvas  = [$(window)];
@@ -941,19 +941,16 @@ function onGoogleMapsAPIReady() {
             return false;
         }
 
-//        if(true === strict) {
-//            var array   = $element.parent().find('*').toArray(),
-//                element = $element.get(0),
-//                idx     = array.indexOf(element),
-//                $i;
-//            for(var i = 0; i < array.length; i++) {
-//                if(idx < i && visible($i = $(array[i]))) {
-//                    if(overlap($element, $i, true)) {
-//                        return false;
-//                    }
-//                }
-//            }
-//        }
+        if(true === strict) {
+            var $i,
+                $array  = $element.parent().find('*');
+            for(var i = $array.index($element) + $element.find('*').length + 1; i < $array.length; i++) {
+                $i      = $array.eq(i);
+                if(!$i.is('[data-multibackground-content]') && visible($i) && overlap($element, $i, true)) {
+                    return false;
+                }
+            }
+        }
 
         return true;
     };
