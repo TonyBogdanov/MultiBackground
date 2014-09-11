@@ -75,9 +75,9 @@
                                 <li><a href="./examples-pattern.html">Patterns</a></li>
                                 <li><a href="./examples-video.html">HTML5 videos</a></li>
                                 <li><a href="./examples-youtube.html">YouTube videos</a></li>
-                                <li class="active"><a href="./examples-vimeo.html">Vimeo videos</a></li>
+                                <li><a href="./examples-vimeo.html">Vimeo videos</a></li>
                                 <li><a href="./examples-iframe.html">iFrames</a></li>
-                                <li><a href="./examples-gmap.html">Google Maps</a></li>
+                                <li class="active"><a href="./examples-gmap.html">Google Maps</a></li>
                                 <li><a href="./examples-slideshow.html">Slideshow</a></li>
                             </ul>
                         </li>
@@ -90,18 +90,67 @@
         </nav>
 
         <div class="container">
-            <h1>Examples &ndash; Vimeo videos</h1>
+            <h1>Examples &ndash; Slideshow</h1>
             <hr />
-            <div class="alert alert-danger"><strong>Note:</strong> It is currently not possible to have more than one Vimeo video on a single page due to Vimeo Player rules, that prevent autoplaying of multiple videos at the same time. Attempting to do this will result in "weird" player behavior.</div>
+            <p>Use the slideshow technique to turn any MultiBackground element into a slider, and it's layers into slides.</p>
+            <br />
+
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-3 col-md-offset-3 col-sm-offset-3">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div
                             class="demo-multibackground"
                             data-multibackground="debug"
-                            data-multibackground-layer-0-type="vimeo"
+                            data-multibackground-layer-0-type="image"
                             data-multibackground-layer-0-attachment="fixed"
-                            data-multibackground-layer-0-id="103344490">
-                        Fixed Vimeo video
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-slideshow-loop="forward"
+                            data-multibackground-layer-1-type="image"
+                            data-multibackground-layer-1-attachment="fixed"
+                            data-multibackground-layer-1-url="./assets/rose.jpg"
+                            data-multibackground-layer-1-slideshow-loop="forward"
+                            data-multibackground-layer-2-type="image"
+                            data-multibackground-layer-2-attachment="fixed"
+                            data-multibackground-layer-2-url="./assets/sunset.jpg"
+                            data-multibackground-layer-2-slideshow-loop="forward">
+                        Forward slideshow
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div
+                            class="demo-multibackground"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-slideshow-loop="backward"
+                            data-multibackground-layer-1-type="image"
+                            data-multibackground-layer-1-attachment="fixed"
+                            data-multibackground-layer-1-url="./assets/rose.jpg"
+                            data-multibackground-layer-1-slideshow-loop="backward"
+                            data-multibackground-layer-2-type="image"
+                            data-multibackground-layer-2-attachment="fixed"
+                            data-multibackground-layer-2-url="./assets/sunset.jpg"
+                            data-multibackground-layer-2-slideshow-loop="backward">
+                        Backward slideshow
+                    </div>
+                </div>
+                <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+                    <div
+                            class="demo-multibackground"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-slideshow-loop="random"
+                            data-multibackground-layer-1-type="image"
+                            data-multibackground-layer-1-attachment="fixed"
+                            data-multibackground-layer-1-url="./assets/rose.jpg"
+                            data-multibackground-layer-1-slideshow-loop="random"
+                            data-multibackground-layer-2-type="image"
+                            data-multibackground-layer-2-attachment="fixed"
+                            data-multibackground-layer-2-url="./assets/sunset.jpg"
+                            data-multibackground-layer-2-slideshow-loop="random">
+                        Random slideshow
                     </div>
                 </div>
             </div>

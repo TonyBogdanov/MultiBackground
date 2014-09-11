@@ -16,6 +16,7 @@
         assert.strictEqual($.fn.multiBackground._isTrue(12), false, "_isTrue must return false for 12");
         assert.strictEqual($.fn.multiBackground._isTrue("0"), false, "_isTrue must return false for \"0\"");
         assert.strictEqual($.fn.multiBackground._isTrue("12"), false, "_isTrue must return false for \"12\"");
+        $.testComplete();
     });
 
 })(jQuery);

@@ -1,5 +1,5 @@
 /**
- * MultiBackground v1.0.4
+ * MultiBackground v1.1
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -88,6 +88,14 @@ function onGoogleMapsAPIReady() {
                                 $(this).attr("data-multibackground-layer", i + 1);
                             });
                         }
+
+                        // Add layer to slideshow
+                        if("undefined" !== typeof options["slideshow"]) {
+                            if("undefined" === typeof $this.data("mb-slideshow")) {
+                                $this.data("mb-slideshow", new MultiBackgroundSlideshow($this));
+                            }
+                            $this.data("mb-slideshow").prepend($element, options);
+                        }
                         break;
 
                     // Append layer (put above all other)
@@ -112,6 +120,14 @@ function onGoogleMapsAPIReady() {
                             $element.attr('data-multibackground-layer', $layers.length);
                             $layers.last().after($element);
                         }
+
+                        // Add layer to slideshow
+                        if("undefined" !== typeof options["slideshow"]) {
+                            if("undefined" === typeof $this.data("mb-slideshow")) {
+                                $this.data("mb-slideshow", new MultiBackgroundSlideshow($this));
+                            }
+                            $this.data("mb-slideshow").append($element, options);
+                        }
                         break;
 
                     // Remove layer by index
@@ -122,13 +138,16 @@ function onGoogleMapsAPIReady() {
                             throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
                         }
 
-                        // Find layer by the given index, deregister callbacks and remove it
+                        // Find layer by the given index, deregister callbacks, remove from slideshow and remove it from DOM
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
                         if(0 === $layer.length) {
                             throw "There is no MultiBackground layer for index: " + index;
                         }
                         if("function" === typeof $layer.data("mb-refresh")) {
                             $(window).unbind("resize scroll", $layer.data("mb-refresh"));
+                        }
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").remove($layer);
                         }
                         $layer.remove();
 
@@ -148,13 +167,18 @@ function onGoogleMapsAPIReady() {
                             $(this).remove();
                         });
 
+                        // Unregister slideshow
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").destroy();
+                        }
+
                         // Unwrap content
                         $this.find("> [data-multibackground-content]").contents().unwrap();
 
                         // Restore parent
                         $this.css("position", $this.data("mb-original-position"));
                         $this.removeAttr("data-multibackground-content");
-                        $this.data("mb-prepared", false);
+                        $this.removeData("mb-prepared");
                         break;
 
                     // Start video playback
@@ -220,6 +244,34 @@ function onGoogleMapsAPIReady() {
                         // Find layer by the given index and signal attached player
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
                         $layer.data("mb-video-player").unMute();
+                        break;
+
+                    // Start slideshow playback
+                    case "playSlideshow":
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").play();
+                        }
+                        break;
+
+                    // Pause slideshow playback
+                    case "pauseSlideshow":
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").pause();
+                        }
+                        break;
+
+                    // Stop slideshow playback
+                    case "stopSlideshow":
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").stop();
+                        }
+                        break;
+
+                    // Destroy slideshow
+                    case "destroySlideshow":
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").destroy($this);
+                        }
                         break;
 
                     // Unsupported action
@@ -334,7 +386,9 @@ function onGoogleMapsAPIReady() {
         // Create solid color element
         var $element = $('<div/>');
         $element.css({"width": "100%", "height": "100%", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none", "opacity": 0, "background": color.getRGBA()});
-        $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
+        if("undefined" === typeof options["slideshow"]) {
+            $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
+        }
         return $element;
     };
 
@@ -433,7 +487,9 @@ function onGoogleMapsAPIReady() {
         // Create element and apply background gradient CSS
         var $element = $("<div/>");
         $element.attr("style", "width:100%;height:100%;min-width:0;max-width:none;min-height:0;max-height:none;opacity:0;background:" + colors[0].getRGB() + ";background:-moz-" + gType + "-gradient(" + gMoz + "," + stopsSimple.join(",") + ");background:-webkit-gradient(" + gWebkit + "," + stopsFull.join(",") + ");background:-webkit-" + gType + "-gradient(" + gWebkitR + "," + stopsSimple.join(",") + ");background:-o-" + gType + "-gradient(" + gO + "," + stopsSimple.join(",") + ");background:-ms-" + gType + "-gradient(" + gMs + "," + stopsSimple.join(",") + ");background:" + gType + "-gradient(" + gW3 + "," + stopsSimple.join(",") + ");background:progid:DXImageTransform.Microsoft.gradient(startColorstr='" + colors[0].getHEX() + "',endColorstr='" + colors[colors.length - 1].getHEX() + "',GradientType=" + gIE + ")" + ";");
-        $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
+        if("undefined" === typeof options["slideshow"]) {
+            $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
+        }
         return $element;
     };
 
@@ -456,8 +512,8 @@ function onGoogleMapsAPIReady() {
         // Attachment based resizers
         switch(options["attachment"]) {
             case "fixed":
-                var refresh = function() {
-                    $.fn.multiBackground._refreshFixed($element);
+                var refresh = function(forceVisible) {
+                    $.fn.multiBackground._refreshAttachment($element, true, false, false, 0, forceVisible);
                     return true;
                 };
                 $element.data("mb-refresh", refresh);
@@ -465,8 +521,8 @@ function onGoogleMapsAPIReady() {
                 $window.bind("resize", refresh);
                 break;
             case "static":
-                var refresh = function() {
-                    $.fn.multiBackground._refreshStatic($element);
+                var refresh = function(forceVisible) {
+                    $.fn.multiBackground._refreshAttachment($element, false, true, false, 0, forceVisible);
                     return true;
                 };
                 $element.data("mb-refresh", refresh);
@@ -478,8 +534,8 @@ function onGoogleMapsAPIReady() {
                 if(isNaN(parallaxSpeed)) {
                     parallaxSpeed   = 1;
                 }
-                var refresh = function() {
-                    $.fn.multiBackground._refreshParallax($element, parallaxSpeed);
+                var refresh = function(forceVisible) {
+                    $.fn.multiBackground._refreshAttachment($element, false, false, true, parallaxSpeed, forceVisible);
                     return true;
                 };
                 $element.data("mb-refresh", refresh);
@@ -518,7 +574,11 @@ function onGoogleMapsAPIReady() {
             $element.data("mb-height", image.height);
             $element.append($image);
             $element.triggerHandler("mb-refresh");
-            $.fn.multiBackground._lsc(options["loadedshowcallback"], $image);
+            if("undefined" === typeof options["slideshow"]) {
+                $.fn.multiBackground._transite(options["transitionloaded"], $image, 1);
+            } else {
+                $image.css("opacity", 1);
+            }
         });
         image.src = options["url"];
         return $element;
@@ -548,7 +608,11 @@ function onGoogleMapsAPIReady() {
             $element.data("mb-height", image.height);
             $element.append($pattern);
             $element.triggerHandler("mb-refresh");
-            $.fn.multiBackground._lsc(options["loadedshowcallback"], $pattern);
+            if("undefined" === typeof options["slideshow"]) {
+                $.fn.multiBackground._transite(options["transitionloaded"], $pattern, 1);
+            } else {
+                $pattern.css("opacity", 1);
+            }
         });
         image.src = options["url"];
         return $element;
@@ -592,7 +656,11 @@ function onGoogleMapsAPIReady() {
             $element.data("mb-width", this.videoWidth);
             $element.data("mb-height", this.videoHeight);
             $element.triggerHandler("mb-refresh");
-            $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
+            if("undefined" === typeof options["slideshow"]) {
+                $.fn.multiBackground._transite(options["transitionloaded"], $video, 1);
+            } else {
+                $video.css("opacity", 1);
+            }
             if(loop) {
                 $video.get(0).loop  = true;
             }
@@ -659,7 +727,11 @@ function onGoogleMapsAPIReady() {
                             e.target.unMute();
                         }
                         $element.triggerHandler("mb-refresh");
-                        $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
+                        if("undefined" === typeof options["slideshow"]) {
+                            $.fn.multiBackground._transite(options["transitionloaded"], $video, 1);
+                        } else {
+                            $video.css("opacity", 1);
+                        }
                     },
                     "onStateChange": function(e) {
                         if(e.data === YT.PlayerState.ENDED && $.fn.multiBackground._isTrue(options["video"]["loop"])) {
@@ -709,7 +781,11 @@ function onGoogleMapsAPIReady() {
                 $element.data("mb-width", options["video"]["width"]);
                 $element.data("mb-height", options["video"]["height"]);
                 $element.triggerHandler("mb-refresh");
-                $.fn.multiBackground._lsc(options["loadedshowcallback"], $video);
+                if("undefined" === typeof options["slideshow"]) {
+                    $.fn.multiBackground._transite(options["transitionloaded"], $video, 1);
+                } else {
+                    $video.css("opacity", 1);
+                }
             }
         };
         if(window.addEventListener) {
@@ -739,7 +815,9 @@ function onGoogleMapsAPIReady() {
         var $element  = $("<iframe src=\"" + options["url"] + "\" scrolling=\"no\" style=\"width:100%;height:100%;border:0;opacity:0;min-width:0;max-width:none;min-height:0;max-height:none;overflow:hidden\"/>");
         $element.bind("load", function() {
             $element.unbind("load");
-            $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
+            if("undefined" === typeof options["slideshow"]) {
+                $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
+            }
         });
         return $element;
     };
@@ -792,7 +870,9 @@ function onGoogleMapsAPIReady() {
                 }
                 var marker = new google.maps.Marker(markerOptions);
             }
-            $.fn.multiBackground._lsc(options["loadedshowcallback"], $element);
+            if("undefined" === typeof options["slideshow"]) {
+                $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
+            }
         };
         if(mb_GoogleMapsAPIReady) {
             apiLoaded();
@@ -813,9 +893,9 @@ function onGoogleMapsAPIReady() {
 
     // Refresh position and size for all attachment types
     // TODO Unit tests
-    $.fn.multiBackground._refreshAttachment = function($element, isFixed, isStatic, isParallax, parallaxSpeed) {
-        if(true !== $element.data("mb-ready") || !$.fn.multiBackground._isVisible($element, true)) {
-            return;
+    $.fn.multiBackground._refreshAttachment = function($element, isFixed, isStatic, isParallax, parallaxSpeed, forceVisible) {
+        if(true !== forceVisible && (true !== $element.data("mb-ready") || !$.fn.multiBackground._isVisible($element, true))) {
+            return this;
         }
 
         var $window         = $(window),
@@ -853,28 +933,12 @@ function onGoogleMapsAPIReady() {
         } else if(isStatic) {
             positionTop     = Math.round((windowHeight - elementHeight) / 2) - $element.offset().top + $window.scrollTop();
         } else {
-            positionTop     = Math.round((windowHeight - elementHeight) / 2) - $element.offset().top;
+            positionTop     = Math.round((viewportHeight - elementHeight) / 2);
         }
 
         $element.find("> [data-multibackground-inner]").css({"width": elementWidth + "px", "height": elementHeight + "px", "left": positionLeft + "px", "top": positionTop + "px"});
-    };
 
-    // Refresh position and size for attachment type: fixed
-    // TODO Unit tests
-    $.fn.multiBackground._refreshFixed = function($element) {
-        $.fn.multiBackground._refreshAttachment($element, true, false, false, 0);
-    };
-
-    // Refresh position and size for attachment type: static
-    // TODO Unit tests
-    $.fn.multiBackground._refreshStatic = function($element) {
-        $.fn.multiBackground._refreshAttachment($element, false, true, false, 0);
-    };
-
-    // Refresh position and size for attachment type: parallax
-    // TODO Unit tests
-    $.fn.multiBackground._refreshParallax = function($element, parallaxSpeed) {
-        $.fn.multiBackground._refreshAttachment($element, false, false, true, parallaxSpeed);
+        return this;
     };
 
     // Determines if the given element is currently visible
@@ -914,12 +978,32 @@ function onGoogleMapsAPIReady() {
             }
         };
 
-        var visible = function($element) {
+        var opacity = function($element, callback) {
+            while(0 !== $element.length && $element.get(0) !== document) {
+                if(callback($.fn.multiBackground._opacity($element))) {
+                    return true;
+                }
+                $element = $element.parent();
+            }
+            return false;
+        };
+
+        var visible = function($element, overlay) {
             if('none' === $element.css('display')) {
                 return false;
             }
-            if(1 > parseFloat($element.css('opacity'))) {
-                return false;
+            if(true === overlay) {
+                if(opacity($element, function(opacity) {
+                    return 1 > opacity;
+                })) {
+                    return false;
+                }
+            } else {
+                if(opacity($element, function(opacity) {
+                    return 0 === opacity;
+                })) {
+                    return false;
+                }
             }
             var canvas  = [$(window)];
             var $parent = $element.parent();
@@ -946,7 +1030,7 @@ function onGoogleMapsAPIReady() {
                 $array  = $element.parent().find('*');
             for(var i = $array.index($element) + $element.find('*').length + 1; i < $array.length; i++) {
                 $i      = $array.eq(i);
-                if(!$i.is('[data-multibackground-content]') && visible($i) && overlap($element, $i, true)) {
+                if(!$i.is('[data-multibackground-content]') && visible($i, true) && overlap($element, $i, true)) {
                     return false;
                 }
             }
@@ -1013,35 +1097,79 @@ function onGoogleMapsAPIReady() {
         return found ? array : object;
     };
 
-    // loadedshowcallback animator
-    // TODO Unit tests
-    $.fn.multiBackground._lsc = function(animator, $element) {
+    // Get actual element opacity (taking CSS animations into account)
+    $.fn.multiBackground._opacity = function($element) {
+        return Math.round(parseFloat($element.css("opacity")) * 1000) / 1000;
+    };
+
+    // Transition animator
+    $.fn.multiBackground._transite = function(animator, $element, opacity) {
+        var useGPU = function() {
+            if("undefined" === typeof $.fn.multiBackground._useGPU) {
+                $.fn.multiBackground._useGPU = false;
+                var props = ["-webkit-transition", "-moz-transition", "-o-transition", "-ms-transition", "transition"];
+                for(var i in props) {
+                    if("undefined" !== typeof $element.css(props[i])) {
+                        $.fn.multiBackground._useGPU = props[i];
+                        break;
+                    }
+                }
+            }
+            return $.fn.multiBackground._useGPU;
+        };
+
         switch(typeof animator) {
             case "function":
-                animator($element);
-                return;
+                return animator($element, opacity);
             case "string":
                 if("function" === typeof window[animator]) {
-                    window[animator]($element);
-                    return;
+                    return window[animator]($element);
                 }
-                var easing, duration;
-                animator = animator.split(",");
+                var easing,
+                    duration,
+                    animator = animator.split(",");
                 if(
                     2 != animator.length ||
-                        "string" !== typeof (easing = animator[0]) ||
-                        isNaN(duration = parseInt(animator[1]))
-                    ) {
+                    "string" !== typeof (easing = animator[0]) ||
+                    isNaN(duration = parseInt(animator[1]))
+                ) {
                     break;
                 }
-                if("undefined" === typeof $.easing[easing]) {
-                    console.log("MBWARNING: Easing: " + easing + " is not defined");
-                    break;
+
+                var gpu = useGPU();
+                if(false === gpu) {
+                    if("undefined" === typeof $.easing[easing]) {
+                        throw "Easing: " + easing + " is not defined";
+                    }
+                    $element.stop().animate({"opacity": opacity}, {"duration": duration, "easing": easing});
+                } else {
+                    $element.data("mb-transite-original", $element.css(gpu));
+                    $element.css(gpu, "opacity " + (duration / 1000) + "s" + " " + easing + " 0s");
+                    setTimeout(function() {
+                        $element.css("opacity", opacity);
+                    }, 1);
+                    $element.data("mb-transite-clear-callback", function() {
+                        $element.css(gpu, $element.data("mb-transite-original"));
+                        $element.removeData("mb-transite-original");
+                    });
+                    $element.data("mb-transite-clear-timeout", setTimeout($element.data("mb-transite-clear-callback"), duration + 1));
                 }
-                $element.stop().animate({"opacity": 1}, {"duration": duration, "easing": easing});
-                return;
+
+                return {"easing": easing, "duration": duration};
+            default:
+                throw "Unsupported transition animator type: \"" + (typeof animator) + "\"";
         }
-        $element.css("opacity", 1);
+    };
+
+    // Transition animator force stop
+    // TODO Unit tests
+    $.fn.multiBackground._transiteStop = function($element) {
+        $element.stop();
+        if("undefined" !== typeof $element.data("mb-transite-clear-timeout")) {
+            clearTimeout($element.data("mb-transite-clear-timeout"));
+            $element.data("mb-transite-clear-callback")();
+            $element.removeData("mb-transite-clear-callback").removeData("mb-transite-clear-timeout");
+        }
     };
 
     // Checks if the given value can be evaluated to boolean true
@@ -1050,27 +1178,270 @@ function onGoogleMapsAPIReady() {
         return true === value || "true" === value || 1 === parseInt(value);
     };
 
+    // Slideshow controllers
+    // TODO Unit tests
+    var MultiBackgroundSlideshow                        = function() {
+        this.run(0);
+    };
+    MultiBackgroundSlideshow.prototype.TYPE_FORWARD     = 0;
+    MultiBackgroundSlideshow.prototype.TYPE_BACKWARD    = 1;
+    MultiBackgroundSlideshow.prototype.TYPE_RANDOM      = 2;
+    MultiBackgroundSlideshow.prototype.runner           = null;
+    MultiBackgroundSlideshow.prototype.layers           = {0: [], 1: [], 2: []}; // Keys must correspond to TYPE_* params
+    MultiBackgroundSlideshow.prototype.currentLayer     = {0: null, 1: null, 2: null}; // Keys must correspond to TYPE_* params
+    MultiBackgroundSlideshow.prototype.playbacks        = { // Keys must correspond to TYPE_* params
+        0: {callback: null, timeout: null},
+        1: {callback: null, timeout: null},
+        2: {callback: null, timeout: null}
+    };
+    MultiBackgroundSlideshow.prototype.loops            = { // Keys must correspond to TYPE_* params
+        0: function(obj) {
+            var loop = {};
+            if(null === obj.currentLayer[obj.TYPE_FORWARD]) {
+                obj.currentLayer[obj.TYPE_FORWARD] = -1;
+                loop.prev = null;
+            } else {
+                loop.prev = obj.currentLayer[obj.TYPE_FORWARD];
+            }
+            obj.currentLayer[obj.TYPE_FORWARD]++;
+            if(obj.currentLayer[obj.TYPE_FORWARD] >= obj.layers[obj.TYPE_FORWARD].length) {
+                obj.currentLayer[obj.TYPE_FORWARD] = 0;
+            }
+            loop.next = obj.currentLayer[obj.TYPE_FORWARD];
+            return loop;
+        },
+        1: function(obj) {
+            var loop = {};
+            if(null === obj.currentLayer[obj.TYPE_BACKWARD]) {
+                obj.currentLayer[obj.TYPE_BACKWARD] = obj.layers[obj.TYPE_BACKWARD].length;
+                loop.prev = null;
+            } else {
+                loop.prev = obj.currentLayer[obj.TYPE_BACKWARD];
+            }
+            obj.currentLayer[obj.TYPE_BACKWARD]--;
+            if(obj.currentLayer[obj.TYPE_BACKWARD] < 0) {
+                obj.currentLayer[obj.TYPE_BACKWARD] = obj.layers[obj.TYPE_BACKWARD].length - 1;
+            }
+            loop.next = obj.currentLayer[obj.TYPE_BACKWARD];
+            return loop;
+        },
+        2: function(obj) {
+            var loop = {};
+            var rand = [];
+            for(var i = 0; i < obj.layers[obj.TYPE_RANDOM].length; i++) {
+                rand.push(i);
+            }
+            if(null === obj.currentLayer[obj.TYPE_RANDOM]) {
+                loop.prev = null;
+            } else {
+                loop.prev = obj.currentLayer[obj.TYPE_RANDOM];
+                rand.splice(loop.prev, 1);
+            }
+            if(0 === rand.length) {
+                loop.next = loop.prev;
+            } else {
+                loop.next = rand[Math.round(Math.random() * (rand.length - 1))];
+                obj.currentLayer[obj.TYPE_RANDOM] = loop.next;
+            }
+            return loop;
+        }
+    };
+    MultiBackgroundSlideshow.prototype.append           = function($layer, options) {
+        if("undefined" === typeof options["slideshow"]["loop"]) {
+            throw "The \"slideshow\" key must be an object, and must specify a \"loop\" with a value of type \"string\".";
+        }
+        switch(options["slideshow"]["loop"]) {
+            case "forward":
+                this.layers[this.TYPE_FORWARD].push($layer);
+                break;
+            case "backward":
+                this.layers[this.TYPE_BACKWARD].push($layer);
+                break;
+            case "random":
+                this.layers[this.TYPE_RANDOM].push($layer);
+                break;
+            default:
+                throw "Unsupported [\"slideshow\"][\"loop\"] value.";
+        }
+        $layer.css("opacity", 0);
+        $layer.data("mb-slideshow", {
+            transition: "undefined" === typeof options["slideshow"]["transition"] ? "linear,500" : options["slideshow"]["transition"],
+            delay:      "undefined" === typeof options["slideshow"]["delay"] ? 2000 : parseInt(options["slideshow"]["delay"])
+        });
+        return this;
+    };
+    MultiBackgroundSlideshow.prototype.prepend          = function($layer, options) {
+        if("undefined" === typeof options["slideshow"]["loop"]) {
+            throw "The \"slideshow\" key must be an object, and must specify a \"loop\" with a value of type \"string\".";
+        }
+        switch(options["slideshow"]["loop"]) {
+            case "forward":
+                this.layers[this.TYPE_FORWARD].unshift($layer);
+                break;
+            case "backward":
+                this.layers[this.TYPE_BACKWARD].unshift($layer);
+                break;
+            case "random":
+                this.layers[this.TYPE_RANDOM].unshift($layer);
+                break;
+            default:
+                throw "Unsupported [\"slideshow\"][\"loop\"] value.";
+        }
+        $layer.css("opacity", 0);
+        $layer.data("mb-slideshow", {
+            transition: "undefined" === typeof options["slideshow"]["transition"] ? "linear,500" : options["slideshow"]["transition"],
+            delay:      "undefined" === typeof options["slideshow"]["delay"] ? 2000 : parseInt(options["slideshow"]["delay"])
+        });
+        return this;
+    };
+    MultiBackgroundSlideshow.prototype.remove           = function($layer) {
+        var idx;
+        if(0 < this.layers[this.TYPE_FORWARD].length) {
+            if(0 <= (idx = this.layers[this.TYPE_FORWARD].indexOf($layer))) {
+                $layer.removeData("mb-slideshow");
+                this.layers[this.TYPE_FORWARD].splice(idx, 1);
+                return this;
+            }
+        }
+        if(0 < this.layers[this.TYPE_BACKWARD].length) {
+            if(0 <= (idx = this.layers[this.TYPE_BACKWARD].indexOf($layer))) {
+                $layer.removeData("mb-slideshow");
+                this.layers[this.TYPE_BACKWARD].splice(idx, 1);
+                return this;
+            }
+        }
+        if(0 < this.layers[this.TYPE_RANDOM].length) {
+            if(0 <= (idx = this.layers[this.TYPE_RANDOM].indexOf($layer))) {
+                $layer.removeData("mb-slideshow");
+                this.layers[this.TYPE_RANDOM].splice(idx, 1);
+                return this;
+            }
+        }
+        return this;
+    };
+    MultiBackgroundSlideshow.prototype.run              = function(retry) {
+        var self = this;
+
+        if(null !== self.runner) {
+            clearTimeout(self.runner);
+        }
+
+        var loop = function(type, loop) {
+            if(null !== loop.prev && loop.prev === loop.next) {
+                return 60000;
+            }
+            if(null !== loop.prev) {
+                self.layers[type][loop.prev].after(self.layers[type][loop.next]);
+            }
+            if("undefined" !== typeof self.layers[type][loop.next].data("mb-refresh")) {
+                self.layers[type][loop.next].data("mb-refresh")(true);
+            }
+            var transition = $.fn.multiBackground._transite(self.layers[type][loop.next].data("mb-slideshow").transition, self.layers[type][loop.next], 1);
+            if(null !== loop.prev) {
+                self.layers[type][loop.prev].data("mb-slideshow-hide", setTimeout(function() {
+                    self.layers[type][loop.prev].css("opacity", 0);
+                }, transition.duration));
+            }
+            return transition.duration + self.layers[type][loop.next].data("mb-slideshow").delay;
+        };
+
+        var play = function(type) {
+            if(null === self.playbacks[type].timeout && 0 < self.layers[type].length) {
+                self.playbacks[type].callback = function() {
+                    self.playbacks[type].timeout = setTimeout(self.playbacks[type].callback, loop(type, self.loops[type](self)));
+                };
+                self.playbacks[type].callback();
+            }
+        };
+
+        play(self.TYPE_FORWARD);
+        play(self.TYPE_BACKWARD);
+        play(self.TYPE_RANDOM);
+
+        if(100 > retry && (
+            0 === self.layers[self.TYPE_FORWARD].length ||
+            0 === self.layers[self.TYPE_BACKWARD].length ||
+            0 === self.layers[self.TYPE_RANDOM].length
+        )) {
+            self.runner = setTimeout(function() {
+                self.run(retry + 1);
+            }, 100);
+        }
+    };
+    MultiBackgroundSlideshow.prototype.play             = function() {
+        for(var i in this.playbacks) {
+            this.playbacks[i].timeout = null;
+        }
+        this.run(100);
+        return this;
+    };
+    MultiBackgroundSlideshow.prototype.pause            = function() {
+        for(var i in this.playbacks) {
+            if(null !== this.playbacks[i].timeout) {
+                clearTimeout(this.playbacks[i].timeout);
+            }
+        }
+        return this;
+    };
+    MultiBackgroundSlideshow.prototype.stop             = function() {
+        if(null !== this.runner) {
+            clearTimeout(this.runner);
+        }
+        for(var i in this.playbacks) {
+            if(null !== this.playbacks[i].timeout) {
+                clearTimeout(this.playbacks[i].timeout);
+            }
+            this.currentLayer[i] = null;
+        }
+        return this;
+    };
+    MultiBackgroundSlideshow.prototype.destroy          = function($element) {
+        var $layers = $element.find('> [data-multibackground-layer]');
+
+        this.stop();
+        $element.removeData("mb-slideshow");
+        $.fn.multiBackground._transiteStop($layers);
+        $layers.removeData("mb-slideshow").each(function() {
+            var $this = $(this);
+            if("undefined" !== typeof $this.data("mb-slideshow-hide")) {
+                clearTimeout($this.data("mb-slideshow-hide"));
+                $this.removeData("mb-slideshow-hide");
+            }
+        }).sort(function(a, b) {
+            var an  = parseInt(a.getAttribute("data-multibackground-layer")),
+                bn  = parseInt(b.getAttribute("data-multibackground-layer"));
+            if(an > bn) {
+                return 1;
+            }
+            if(an < bn) {
+                return -1;
+            }
+            return 0;
+        }).css("opacity", 1).detach().prependTo($element);
+        return this;
+    };
+
     // Video player controls wrapper for HTML5 videos
     // TODO Unit tests
     function MultiBackgroundHTML5PlayerWrapper(element) {
         MultiBackgroundHTML5PlayerWrapper.prototype.element = element;
     }
     MultiBackgroundHTML5PlayerWrapper.prototype.element = null;
-    MultiBackgroundHTML5PlayerWrapper.prototype.play = function() {
+    MultiBackgroundHTML5PlayerWrapper.prototype.play    = function() {
         this.element.play();
     };
-    MultiBackgroundHTML5PlayerWrapper.prototype.pause = function() {
+    MultiBackgroundHTML5PlayerWrapper.prototype.pause   = function() {
         this.element.pause();
     };
-    MultiBackgroundHTML5PlayerWrapper.prototype.stop = function() {
+    MultiBackgroundHTML5PlayerWrapper.prototype.stop    = function() {
         this.element.pause();
         this.element.currentTime = 0;
     };
-    MultiBackgroundHTML5PlayerWrapper.prototype.mute = function() {
+    MultiBackgroundHTML5PlayerWrapper.prototype.mute    = function() {
         this.element.volume = 0;
         this.element.muted = true;
     };
-    MultiBackgroundHTML5PlayerWrapper.prototype.unMute = function() {
+    MultiBackgroundHTML5PlayerWrapper.prototype.unMute  = function() {
         this.element.volume = 1;
         this.element.muted = false;
     };
@@ -1080,21 +1451,21 @@ function onGoogleMapsAPIReady() {
     function MultiBackgroundYouTubePlayerWrapper(player) {
         MultiBackgroundYouTubePlayerWrapper.prototype.player = player;
     }
-    MultiBackgroundYouTubePlayerWrapper.prototype.player = null;
-    MultiBackgroundYouTubePlayerWrapper.prototype.play = function() {
+    MultiBackgroundYouTubePlayerWrapper.prototype.player    = null;
+    MultiBackgroundYouTubePlayerWrapper.prototype.play      = function() {
         this.player.playVideo();
     };
-    MultiBackgroundYouTubePlayerWrapper.prototype.pause = function() {
+    MultiBackgroundYouTubePlayerWrapper.prototype.pause     = function() {
         this.player.pauseVideo();
     };
-    MultiBackgroundYouTubePlayerWrapper.prototype.stop = function() {
+    MultiBackgroundYouTubePlayerWrapper.prototype.stop      = function() {
         this.player.stopVideo();
     };
-    MultiBackgroundYouTubePlayerWrapper.prototype.mute = function() {
+    MultiBackgroundYouTubePlayerWrapper.prototype.mute      = function() {
         this.player.mute();
         this.player.setVolume(0);
     };
-    MultiBackgroundYouTubePlayerWrapper.prototype.unMute = function() {
+    MultiBackgroundYouTubePlayerWrapper.prototype.unMute    = function() {
         this.player.unMute();
         this.player.setVolume(100);
     };
@@ -1105,19 +1476,19 @@ function onGoogleMapsAPIReady() {
         this.element = element;
     }
     MultiBackgroundVimeoPlayerWrapper.prototype.element = null;
-    MultiBackgroundVimeoPlayerWrapper.prototype.play = function() {
+    MultiBackgroundVimeoPlayerWrapper.prototype.play    = function() {
         this.element.contentWindow.postMessage({"method": "play"}, "*");
     };
-    MultiBackgroundVimeoPlayerWrapper.prototype.pause = function() {
+    MultiBackgroundVimeoPlayerWrapper.prototype.pause   = function() {
         this.element.contentWindow.postMessage({"method": "pause"}, "*");
     };
-    MultiBackgroundVimeoPlayerWrapper.prototype.stop = function() {
+    MultiBackgroundVimeoPlayerWrapper.prototype.stop    = function() {
         this.element.contentWindow.postMessage({"method": "pause"}, "*");
     };
-    MultiBackgroundVimeoPlayerWrapper.prototype.mute = function() {
+    MultiBackgroundVimeoPlayerWrapper.prototype.mute    = function() {
         this.element.contentWindow.postMessage({"method": "setVolume"}, 0);
     };
-    MultiBackgroundVimeoPlayerWrapper.prototype.unMute = function() {
+    MultiBackgroundVimeoPlayerWrapper.prototype.unMute  = function() {
         this.element.contentWindow.postMessage({"method": "setVolume"}, 1);
     };
 
@@ -1220,7 +1591,7 @@ function onGoogleMapsAPIReady() {
             "zoom": 15,
             "language": "en"
         },
-        "loadedshowcallback": "linear,500"
+        "transitionloaded": "linear,500"
     };
 
     // Parse and apply plugin from attributes & hidden integrators

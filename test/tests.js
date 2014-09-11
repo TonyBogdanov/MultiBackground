@@ -1,10 +1,17 @@
 (function($) {
     var tests   = [
         "api-flags",
+        "is-true",
         "is-visible",
-        "is-true"
+        "opacity",
+        "transite"
     ];
-    for(var key in tests) {
-        $('body').append($('<script src="./tests/' + tests[key] + '.js"/>'));
-    }
+    $.testComplete = function() {
+        if(0 === tests.length) {
+            return;
+        }
+        $('body').append($('<script src="./tests/' + tests[0] + '.js"/>'));
+        tests.shift();
+    };
+    $.testComplete();
 })(jQuery);

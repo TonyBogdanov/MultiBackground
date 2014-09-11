@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.0.4 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.1 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -62,6 +62,7 @@
                                 <li><a href="./documentation.html#bg-vimeo-video">Background type: <em>Vimeo Video</em></a></li>
                                 <li><a href="./documentation.html#bg-iframe">Background type: <em>iFrame</em></a></li>
                                 <li><a href="./documentation.html#bg-gmap">Background type: <em>Google Map</em></a></li>
+                                <li><a href="./documentation.html#slideshow">Slideshow</a></li>
                                 <li><a href="./documentation.html#advanced">Advanced options</a></li>
                             </ul>
                         </li>
@@ -77,9 +78,11 @@
                                 <li><a href="./examples-vimeo.html">Vimeo videos</a></li>
                                 <li><a href="./examples-iframe.html">iFrames</a></li>
                                 <li><a href="./examples-gmap.html">Google Maps</a></li>
+                                <li><a href="./examples-slideshow.html">Slideshow</a></li>
                             </ul>
                         </li>
                         <li><a href="../download.php" target="_blank">Download</a></li>
+                        <li><a href="../test" target="_blank">Tests</a></li>
                         <li><a href="https://github.com/TonyBogdanov/MultiBackground" target="_blank">GitHub repository</a></li>
                     </ul>
                 </div>
@@ -107,6 +110,8 @@
                     <li><a href="./documentation.html#bg-vimeo-video">Background type: <em>Vimeo Video</em></a></li>
                     <li><a href="./documentation.html#bg-iframe">Background type: <em>iFrame</em></a></li>
                     <li><a href="./documentation.html#bg-gmap">Background type: <em>Google Map</em></a></li>
+                                <li><a href="./documentation.html#slideshow">Slideshow</a></li>
+                    <li><a href="./documentation.html#slideshow">Slideshow</a></li>
                     <li><a href="./documentation.html#advanced">Advanced options</a></li>
                 </ol>
             </div>
@@ -750,14 +755,60 @@ $(...).multiBackground({}, false);</code></pre>
                 </tbody>
             </table>
 
+            <h3 id="slideshow">Slideshow</h3>
+            <h4>Overview</h4>
+            <p>You can turn any MultiBackground element into a slideshow slider, where each layer (type doesn't matter) will be used as a slide.</p>
+            <p>Each slideshow option is set under the <code>slideshow</code> key for each layer, e.g.: <code>data-multibackground-layer-0-slideshow-loop="forward"</code></p>
+            <h4>Options</h4>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>Type</th>
+                    <th>Value</th>
+                    <th>Required</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><code>loop</code></td>
+                    <td><code>string</code></td>
+                    <td><code>forward</code>, <code>backward</code>, <code>random</code></td>
+                    <td>Yes</td>
+                    <td>This specifies the order in which the slides will be looped (animated).</td>
+                </tr>
+                <tr>
+                    <td><code>delay</code></td>
+                    <td><code>integer</code></td>
+                    <td>Delay in ms (default: <code>2000</code>)</td>
+                    <td>No</td>
+                    <td>The delay in ms before transitioning to the next slide.</td>
+                </tr>
+                <tr>
+                    <td><code>transition</code></td>
+                    <td><code>Transition</code></td>
+                    <td><em>Transition</em> (default: <code>linear,500</code>)</td>
+                    <td>No</td>
+                    <td>The <em>Transition</em> to be used when showing the particular slide (see section <strong>Advanced options / Transition</strong>).</td>
+                </tr>
+                </tbody>
+            </table>
+            <p>When animating slides are grouped by loop type. So, theoretically it is possible to have a case in which, you have 2 <code>forward</code> slides and 2 <code>backward</code> slides in the same MultiBackground element. In this case the first 2 slides will loop independent from the second 2, as if they are part of another MultiBackground element.</p>
+            <p>However, this is a rather rare and "weird" case, which has not been tested nor has it been specifically designed this way, so problems or undocumented behavior might occur.</p>
+
             <h3 id="advanced">Advanced options</h3>
-            <h4><code>loadedshowcallback</code></h4>
-            <p>Every element, once loaded is displayed with a transition effect. This effect is a callback function specified in the <em>options</em> object under: <code>{"loadedshowcallback": function($element) { ... }}</code></p>
-            <p>The function accepts the jQuery object of the element being shown.</p>
-            <p>By default this function would <code>.animate()</code> the opacity of the element from <code>0</code> to <code>1</code> in <code>500ms</code>, but you can replace it with whatever you want.</p>
-            <p>As this is a function you cannot pass the implementation using HTML attributes, you must use JavaScript. However, you can define a global function and simply pass it's name as a string on the element as an HTML attribute: <code>data-multibackground-layer-0-loadedshowcallback="myGlobalAnimationFunction"</code>.</p>
-            <p>If all you need is a simple animation and you do not want to write your own functions, you can just pass a special string, which will be used by the plugin to construct an animation.</p>
-            <p>The string should look like this: <code>linear,500</code>, where <code>linear</code> is a jQuery easing name and <code>500</code> is the desired duration of your animation in milliseconds. Please note, that the minimum required version of jQuery is 1.8.3, which only includes 2 easing types: <code>linear</code> and <code>swing</code>. If you want to use more you need to either use a newer jQuery version, or load the <a href="http://plugins.jquery.com/jquery.easing/" target="_blank">jQuery Easing Plugin</a>.</p>
+            <h4>Transition</h4>
+            <p>Showing or hiding elements or layers often uses some kind of a transition effect. Options which require <em>Transition</em> type of values must comply to the following structure.</p>
+            <p>A <em>Transition</em> can be a custom anonymous function or a string.</p>
+            <p>If a function is passed it must accept the jQuery object of the element being animated as first argument, and the target opacity of the animation as second argument.</p>
+            <p>If a string is passed it should look like this: <code>linear,500</code>, where <code>linear</code> is a easing name and <code>500</code> is the desired duration of your animation in milliseconds.</p>
+            <p>By default GPU acceleration is used for the transition specified by string on browsers that support it (almost any modern browser except IE9), so make sure the easing you have passed is a valid CSS3 easing name. Browsers with no GPU acceleration will fallback to a <code>jQuery.animate()</code> alternative, so in this case you must make sure the easing is a valid jQuery easing name.</p>
+            <p>Please note, that the minimum required version of jQuery is 1.8.3, which only includes 2 easing types: <code>linear</code> and <code>swing</code>. If you want to use more you need to either use a newer jQuery version, or load the <a href="http://plugins.jquery.com/jquery.easing/" target="_blank">jQuery Easing Plugin</a>.</p>
+            <p>Please also note, that most browsers do not support large duration values, so keep the transition duration under 30 seconds (30000 ms).</p>
+
+            <h4><code>transitionloaded</code> (value must be a valid Transition)</h4>
+            <p>This is the transition used to show (animate opacity from 0 to 1) MultiBackground layers, once their content is ready.</p>
 
             <h4><code>data-multibackground-integrator</code></h4>
             <p>There is a third way of initializing the plugin, that was developed for the WordPress version of the plugin. It combines an HTML attribute approach using JSON structure being passed directly to the JavaScript plugin.</p>
