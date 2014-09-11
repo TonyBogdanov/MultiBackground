@@ -568,7 +568,7 @@ function onGoogleMapsAPIReady() {
                 return $(this);
             }
             var $image = $("<img src=\"" + options["url"] + "\" alt=\"\" data-multibackground-inner/>");
-            $image.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0});
+            $image.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0, "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none"});
             $element.data("mb-ready", true);
             $element.data("mb-width", image.width);
             $element.data("mb-height", image.height);
@@ -602,7 +602,7 @@ function onGoogleMapsAPIReady() {
                 return $(this);
             }
             var $pattern = $("<div style=\"background:url(" + options["url"] + ")\" data-multibackground-inner/>");
-            $pattern.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0});
+            $pattern.css({"position": "absolute", "left": 0, "top": 0, "opacity": 0, "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none"});
             $element.data("mb-ready", true);
             $element.data("mb-width", image.width);
             $element.data("mb-height", image.height);
@@ -673,7 +673,7 @@ function onGoogleMapsAPIReady() {
         });
 
         // Prepare video & attach to element
-        $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
+        $video.attr("style", "position:absolute;left:0;top:0;opacity:0;min-width:0;max-width:none;min-height:0;max-height:none");
         $video.append(options["video"]["nohtml5support"]);
         $element.data("mb-video-player", new MultiBackgroundHTML5PlayerWrapper($video.get(0)));
         $element.append($video);
@@ -753,7 +753,7 @@ function onGoogleMapsAPIReady() {
         }
 
         // Prepare video & attach to element
-        $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
+        $video.attr("style", "position:absolute;left:0;top:0;opacity:0;min-width:0;max-width:none;min-height:0;max-height:none");
         $element.append($video);
         return $element;
     };
@@ -795,7 +795,7 @@ function onGoogleMapsAPIReady() {
         }
 
         // Prepare video & attach to element
-        $video.attr("style", "position:absolute;left:0;top:0;opacity:0");
+        $video.attr("style", "position:absolute;left:0;top:0;opacity:0;min-width:0;max-width:none;min-height:0;max-height:none");
         $element.append($video);
         $element.data("mb-video-player", new MultiBackgroundVimeoPlayerWrapper($video.get(0)));
         return $element;
