@@ -136,6 +136,14 @@
         $test1.remove();
         $test2.remove();
 
+        $test1 = $('<div style="position:absolute;top:100px;left:100px;width:100px;height:100px">1</div>');
+        $test2 = $('<div style="position:absolute;top:100px;left:100px;width:100px;height:100px" data-multibackground-translucent>2</div>');
+        $body.append($test1);
+        $body.append($test2);
+        assert.strictEqual($.fn.multiBackground._isVisible($test1, true), true, "_isVisible must return true for an element that is completely overlapped by another visible element marked as [data-multibackground-translucent]");
+        $test1.remove();
+        $test2.remove();
+
         $test1 = $('<div style="position:absolute;top:100px;left:100px;width:100px;height:100px;background:red">1</div>');
         $test2 = $('<div style="position:absolute;top:0;left:0;width:100px;height:100px;background:green">2</div>');
         $test1.append($test2);

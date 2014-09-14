@@ -386,6 +386,9 @@ function onGoogleMapsAPIReady() {
         // Create solid color element
         var $element = $('<div/>');
         $element.css({"width": "100%", "height": "100%", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none", "opacity": 0, "background": color.getRGBA()});
+        if(color.isTranslucent()) {
+            $element.attr("data-multibackground-translucent", "");
+        }
         if("undefined" === typeof options["slideshow"]) {
             $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
         }
@@ -469,7 +472,7 @@ function onGoogleMapsAPIReady() {
         }
 
         // Walk points and build CSS stops
-        var colors = [], stopsSimple = [], stopsFull = [];
+        var colors = [], stopsSimple = [], stopsFull = [], hasTranslucent = false;
         for(var key in options["points"]) {
             var position = parseFloat(options["points"][key]["position"]) * 100;
             if(isNaN(position)) {
@@ -479,6 +482,9 @@ function onGoogleMapsAPIReady() {
                 throw "Each gradient point must specify a param \"color\" with a value of type \"string\"";
             }
             var color = new MultiBackgroundColor(options["points"][key]["color"]);
+            if(color.isTranslucent()) {
+                hasTranslucent = true;
+            }
             colors.push(color);
             stopsSimple.push(color.getRGBA() + " " + position + "%");
             stopsFull.push("color-stop(" + position + "%, " + color.getRGBA() + ")");
@@ -487,6 +493,9 @@ function onGoogleMapsAPIReady() {
         // Create element and apply background gradient CSS
         var $element = $("<div/>");
         $element.attr("style", "width:100%;height:100%;min-width:0;max-width:none;min-height:0;max-height:none;opacity:0;background:" + colors[0].getRGB() + ";background:-moz-" + gType + "-gradient(" + gMoz + "," + stopsSimple.join(",") + ");background:-webkit-gradient(" + gWebkit + "," + stopsFull.join(",") + ");background:-webkit-" + gType + "-gradient(" + gWebkitR + "," + stopsSimple.join(",") + ");background:-o-" + gType + "-gradient(" + gO + "," + stopsSimple.join(",") + ");background:-ms-" + gType + "-gradient(" + gMs + "," + stopsSimple.join(",") + ");background:" + gType + "-gradient(" + gW3 + "," + stopsSimple.join(",") + ");background:progid:DXImageTransform.Microsoft.gradient(startColorstr='" + colors[0].getHEX() + "',endColorstr='" + colors[colors.length - 1].getHEX() + "',GradientType=" + gIE + ")" + ";");
+        if(hasTranslucent) {
+            $element.attr("data-multibackground-translucent", "");
+        }
         if("undefined" === typeof options["slideshow"]) {
             $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
         }
@@ -581,6 +590,11 @@ function onGoogleMapsAPIReady() {
             }
         });
         image.src = options["url"];
+
+        if(null !== options["url"].match(/\.png$/i)) {
+            $element.attr("data-multibackground-translucent", "");
+        }
+
         return $element;
     };
 
@@ -614,7 +628,13 @@ function onGoogleMapsAPIReady() {
                 $pattern.css("opacity", 1);
             }
         });
+
         image.src = options["url"];
+
+        if(null !== options["url"].match(/\.png$/i)) {
+            $element.attr("data-multibackground-translucent", "");
+        }
+
         return $element;
     };
 
@@ -1021,6 +1041,16 @@ function onGoogleMapsAPIReady() {
             return true;
         };
 
+        var mark    = function($element) {
+            while(0 !== $element.length && $element.get(0) !== document) {
+                if($element.is('[data-multibackground-content], [data-multibackground-translucent]')) {
+                    return true;
+                }
+                $element = $element.parent();
+            }
+            return false;
+        };
+
         if(!visible($element)) {
             return false;
         }
@@ -1030,7 +1060,8 @@ function onGoogleMapsAPIReady() {
                 $array  = $element.parent().find('*');
             for(var i = $array.index($element) + $element.find('*').length + 1; i < $array.length; i++) {
                 $i      = $array.eq(i);
-                if(!$i.is('[data-multibackground-content]') && visible($i, true) && overlap($element, $i, true)) {
+                if(!mark($i) && visible($i, true) && overlap($element, $i, true)) {
+                    console.log($i.get(0));
                     return false;
                 }
             }
@@ -1559,21 +1590,24 @@ function onGoogleMapsAPIReady() {
         // No match
         throw "Color value could not be parsed, supported formats are: #09f, #09ff, #0099ff, #0099ffff, rgb(0, 128, 255), rgba(0, 128, 255, 0.5)";
     };
-    MultiBackgroundColor.prototype.red      = 255;
-    MultiBackgroundColor.prototype.green    = 255;
-    MultiBackgroundColor.prototype.blue     = 255;
-    MultiBackgroundColor.prototype.alpha    = 255;
-    MultiBackgroundColor.prototype.getHEX   = function() {
+    MultiBackgroundColor.prototype.red              = 255;
+    MultiBackgroundColor.prototype.green            = 255;
+    MultiBackgroundColor.prototype.blue             = 255;
+    MultiBackgroundColor.prototype.alpha            = 255;
+    MultiBackgroundColor.prototype.getHEX           = function() {
         return "#" + (this.red < 16 ? "0" : "") + this.red.toString(16) + (this.green < 16 ? "0" : "") + this.green.toString(16) + (this.blue < 16 ? "0" : "") + this.blue.toString(16);
     };
-    MultiBackgroundColor.prototype.getHEXA  = function() {
+    MultiBackgroundColor.prototype.getHEXA          = function() {
         return "#" + (this.red < 16 ? "0" : "") + this.red.toString(16) + (this.green < 16 ? "0" : "") + this.green.toString(16) + (this.blue < 16 ? "0" : "") + this.blue.toString(16) + this.alpha.toString(16) + (this.alpha < 16 ? "0" : "") + this.alpha.toString(16);
     };
     MultiBackgroundColor.prototype.getRGB   = function() {
         return "rgb(" + this.red + ", " + this.green + ", " + this.blue + ")";
     };
-    MultiBackgroundColor.prototype.getRGBA  = function() {
+    MultiBackgroundColor.prototype.getRGBA          = function() {
         return "rgba(" + this.red + ", " + this.green + ", " + this.blue + ", " + (this.alpha / 255) + ")";
+    };
+    MultiBackgroundColor.prototype.isTranslucent    = function() {
+        return this.alpha < 255;
     };
 
     // Default plugin option params

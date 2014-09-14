@@ -12,6 +12,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, .table, .table-responsive {
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, hr, pre, .table {
     margin-bottom: 30px;
 }
+th {
+    white-space: nowrap;
+}
 .demo-multibackground > [data-multibackground-content] {
     font-family: arial;
     font-size: 20px;
