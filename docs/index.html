@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.1 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.1.1 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -88,7 +88,6 @@
                 </div>
             </div>
         </nav>
-
         <div class="container">
             <h1>Introduction</h1>
             <hr />
@@ -288,6 +287,18 @@
                             <td class="success">Yes</td>
                             <td class="success">Yes</td>
                         </tr>
+                        <tr>
+                            <td>MouseWheel override</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="success">Yes</td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Feature works, but no performance boost has been noticed."></i></td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Feature works, but no performance boost has been noticed."></i></td>
+                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Feature works, but no performance boost has been noticed."></i></td>
+                            <td class="text-muted">Does not apply <i class="glyphicon glyphicon-question-sign" title="Touch devices do not spawn mousewheel events."></i></td>
+                            <td class="text-muted">Does not apply <i class="glyphicon glyphicon-question-sign" title="Touch devices do not spawn mousewheel events."></i></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -301,8 +312,19 @@
             <pre><code class="prettyprint linenums lang-html">&lt;script type="text/javascript" src="../plugin/requirements/jquery-1.8.3.min.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="../plugin/jquery.multibackground.min.js"&gt;&lt;/script&gt;</code></pre>
 
+            <div class="alert alert-info">
+                <p><strong>Heads up!</strong></p>
+                <p>A <em>MouseWheel override</em> feature was introduced in version 1.1.1, which will achieve much smoother animations and parallax effects while scrolling, but may also be incompatible with some third party plugins (especially scrolling ones). <a href="./documentation.html#advanced">Check the documentation for more info</a>.</p>
+            </div>
+
             <h3>Changelog</h3>
             <ul>
+                <li>
+                    <strong>1.1.1</strong>
+                    <ul>
+                        <li><em>MouseWheel override</em> feature for smoother animations.</li>
+                    </ul>
+                </li>
                 <li>
                     <strong>1.1</strong>
                     <ul>

@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.1 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.1.1 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -815,6 +815,14 @@ $(...).multiBackground({}, false);</code></pre>
             <p>The first one just marks the element as an integrator element and does not require a value. You can optionally set the value to <code>debug</code> to enable the debug mode of the plugin.</p>
             <p>The second must contain a valid jQuery selector of the element(s) in the DOM, on which you want to apply the plugin.</p>
             <p>The third must contain a serialized JSON string with all the options, that will be passed to the MultiBackground plugin.</p>
+
+            <h4>MouseWheel override</h4>
+            <p>In order to achieve smooth animations for "static" and "parallax" attachments and still keep performance, the plugin overrides the default <code>mousewheel</code> (name depends on browser) event and performs window scrolling manually, rather than leaving this action to the browser.</p>
+            <p>The gain is clear, but there are two downsides to this method.</p>
+            <ol>
+                <li>As the scrolling of the page is triggered by the plugin instead of the browser, the scrolling speed may differ, than the browser's default speed. By default, it is set to <code>100</code>, which means a single stroke of the mousewheel will scroll the window by <code>100px</code>. To change this value set a <code>data-multibackground-mousewheeloverridespeed</code> attribute on the <code>body</code> element.</li>
+                <li>The override may cause problems or undocumented behavior in some cases, or may be incompatible with other scrolling plugins. If you stumble upon such problems and you don't mind the "not-so-smooth" animations, you can disable the feature by adding a <code>data-multibackground-disablemousewheeloverride</code> attribute to the <code>body</code> element. Value is irrelevant.</li>
+            </ol>
             <br />
         </div>
 

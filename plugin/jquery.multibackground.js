@@ -1,5 +1,5 @@
 /**
- * MultiBackground v1.1
+ * MultiBackground v1.1.1
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -144,7 +144,7 @@ function onGoogleMapsAPIReady() {
                             throw "There is no MultiBackground layer for index: " + index;
                         }
                         if("function" === typeof $layer.data("mb-refresh")) {
-                            $(window).unbind("resize scroll", $layer.data("mb-refresh"));
+                            $.fn.multiBackground._refreshEvents.remove($layer.data("mb-refresh"));
                         }
                         if("undefined" !== typeof $this.data("mb-slideshow")) {
                             $this.data("mb-slideshow").remove($layer);
@@ -162,7 +162,7 @@ function onGoogleMapsAPIReady() {
                         // Deregister all layer callbacks & remove layers
                         $this.find("> [data-multibackground-layer]").each(function() {
                             if("function" === typeof $(this).data("mb-refresh")) {
-                                $(window).unbind("resize scroll", $(this).data("mb-refresh"));
+                                $.fn.multiBackground._refreshEvents.remove($(this).data("mb-refresh"));
                             }
                             $(this).remove();
                         });
@@ -527,7 +527,7 @@ function onGoogleMapsAPIReady() {
                 };
                 $element.data("mb-refresh", refresh);
                 $element.bind("mb-refresh", refresh);
-                $window.bind("resize", refresh);
+                $.fn.multiBackground._refreshEvents.add(refresh);
                 break;
             case "static":
                 var refresh = function(forceVisible) {
@@ -536,7 +536,7 @@ function onGoogleMapsAPIReady() {
                 };
                 $element.data("mb-refresh", refresh);
                 $element.bind("mb-refresh", refresh);
-                $window.bind("resize scroll", refresh);
+                $.fn.multiBackground._refreshEvents.add(refresh);
                 break;
             case "parallax":
                 var parallaxSpeed   = parseFloat(options["parallaxspeed"]);
@@ -549,7 +549,7 @@ function onGoogleMapsAPIReady() {
                 };
                 $element.data("mb-refresh", refresh);
                 $element.bind("mb-refresh", refresh);
-                $window.bind("resize scroll", refresh);
+                $.fn.multiBackground._refreshEvents.add(refresh);
                 break;
             default:
                 throw "Unsupported attachment: \"" + options["attachment"] + "\"";
@@ -1627,6 +1627,49 @@ function onGoogleMapsAPIReady() {
         },
         "transitionloaded": "linear,500"
     };
+
+    // Scroll/Resize (refresh) events
+    $.fn.multiBackground._refreshEvents = {
+        events: [],
+        add: function(callback) {
+            this.events.push(callback);
+            return this;
+        },
+        remove: function(callback) {
+            var idx = this.events.indexOf(callback);
+            if(0 <= idx) {
+                this.events.splice(idx, 1);
+            }
+            return this;
+        },
+        call: function() {
+            for(var i in this.events) {
+                this.events[i]();
+            }
+            return this;
+        }
+    };
+    $(window).bind('resize scroll', function() {
+        $.fn.multiBackground._refreshEvents.call();
+    });
+
+    // Override mousewheel scrolling to achieve smooth animations
+    // Disable if causes problems or incompatibility with other scrolling plugins
+    if(0 === $('body[data-multibackground-disablemousewheeloverride]').length) {
+        $(window).bind('DOMMouseScroll mousewheel wheel', function(e) {
+            e.preventDefault();
+            var offset  = $(window).scrollTop();
+            var speed   = parseInt($('body').attr('data-multibackground-mousewheeloverridespeed'));
+            if(isNaN(speed)) {
+                speed   = 100;
+            }
+            if(e.originalEvent.detail < 0 || e.originalEvent.wheelDelta > 0 || e.originalEvent.deltaY < 0) {
+                window.scrollTo(0, offset - speed);
+            } else {
+                window.scrollTo(0, offset + speed);
+            }
+        });
+    }
 
     // Parse and apply plugin from attributes & hidden integrators
     $(function() {
