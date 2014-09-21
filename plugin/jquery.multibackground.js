@@ -59,7 +59,7 @@ function onGoogleMapsAPIReady() {
                 // Extend default plugin options with passed
                 options = $.extend(true, {}, $.fn.multiBackground._defaultOptions, options);
 
-                // Check action, prepare parent & create layer
+                // Check action
                 if("string" !== typeof options["action"]) {
                     throw "Plugin options must specify a \"action\" param with a value of type \"string\"";
                 }
@@ -77,7 +77,7 @@ function onGoogleMapsAPIReady() {
                         var $element = $.fn.multiBackground._createLayer(options);
 
                         // Put as first layer
-                        var $layers = $this.find('> [data-multibackground-layer]');
+                        var $layers = $this.find("> [data-multibackground-layer]");
                         if(0 === $layers.length) {
                             $this.wrapInner("<div data-multibackground-content style=\"position: relative;\"/>");
                         }
@@ -111,13 +111,13 @@ function onGoogleMapsAPIReady() {
                         var $element = $.fn.multiBackground._createLayer(options);
 
                         // Find last layer in parent and push after it, or put as first layer
-                        var $layers = $this.find('> [data-multibackground-layer]');
+                        var $layers = $this.find("> [data-multibackground-layer]");
                         if(0 === $layers.length) {
                             $this.wrapInner("<div data-multibackground-content style=\"position: relative;\"/>");
-                            $element.attr('data-multibackground-layer', 0);
+                            $element.attr("data-multibackground-layer", 0);
                             $this.prepend($element);
                         } else {
-                            $element.attr('data-multibackground-layer', $layers.length);
+                            $element.attr("data-multibackground-layer", $layers.length);
                             $layers.last().after($element);
                         }
 
@@ -153,7 +153,7 @@ function onGoogleMapsAPIReady() {
 
                         // Reindex remaining layers
                         $this.find("> [data-multibackground-layer]").each(function(i) {
-                            $(this).attr('data-multibackground-layer', i);
+                            $(this).attr("data-multibackground-layer", i);
                         });
                         break;
 
@@ -278,6 +278,9 @@ function onGoogleMapsAPIReady() {
                     default:
                         throw "Unsupported action: \"" + options["action"] + "\"";
                 }
+
+                // Loader
+                $.fn.multiBackground._loader($this);
             });
         } catch(e) {
             if(false === silent) {
@@ -314,8 +317,8 @@ function onGoogleMapsAPIReady() {
             var $this   = $(this);
             var debug   = "debug" === $this.attr("data-multibackground-integrator");
             try {
-                var selector    = $this.attr('data-multibackground-integrator-selector');
-                var options     = $.parseJSON($this.attr('data-multibackground-integrator-options'));
+                var selector    = $this.attr("data-multibackground-integrator-selector");
+                var options     = $.parseJSON($this.attr("data-multibackground-integrator-options"));
                 $(selector).multiBackground(options, !debug);
             } catch(e) {
                 if(debug) {
@@ -384,7 +387,7 @@ function onGoogleMapsAPIReady() {
         var color = new MultiBackgroundColor(options["color"]);
 
         // Create solid color element
-        var $element = $('<div/>');
+        var $element = $("<div/>");
         $element.css({"width": "100%", "height": "100%", "min-width": 0, "max-width": "none", "min-height": 0, "max-height": "none", "opacity": 0, "background": color.getRGBA()});
         if(color.isTranslucent()) {
             $element.attr("data-multibackground-translucent", "");
@@ -571,8 +574,8 @@ function onGoogleMapsAPIReady() {
 
         // Load image & trigger background refresh once ready
         var image = new Image();
-        $(image).bind('load error', function(e) {
-            $(this).unbind('load error');
+        $(image).bind("load error", function(e) {
+            $(this).unbind("load error");
             if("load" !== e.type) {
                 return $(this);
             }
@@ -911,6 +914,33 @@ function onGoogleMapsAPIReady() {
         return $element;
     };
 
+    // Add a preloader to the element
+    $.fn.multiBackground._loader = function($element) {
+        if(0 < $element.children(".mb-s").length) {
+            return $element;
+        }
+        var vnd         = function(s) {
+            var result  = "";
+            var vendors = ["-webkit-", "-moz-", "-ms-", "-o-", ""];
+            for(var i = 0; i < vendors.length; i++) {
+                result  += s.replace(/%v/g, vendors[i]);
+            }
+            return result;
+        };
+        var $spinner    = $("<div class=\"mb-s\"/>");
+        var $dot1       = $("<div class=\"mb-d1\"/>");
+        var $dot2       = $("<div class=\"mb-d2\"/>");
+        var $dot3       = $("<div class=\"mb-d3\"/>");
+        $spinner.append($dot1);
+        $spinner.append($dot2);
+        $spinner.append($dot3);
+        $element.prepend($spinner);
+        if(0 === $("#mb-s").length) {
+            $("head").append("<style id=\"mb-s\" type=\"text/css\">.mb-s{width:20px;height:20px;position:absolute;top:50%;left:50%;margin:-10px 0 0 -10px;" + vnd("%vanimation:mb-r 1s infinite linear;") + "}" + vnd("@%vkeyframes mb-r{100%{" + vnd("%vtransform:rotate(360deg);") + "}}") + vnd("@%vkeyframes mb-s{0%,100%{" + vnd("%vtransform:scale(0.0);") + "}50%{" + vnd("%vtransform:scale(1.0);") + "}}") + ".mb-d1,.mb-d2,.mb-d3{width:90%;height:90%;display:block;position:absolute;border-radius:100%;background:#d15600;" + vnd("%vanimation:mb-s 1.5s infinite ease-in-out;") + "}.mb-d1{top:-25%;left:25%;" + vnd("%vanimation-delay:-0.5s;") + "}.mb-d2{top:50%;left:-18.3%;" + vnd("%vanimation-delay:-1.0s;") + "}.mb-d3{top:50%;left:68.3%;" + vnd("%vanimation-delay:-1.5s;") + "}</style>");
+        }
+        return $element;
+    };
+
     // Refresh position and size for all attachment types
     // TODO Unit tests
     $.fn.multiBackground._refreshAttachment = function($element, isFixed, isStatic, isParallax, parallaxSpeed, forceVisible) {
@@ -961,6 +991,16 @@ function onGoogleMapsAPIReady() {
         return this;
     };
 
+    // Determines if all the given layers are marked as ready (e.g. their content has finished loading)
+    $.fn.multiBackground._layersReady = function(layers) {
+        for(var i = 0; i < layers.length; i++) {
+            if(true !== $(layers[i]).data("mb-ready")) {
+                return false;
+            }
+        }
+        return true;
+    };
+
     // Determines if the given element is currently visible
     // Visible means, that all of the following conditions must be met:
     // 1. It should not be :hidden or opacity: 0.
@@ -1009,7 +1049,7 @@ function onGoogleMapsAPIReady() {
         };
 
         var visible = function($element, overlay) {
-            if('none' === $element.css('display')) {
+            if("none" === $element.css("display")) {
                 return false;
             }
             if(true === overlay) {
@@ -1028,7 +1068,7 @@ function onGoogleMapsAPIReady() {
             var canvas  = [$(window)];
             var $parent = $element.parent();
             while(0 !== $parent.length && $parent.get(0) !== document) {
-                if('hidden' === $parent.css('overflow')) {
+                if("hidden" === $parent.css("overflow")) {
                     canvas.push($parent);
                 }
                 $parent = $parent.parent();
@@ -1043,7 +1083,7 @@ function onGoogleMapsAPIReady() {
 
         var mark    = function($element) {
             while(0 !== $element.length && $element.get(0) !== document) {
-                if($element.is('[data-multibackground-content], [data-multibackground-translucent]')) {
+                if($element.is("[data-multibackground-content], [data-multibackground-translucent]")) {
                     return true;
                 }
                 $element = $element.parent();
@@ -1057,8 +1097,8 @@ function onGoogleMapsAPIReady() {
 
         if(true === strict) {
             var $i,
-                $array  = $element.parent().find('*');
-            for(var i = $array.index($element) + $element.find('*').length + 1; i < $array.length; i++) {
+                $array  = $element.parent().find("*");
+            for(var i = $array.index($element) + $element.find("*").length + 1; i < $array.length; i++) {
                 $i      = $array.eq(i);
                 if(!mark($i) && visible($i, true) && overlap($element, $i, true)) {
                     console.log($i.get(0));
@@ -1165,6 +1205,10 @@ function onGoogleMapsAPIReady() {
                     isNaN(duration = parseInt(animator[1]))
                 ) {
                     break;
+                }
+
+                if(50 > duration && 0 < duration) {
+                    duration = 50;
                 }
 
                 var gpu = useGPU();
@@ -1371,17 +1415,23 @@ function onGoogleMapsAPIReady() {
             if(null !== loop.prev) {
                 self.layers[type][loop.prev].data("mb-slideshow-hide", setTimeout(function() {
                     self.layers[type][loop.prev].css("opacity", 0);
-                }, transition.duration));
+                }, transition.duration + 50));
             }
             return transition.duration + self.layers[type][loop.next].data("mb-slideshow").delay;
         };
 
         var play = function(type) {
             if(null === self.playbacks[type].timeout && 0 < self.layers[type].length) {
-                self.playbacks[type].callback = function() {
-                    self.playbacks[type].timeout = setTimeout(self.playbacks[type].callback, loop(type, self.loops[type](self)));
-                };
-                self.playbacks[type].callback();
+                if($.fn.multiBackground._layersReady(self.layers[type])) {
+                    self.playbacks[type].callback = function() {
+                        self.playbacks[type].timeout = setTimeout(self.playbacks[type].callback, loop(type, self.loops[type](self)));
+                    };
+                    self.playbacks[type].callback();
+                } else {
+                    setTimeout(function() {
+                        play(type);
+                    }, 100);
+                }
             }
         };
 
@@ -1427,7 +1477,7 @@ function onGoogleMapsAPIReady() {
         return this;
     };
     MultiBackgroundSlideshow.prototype.destroy          = function($element) {
-        var $layers = $element.find('> [data-multibackground-layer]');
+        var $layers = $element.find("> [data-multibackground-layer]");
 
         this.stop();
         $element.removeData("mb-slideshow");
@@ -1649,17 +1699,17 @@ function onGoogleMapsAPIReady() {
             return this;
         }
     };
-    $(window).bind('resize scroll', function() {
+    $(window).bind("resize scroll", function() {
         $.fn.multiBackground._refreshEvents.call();
     });
 
     // Override mousewheel scrolling to achieve smooth animations
     // Disable if causes problems or incompatibility with other scrolling plugins
-    if(0 === $('body[data-multibackground-disablemousewheeloverride]').length) {
-        $(window).bind('DOMMouseScroll mousewheel wheel', function(e) {
+    if(0 === $("body[data-multibackground-disablemousewheeloverride]").length) {
+        $(window).bind("DOMMouseScroll mousewheel wheel", function(e) {
             e.preventDefault();
             var offset  = $(window).scrollTop();
-            var speed   = parseInt($('body').attr('data-multibackground-mousewheeloverridespeed'));
+            var speed   = parseInt($("body").attr("data-multibackground-mousewheeloverridespeed"));
             if(isNaN(speed)) {
                 speed   = 100;
             }
