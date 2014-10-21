@@ -4,7 +4,8 @@
         "is-true",
         "is-visible",
         "opacity",
-        "transite"
+        "transite",
+        "action-destroy"
     ];
     $.testComplete = function() {
         if(0 === tests.length) {

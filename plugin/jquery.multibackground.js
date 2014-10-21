@@ -1,5 +1,5 @@
 /**
- * MultiBackground v1.1.1
+ * MultiBackground v1.1.3
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -96,6 +96,9 @@ function onGoogleMapsAPIReady() {
                             }
                             $this.data("mb-slideshow").prepend($element, options);
                         }
+
+                        // Loader
+                        $.fn.multiBackground._loader($this);
                         break;
 
                     // Append layer (put above all other)
@@ -128,6 +131,9 @@ function onGoogleMapsAPIReady() {
                             }
                             $this.data("mb-slideshow").append($element, options);
                         }
+
+                        // Loader
+                        $.fn.multiBackground._loader($this);
                         break;
 
                     // Remove layer by index
@@ -171,9 +177,17 @@ function onGoogleMapsAPIReady() {
                         if("undefined" !== typeof $this.data("mb-slideshow")) {
                             $this.data("mb-slideshow").destroy();
                         }
+                        
+                        // Remove loader
+                        $this.find(".mb-s").remove();
 
                         // Unwrap content
-                        $this.find("> [data-multibackground-content]").contents().unwrap();
+                        var $content    = $this.find("> [data-multibackground-content]");
+                        if(0 < $content.contents().length) {
+                            $content.contents().unwrap();
+                        } else {
+                            $content.remove();
+                        }
 
                         // Restore parent
                         $this.css("position", $this.data("mb-original-position"));
@@ -278,9 +292,6 @@ function onGoogleMapsAPIReady() {
                     default:
                         throw "Unsupported action: \"" + options["action"] + "\"";
                 }
-
-                // Loader
-                $.fn.multiBackground._loader($this);
             });
         } catch(e) {
             if(false === silent) {
@@ -1705,22 +1716,24 @@ function onGoogleMapsAPIReady() {
 
     // Override mousewheel scrolling to achieve smooth animations
     // Disable if causes problems or incompatibility with other scrolling plugins
-    if(0 === $("body[data-multibackground-disablemousewheeloverride]").length) {
-        $(window).bind("DOMMouseScroll mousewheel wheel", function(e) {
-            e.preventDefault();
-            var offset  = $(window).scrollTop();
-            var speed   = parseInt($("body").attr("data-multibackground-mousewheeloverridespeed"));
-            if(isNaN(speed)) {
-                speed   = 100;
-            }
-            if(e.originalEvent.detail < 0 || e.originalEvent.wheelDelta > 0 || e.originalEvent.deltaY < 0) {
-                window.scrollTo(0, offset - speed);
-            } else {
-                window.scrollTo(0, offset + speed);
-            }
-        });
-    }
-
+    $(function() {
+        if(!$("body").is("[data-multibackground-disablemousewheeloverride]") && !$("body").hasClass("multibackground-disablemousewheeloverride")) {
+            $(window).bind("DOMMouseScroll mousewheel wheel", function(e) {
+                e.preventDefault();
+                var offset  = $(window).scrollTop();
+                var speed   = parseInt($("body").attr("data-multibackground-mousewheeloverridespeed"));
+                if(isNaN(speed)) {
+                    speed   = 100;
+                }
+                if(e.originalEvent.detail < 0 || e.originalEvent.wheelDelta > 0 || e.originalEvent.deltaY < 0) {
+                    window.scrollTo(0, offset - speed);
+                } else {
+                    window.scrollTo(0, offset + speed);
+                }
+            });
+        }
+    });
+    
     // Parse and apply plugin from attributes & hidden integrators
     $(function() {
         $("[data-multibackground]").multiBackgroundFromAttributes();
