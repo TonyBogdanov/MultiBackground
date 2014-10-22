@@ -26,6 +26,8 @@
         <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="./css/demo.css">
         <link rel="stylesheet" href="./prettify/prettify.css">
+        
+        <link rel="stylesheet" href="./font-awesome/css/font-awesome.min.css">
     </head>
     <body>
         <nav class="navbar navbar-default" role="navigation">
@@ -99,205 +101,221 @@
             <h3>Browser compatibility</h3>
             <p>The plugin is supported by the latest versions of all major browsers. However, you are always encouraged to test it yourself before heavily relying on the plugin.</p>
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-compatibility">
                     <thead>
                         <tr>
-                            <th>Background type</th>
-                            <th>Chrome 36</th>
-                            <th>Firefox 31</th>
-                            <th>Opera 23</th>
-                            <th>Safari 5 (Windows 7)</th>
-                            <th>IE 11</th>
-                            <th>IE 10</th>
-                            <th>IE 9</th>
-                            <th>Chrome 36 (Android)</th>
-                            <th>Firefox 31 (Android)</th>
+                            <th class="text-left">Background type</th>
+                            <th><img src="./img/chrome.png" alt="" title="Chrome 36" /></th>
+                            <th><img src="./img/firefox.png" alt="" title="Firefox 31" /></th>
+                            <th><img src="./img/opera.png" alt="" title="Opera 23" /></th>
+                            <th><img src="./img/safari.png" alt="" title="Safari 5" />&nbsp;<img src="./img/windows7.png" alt="" title="Windows 7" /></th>
+                            <th><img src="./img/ie.png" alt="" title="Internet Explorer 11" />&nbsp;11</th>
+                            <th><img src="./img/ie.png" alt="" title="Internet Explorer 10" />&nbsp;10</th>
+                            <th><img src="./img/ie.png" alt="" title="Internet Explorer 9" />&nbsp;9</th>
+                            <th><img src="./img/chrome.png" alt="" title="Chrome 36" />&nbsp;<img src="./img/android.png" alt="" title="Android" /></th>
+                            <th><img src="./img/firefox.png" alt="" title="Firefox 31" />&nbsp;<img src="./img/android.png" alt="" title="Android" /></th>
+                            <th><img src="./img/safari.png" alt="" title="Safari" />&nbsp;<img src="./img/ios.png" alt="" title="iOS 8" /></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Solid</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Solid</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>Horizontal gradient</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Horizontal gradient</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>Vertical gradient</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Vertical gradient</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>Diagonal gradient</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Diagonal gradient</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>Radial gradient</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Fallback to type solid with the color of the first point"></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Radial gradient</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="Fallback to type solid with the color of the first point"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>Image</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Image</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>Pattern</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Pattern</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>HTML5 video</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support HTML5 video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
-                            <td class="success">Yes <i class="glyphicon glyphicon-question-sign" title="Seems to be unstable in some cases."></i></td>
+                            <td class="text-left">HTML5 video</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i>&nbsp;<i class="fa fa-question-circle" title="The browser does support HTML5 video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
+                            <td class="success"><i class="fa fa-check"></i>&nbsp;<i class="fa fa-question-circle" title="Seems to be unstable in some cases."></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i>&nbsp;<i class="fa fa-question-circle" title="The browser does support HTML5 video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
                         </tr>
                         <tr>
-                            <td>YouTube video</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support YouTube video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">YouTube video</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i>&nbsp;<i class="fa fa-question-circle" title="The browser does support YouTube video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i>&nbsp;<i class="fa fa-question-circle" title="The browser does support YouTube video, but it is impossible to autostart the video (even through the API) without an user interaction due to browser policy."></i></td>
                         </tr>
                         <tr>
-                            <td>Vimeo video <i class="glyphicon glyphicon-question-sign" title="It is currently not possible to have more than one video on a single page autoplay simultaneously. This is a Vimeo player policy and is irrelevant to browser version or OS."></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="danger">No</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="danger">No</td>
-                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support Vimeo video, but it is impossible to autostart the video (even through the API) without an user interaction due to Vimeo player policy."></i></td>
-                            <td class="danger">No <i class="glyphicon glyphicon-question-sign" title="The browser does support Vimeo video, but it is impossible to autostart the video (even through the API) without an user interaction due to Vimeo player policy."></i></td>
+                            <td class="text-left">Vimeo video <i class="fa fa-question-circle" title="It is currently not possible to have more than one video on a single page autoplay simultaneously. This is a Vimeo player policy and is irrelevant to browser version or OS."></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="You need to have QuickTime installed. Experience might be unstable."></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i>&nbsp;<i class="fa fa-question-circle" title="The browser does support Vimeo video, but it is impossible to autostart the video (even through the API) without an user interaction due to Vimeo player policy."></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i>&nbsp;<i class="fa fa-question-circle" title="The browser does support Vimeo video, but it is impossible to autostart the video (even through the API) without an user interaction due to Vimeo player policy."></i></td>
+                            <td class="danger"><i class="fa fa-remove"></i>&nbsp;<i class="fa fa-question-circle" title="The browser does support Vimeo video, but it is impossible to autostart the video (even through the API) without an user interaction due to Vimeo player policy."></i></td>
                         </tr>
                         <tr>
-                            <td>iFrame</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">iFrame</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>Google map</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Google map</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                     </tbody>
                     <thead>
                         <tr>
-                            <th>Feature</th>
-                            <th>Chrome 36</th>
-                            <th>Firefox 31</th>
-                            <th>Opera 23</th>
-                            <th>Safari 5 (Windows 7)</th>
-                            <th>IE 11</th>
-                            <th>IE 10</th>
-                            <th>IE 9</th>
-                            <th>Chrome 36 (Android)</th>
-                            <th>Firefox 31 (Android)</th>
+                            <th class="text-left">Feature</th>
+                            <th><img src="./img/chrome.png" alt="" title="Chrome 36" /></th>
+                            <th><img src="./img/firefox.png" alt="" title="Firefox 31" /></th>
+                            <th><img src="./img/opera.png" alt="" title="Opera 23" /></th>
+                            <th><img src="./img/safari.png" alt="" title="Safari 5" />&nbsp;<img src="./img/windows7.png" alt="" title="Windows 7" /></th>
+                            <th><img src="./img/ie.png" alt="" title="Internet Explorer 11" />&nbsp;11</th>
+                            <th><img src="./img/ie.png" alt="" title="Internet Explorer 10" />&nbsp;10</th>
+                            <th><img src="./img/ie.png" alt="" title="Internet Explorer 9" />&nbsp;9</th>
+                            <th><img src="./img/chrome.png" alt="" title="Chrome 36" />&nbsp;<img src="./img/android.png" alt="" title="Android" /></th>
+                            <th><img src="./img/firefox.png" alt="" title="Firefox 31" />&nbsp;<img src="./img/android.png" alt="" title="Android" /></th>
+                            <th><img src="./img/safari.png" alt="" title="Safari" />&nbsp;<img src="./img/ios.png" alt="" title="iOS 8" /></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Slideshow</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
+                            <td class="text-left">Slideshow</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
                         </tr>
                         <tr>
-                            <td>MouseWheel override</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="success">Yes</td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Feature works, but no performance boost has been noticed."></i></td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Feature works, but no performance boost has been noticed."></i></td>
-                            <td class="warning">Partial <i class="glyphicon glyphicon-question-sign" title="Feature works, but no performance boost has been noticed."></i></td>
-                            <td class="text-muted">Does not apply <i class="glyphicon glyphicon-question-sign" title="Touch devices do not spawn mousewheel events."></i></td>
-                            <td class="text-muted">Does not apply <i class="glyphicon glyphicon-question-sign" title="Touch devices do not spawn mousewheel events."></i></td>
+                            <td class="text-left">MouseWheel override</td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="success"><i class="fa fa-check"></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="Feature works, but no performance boost has been noticed."></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="Feature works, but no performance boost has been noticed."></i></td>
+                            <td class="warning"><i class="fa fa-question-circle" title="Feature works, but no performance boost has been noticed."></i></td>
+                            <td class="text-muted"><i class="fa fa-question-circle" title="Touch devices do not spawn mousewheel events."></i></td>
+                            <td class="text-muted"><i class="fa fa-question-circle" title="Touch devices do not spawn mousewheel events."></i></td>
+                            <td class="text-muted"><i class="fa fa-question-circle" title="Touch devices do not spawn mousewheel events."></i></td>
                         </tr>
                     </tbody>
                 </table>
