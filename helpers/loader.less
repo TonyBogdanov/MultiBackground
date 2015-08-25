@@ -1,0 +1,43 @@
+@import "lesshat.less";
+@import "lesshat-prefixed.less";
+
+.mb-s {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -20px 0 0 -20px;
+  .transform(rotate(45deg));
+}
+.mb-s .mb-d1,
+.mb-s .mb-d2,
+.mb-s .mb-d3,
+.mb-s .mb-d4 {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #000;
+}
+.mb-s .mb-d1 {
+  .animation(mb-a-1 1s infinite);
+}
+.mb-s .mb-d2 {
+  left: 20px;
+  .animation(mb-a-2 1s infinite);
+}
+.mb-s .mb-d3 {
+  top: 20px;
+  .animation(mb-a-3 1s infinite);
+}
+.mb-s .mb-d4 {
+  top: 20px;
+  left: 20px;
+  .animation(mb-a-4 1s infinite);
+}
+.keyframes(~'mb-a-1, 0%{transform:translate(0)rotate(0)} 33%{transform:translate(-5px,-5px)rotate(0)} 66%{transform:translate(-5px,-5px)rotate(90deg)} 100%{transform:translate(0)rotate(90deg)}');
+.keyframes(~'mb-a-2, 0%{transform:translate(0)rotate(0)} 33%{transform:translate(5px,-5px)rotate(0)} 66%{transform:translate(5px,-5px)rotate(90deg)} 100%{transform:translate(0)rotate(90deg)}');
+.keyframes(~'mb-a-3, 0%{transform:translate(0)rotate(0)} 33%{transform:translate(-5px,5px)rotate(0)} 66%{transform:translate(-5px,5px)rotate(90deg)} 100%{transform:translate(0)rotate(90deg)}');
+.keyframes(~'mb-a-4, 0%{transform:translate(0)rotate(0)} 33%{transform:translate(5px,5px)rotate(0)} 66%{transform:translate(5px,5px)rotate(90deg)} 100%{transform:translate(0)rotate(90deg)}');

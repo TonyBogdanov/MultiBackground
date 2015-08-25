@@ -1,5 +1,5 @@
-/**
- * MultiBackground v1.1.3
+/*!
+ * MultiBackground v1.1.6
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -942,12 +942,14 @@ function onGoogleMapsAPIReady() {
         var $dot1       = $("<div class=\"mb-d1\"/>");
         var $dot2       = $("<div class=\"mb-d2\"/>");
         var $dot3       = $("<div class=\"mb-d3\"/>");
+        var $dot4       = $("<div class=\"mb-d4\"/>");
         $spinner.append($dot1);
         $spinner.append($dot2);
         $spinner.append($dot3);
+        $spinner.append($dot4);
         $element.prepend($spinner);
         if(0 === $("#mb-s").length) {
-            $("head").append("<style id=\"mb-s\" type=\"text/css\">.mb-s{width:20px;height:20px;position:absolute;top:50%;left:50%;margin:-10px 0 0 -10px;" + vnd("%vanimation:mb-r 1s infinite linear;") + "}" + vnd("@%vkeyframes mb-r{100%{" + vnd("%vtransform:rotate(360deg);") + "}}") + vnd("@%vkeyframes mb-s{0%,100%{" + vnd("%vtransform:scale(0.0);") + "}50%{" + vnd("%vtransform:scale(1.0);") + "}}") + ".mb-d1,.mb-d2,.mb-d3{width:90%;height:90%;display:block;position:absolute;border-radius:100%;background:#d15600;" + vnd("%vanimation:mb-s 1.5s infinite ease-in-out;") + "}.mb-d1{top:-25%;left:25%;" + vnd("%vanimation-delay:-0.5s;") + "}.mb-d2{top:50%;left:-18.3%;" + vnd("%vanimation-delay:-1.0s;") + "}.mb-d3{top:50%;left:68.3%;" + vnd("%vanimation-delay:-1.5s;") + "}</style>");
+            $("head").append('<style id="mb-s" type="text/css">.mb-s{width:40px;height:40px;position:absolute;top:50%;left:50%;margin:-20px 0 0 -20px;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.mb-s .mb-d1,.mb-s .mb-d2,.mb-s .mb-d3,.mb-s .mb-d4{width:20px;height:20px;position:absolute;top:0;left:0;background:#000}.mb-s .mb-d1{-webkit-animation:mb-a-1 1s infinite;-moz-animation:mb-a-1 1s infinite;-o-animation:mb-a-1 1s infinite;animation:mb-a-1 1s infinite}.mb-s .mb-d2{left:20px;-webkit-animation:mb-a-2 1s infinite;-moz-animation:mb-a-2 1s infinite;-o-animation:mb-a-2 1s infinite;animation:mb-a-2 1s infinite}.mb-s .mb-d3{top:20px;-webkit-animation:mb-a-3 1s infinite;-moz-animation:mb-a-3 1s infinite;-o-animation:mb-a-3 1s infinite;animation:mb-a-3 1s infinite}.mb-s .mb-d4{top:20px;left:20px;-webkit-animation:mb-a-4 1s infinite;-moz-animation:mb-a-4 1s infinite;-o-animation:mb-a-4 1s infinite;animation:mb-a-4 1s infinite}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-1{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,-5px)rotate(0)}66%{-webkit-transform:translate(-5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-1{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(-5px,-5px)rotate(0)}66%{-moz-transform:translate(-5px,-5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-1{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(-5px,-5px)rotate(0)}66%{-o-transform:translate(-5px,-5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-1{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,-5px)rotate(0);-moz-transform:translate(-5px,-5px)rotate(0);-ms-transform:translate(-5px,-5px)rotate(0);transform:translate(-5px,-5px)rotate(0)}66%{-webkit-transform:translate(-5px,-5px)rotate(90deg);-moz-transform:translate(-5px,-5px)rotate(90deg);-ms-transform:translate(-5px,-5px)rotate(90deg);transform:translate(-5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-2{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,-5px)rotate(0)}66%{-webkit-transform:translate(5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-2{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(5px,-5px)rotate(0)}66%{-moz-transform:translate(5px,-5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-2{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(5px,-5px)rotate(0)}66%{-o-transform:translate(5px,-5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-2{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,-5px)rotate(0);-moz-transform:translate(5px,-5px)rotate(0);-ms-transform:translate(5px,-5px)rotate(0);transform:translate(5px,-5px)rotate(0)}66%{-webkit-transform:translate(5px,-5px)rotate(90deg);-moz-transform:translate(5px,-5px)rotate(90deg);-ms-transform:translate(5px,-5px)rotate(90deg);transform:translate(5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-3{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,5px)rotate(0)}66%{-webkit-transform:translate(-5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-3{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(-5px,5px)rotate(0)}66%{-moz-transform:translate(-5px,5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-3{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(-5px,5px)rotate(0)}66%{-o-transform:translate(-5px,5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-3{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,5px)rotate(0);-moz-transform:translate(-5px,5px)rotate(0);-ms-transform:translate(-5px,5px)rotate(0);transform:translate(-5px,5px)rotate(0)}66%{-webkit-transform:translate(-5px,5px)rotate(90deg);-moz-transform:translate(-5px,5px)rotate(90deg);-ms-transform:translate(-5px,5px)rotate(90deg);transform:translate(-5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-4{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,5px)rotate(0)}66%{-webkit-transform:translate(5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-4{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(5px,5px)rotate(0)}66%{-moz-transform:translate(5px,5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-4{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(5px,5px)rotate(0)}66%{-o-transform:translate(5px,5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-4{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,5px)rotate(0);-moz-transform:translate(5px,5px)rotate(0);-ms-transform:translate(5px,5px)rotate(0);transform:translate(5px,5px)rotate(0)}66%{-webkit-transform:translate(5px,5px)rotate(90deg);-moz-transform:translate(5px,5px)rotate(90deg);-ms-transform:translate(5px,5px)rotate(90deg);transform:translate(5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}</style>');
         }
         return $element;
     };
@@ -976,9 +978,16 @@ function onGoogleMapsAPIReady() {
             elementHeight       = Math.round(Math.max(elementHeight, viewportHeight * (1 + Math.abs(parallaxSpeed))));
             elementWidth        = Math.round(elementHeight * elementRatio);
         } else {
-            if(elementHeight < windowHeight) {
-                elementHeight   = windowHeight;
-                elementWidth    = Math.round(elementHeight * elementRatio);
+            if(isStatic) {
+                if(elementHeight < windowHeight) {
+                    elementHeight   = windowHeight;
+                    elementWidth    = Math.round(elementHeight * elementRatio);
+                }
+            } else {
+                if(elementHeight < viewportHeight) {
+                    elementHeight   = viewportHeight;
+                    elementWidth    = Math.round(elementHeight * elementRatio);
+                }
             }
         }
 
@@ -1712,26 +1721,6 @@ function onGoogleMapsAPIReady() {
     };
     $(window).bind("resize scroll", function() {
         $.fn.multiBackground._refreshEvents.call();
-    });
-
-    // Override mousewheel scrolling to achieve smooth animations
-    // Disable if causes problems or incompatibility with other scrolling plugins
-    $(function() {
-        if(!$("body").is("[data-multibackground-disablemousewheeloverride]") && !$("body").hasClass("multibackground-disablemousewheeloverride")) {
-            $(window).bind("DOMMouseScroll mousewheel wheel", function(e) {
-                e.preventDefault();
-                var offset  = $(window).scrollTop();
-                var speed   = parseInt($("body").attr("data-multibackground-mousewheeloverridespeed"));
-                if(isNaN(speed)) {
-                    speed   = 100;
-                }
-                if(e.originalEvent.detail < 0 || e.originalEvent.wheelDelta > 0 || e.originalEvent.deltaY < 0) {
-                    window.scrollTo(0, offset - speed);
-                } else {
-                    window.scrollTo(0, offset + speed);
-                }
-            });
-        }
     });
     
     // Parse and apply plugin from attributes & hidden integrators
