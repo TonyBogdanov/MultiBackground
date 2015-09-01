@@ -65,7 +65,6 @@
                                 <li><a href="./documentation.html#bg-iframe">Background type: <em>iFrame</em></a></li>
                                 <li><a href="./documentation.html#bg-gmap">Background type: <em>Google Map</em></a></li>
                                 <li><a href="./documentation.html#slideshow">Slideshow</a></li>
-                                <li><a href="./documentation.html#alignment">Alignment</a></li>
                                 <li><a href="./documentation.html#advanced">Advanced options</a></li>
                             </ul>
                         </li>
@@ -74,7 +73,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="./examples-color.html">Solid color &amp; gradients</a></li>
                                 <li><a href="./examples-page-background.html">Page background</a></li>
-                                <li class="active"><a href="./examples-image.html">Images</a></li>
+                                <li><a href="./examples-image.html">Images</a></li>
                                 <li><a href="./examples-pattern.html">Patterns</a></li>
                                 <li><a href="./examples-video.html">HTML5 videos</a></li>
                                 <li><a href="./examples-youtube.html">YouTube videos</a></li>
@@ -82,7 +81,7 @@
                                 <li><a href="./examples-iframe.html">iFrames</a></li>
                                 <li><a href="./examples-gmap.html">Google Maps</a></li>
                                 <li><a href="./examples-slideshow.html">Slideshow</a></li>
-                                <li><a href="./examples-alignment.html">Alignment</a></li>
+                                <li class="active"><a href="./examples-alignment.html">Alignment</a></li>
                             </ul>
                         </li>
                         <li><a href="../download.php" target="_blank">Download</a></li>
@@ -94,48 +93,78 @@
         </nav>
 
         <div class="container">
-            <h1>Examples &ndash; Images</h1>
+            <h1>Examples &ndash; Alignment</h1>
             <hr />
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div
+                            class="demo-multibackground"
+                            style="width:180px;height:360px;margin:0 auto"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-alignment-horizontal="left">
+                        Left
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div
+                            class="demo-multibackground"
+                            style="width:180px;height:360px;margin:0 auto"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-alignment-horizontal="center">
+                        Center
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                    <div
+                            class="demo-multibackground"
+                            style="width:180px;height:360px;margin:0 auto"
+                            data-multibackground="debug"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-alignment-horizontal="right">
+                        Right
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-4">
                     <div
                             class="demo-multibackground"
                             data-multibackground="debug"
                             data-multibackground-layer-0-type="image"
                             data-multibackground-layer-0-attachment="fixed"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Fixed image
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-alignment-vertical="top">
+                        Top
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-4">
                     <div
                             class="demo-multibackground"
                             data-multibackground="debug"
                             data-multibackground-layer-0-type="image"
-                            data-multibackground-layer-0-attachment="static"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Static image
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-alignment-vertical="middle">
+                        Middle
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="col-lg-4 col-md-4 col-sm-4">
                     <div
                             class="demo-multibackground"
                             data-multibackground="debug"
                             data-multibackground-layer-0-type="image"
-                            data-multibackground-layer-0-attachment="parallax"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Parallax image
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div
-                            class="demo-multibackground"
-                            data-multibackground="debug"
-                            data-multibackground-layer-0-type="image"
-                            data-multibackground-layer-0-attachment="parallax"
-                            data-multibackground-layer-0-parallaxspeed="-1.0"
-                            data-multibackground-layer-0-url="./assets/birds.jpg">
-                        Reverse parallax image
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-0-alignment-vertical="bottom">
+                        Bottom
                     </div>
                 </div>
             </div>

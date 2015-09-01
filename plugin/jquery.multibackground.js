@@ -1,5 +1,5 @@
 /*!
- * MultiBackground v1.1.6
+ * MultiBackground v1.1.7
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -59,6 +59,14 @@ function onGoogleMapsAPIReady() {
                 // Extend default plugin options with passed
                 options = $.extend(true, {}, $.fn.multiBackground._defaultOptions, options);
 
+                // Slideshow
+                if(
+                    'undefined' != typeof $this.attr('data-multibackground-slideshow-direction') &&
+                    'undefined' == typeof $this.data('mb-slideshow')
+                ) {
+                    $this.data('mb-slideshow', new MultiBackgroundSlideshow($this));
+                }
+
                 // Check action
                 if("string" !== typeof options["action"]) {
                     throw "Plugin options must specify a \"action\" param with a value of type \"string\"";
@@ -90,10 +98,7 @@ function onGoogleMapsAPIReady() {
                         }
 
                         // Add layer to slideshow
-                        if("undefined" !== typeof options["slideshow"]) {
-                            if("undefined" === typeof $this.data("mb-slideshow")) {
-                                $this.data("mb-slideshow", new MultiBackgroundSlideshow($this));
-                            }
+                        if($this[0].hasAttribute('data-multibackground-slideshow-direction')) {
                             $this.data("mb-slideshow").prepend($element, options);
                         }
 
@@ -125,10 +130,7 @@ function onGoogleMapsAPIReady() {
                         }
 
                         // Add layer to slideshow
-                        if("undefined" !== typeof options["slideshow"]) {
-                            if("undefined" === typeof $this.data("mb-slideshow")) {
-                                $this.data("mb-slideshow", new MultiBackgroundSlideshow($this));
-                            }
+                        if($this[0].hasAttribute('data-multibackground-slideshow-direction')) {
                             $this.data("mb-slideshow").append($element, options);
                         }
 
@@ -144,16 +146,13 @@ function onGoogleMapsAPIReady() {
                             throw "Plugin options must specify a \"index\" param with a value of type \"integer\"";
                         }
 
-                        // Find layer by the given index, deregister callbacks, remove from slideshow and remove it from DOM
+                        // Find layer by the given index, deregister callbacks and remove it from DOM
                         var $layer = $this.find("> [data-multibackground-layer=\"" + index + "\"]");
                         if(0 === $layer.length) {
                             throw "There is no MultiBackground layer for index: " + index;
                         }
                         if("function" === typeof $layer.data("mb-refresh")) {
                             $.fn.multiBackground._refreshEvents.remove($layer.data("mb-refresh"));
-                        }
-                        if("undefined" !== typeof $this.data("mb-slideshow")) {
-                            $this.data("mb-slideshow").remove($layer);
                         }
                         $layer.remove();
 
@@ -261,16 +260,9 @@ function onGoogleMapsAPIReady() {
                         break;
 
                     // Start slideshow playback
-                    case "playSlideshow":
+                    case "startSlideshow":
                         if("undefined" !== typeof $this.data("mb-slideshow")) {
-                            $this.data("mb-slideshow").play();
-                        }
-                        break;
-
-                    // Pause slideshow playback
-                    case "pauseSlideshow":
-                        if("undefined" !== typeof $this.data("mb-slideshow")) {
-                            $this.data("mb-slideshow").pause();
+                            $this.data("mb-slideshow").start();
                         }
                         break;
 
@@ -281,10 +273,31 @@ function onGoogleMapsAPIReady() {
                         }
                         break;
 
-                    // Destroy slideshow
-                    case "destroySlideshow":
+                    // Pause slideshow playback
+                    case "pauseSlideshow":
                         if("undefined" !== typeof $this.data("mb-slideshow")) {
-                            $this.data("mb-slideshow").destroy($this);
+                            $this.data("mb-slideshow").pause();
+                        }
+                        break;
+
+                    // Resume slideshow playback
+                    case "resumeSlideshow":
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").resume();
+                        }
+                        break;
+
+                    // Play next slide
+                    case "nextSlideshow":
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").next(options['callback']);
+                        }
+                        break;
+
+                    // Play prev slide
+                    case "prevSlideshow":
+                        if("undefined" !== typeof $this.data("mb-slideshow")) {
+                            $this.data("mb-slideshow").prev(options['callback']);
                         }
                         break;
 
@@ -403,7 +416,7 @@ function onGoogleMapsAPIReady() {
         if(color.isTranslucent()) {
             $element.attr("data-multibackground-translucent", "");
         }
-        if("undefined" === typeof options["slideshow"]) {
+        if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
             $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
         }
         return $element;
@@ -510,7 +523,7 @@ function onGoogleMapsAPIReady() {
         if(hasTranslucent) {
             $element.attr("data-multibackground-translucent", "");
         }
-        if("undefined" === typeof options["slideshow"]) {
+        if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
             $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
         }
         return $element;
@@ -536,7 +549,7 @@ function onGoogleMapsAPIReady() {
         switch(options["attachment"]) {
             case "fixed":
                 var refresh = function(forceVisible) {
-                    $.fn.multiBackground._refreshAttachment($element, true, false, false, 0, forceVisible);
+                    $.fn.multiBackground._refreshAttachment($element, true, false, false, 0, 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['horizontal'] ? options['alignment']['horizontal'] : 'center', 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['vertical'] ? options['alignment']['vertical'] : 'middle', forceVisible);
                     return true;
                 };
                 $element.data("mb-refresh", refresh);
@@ -545,7 +558,7 @@ function onGoogleMapsAPIReady() {
                 break;
             case "static":
                 var refresh = function(forceVisible) {
-                    $.fn.multiBackground._refreshAttachment($element, false, true, false, 0, forceVisible);
+                    $.fn.multiBackground._refreshAttachment($element, false, true, false, 0, 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['horizontal'] ? options['alignment']['horizontal'] : 'center', 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['vertical'] ? options['alignment']['vertical'] : 'middle', forceVisible);
                     return true;
                 };
                 $element.data("mb-refresh", refresh);
@@ -558,7 +571,7 @@ function onGoogleMapsAPIReady() {
                     parallaxSpeed   = 1;
                 }
                 var refresh = function(forceVisible) {
-                    $.fn.multiBackground._refreshAttachment($element, false, false, true, parallaxSpeed, forceVisible);
+                    $.fn.multiBackground._refreshAttachment($element, false, false, true, parallaxSpeed, 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['horizontal'] ? options['alignment']['horizontal'] : 'center', 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['vertical'] ? options['alignment']['vertical'] : 'middle', forceVisible);
                     return true;
                 };
                 $element.data("mb-refresh", refresh);
@@ -597,7 +610,7 @@ function onGoogleMapsAPIReady() {
             $element.data("mb-height", image.height);
             $element.append($image);
             $element.triggerHandler("mb-refresh");
-            if("undefined" === typeof options["slideshow"]) {
+            if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
                 $.fn.multiBackground._transite(options["transitionloaded"], $image, 1);
             } else {
                 $image.css("opacity", 1);
@@ -636,7 +649,7 @@ function onGoogleMapsAPIReady() {
             $element.data("mb-height", image.height);
             $element.append($pattern);
             $element.triggerHandler("mb-refresh");
-            if("undefined" === typeof options["slideshow"]) {
+            if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
                 $.fn.multiBackground._transite(options["transitionloaded"], $pattern, 1);
             } else {
                 $pattern.css("opacity", 1);
@@ -690,7 +703,7 @@ function onGoogleMapsAPIReady() {
             $element.data("mb-width", this.videoWidth);
             $element.data("mb-height", this.videoHeight);
             $element.triggerHandler("mb-refresh");
-            if("undefined" === typeof options["slideshow"]) {
+            if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
                 $.fn.multiBackground._transite(options["transitionloaded"], $video, 1);
             } else {
                 $video.css("opacity", 1);
@@ -761,7 +774,7 @@ function onGoogleMapsAPIReady() {
                             e.target.unMute();
                         }
                         $element.triggerHandler("mb-refresh");
-                        if("undefined" === typeof options["slideshow"]) {
+                        if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
                             $.fn.multiBackground._transite(options["transitionloaded"], $video, 1);
                         } else {
                             $video.css("opacity", 1);
@@ -815,7 +828,7 @@ function onGoogleMapsAPIReady() {
                 $element.data("mb-width", options["video"]["width"]);
                 $element.data("mb-height", options["video"]["height"]);
                 $element.triggerHandler("mb-refresh");
-                if("undefined" === typeof options["slideshow"]) {
+                if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
                     $.fn.multiBackground._transite(options["transitionloaded"], $video, 1);
                 } else {
                     $video.css("opacity", 1);
@@ -849,7 +862,7 @@ function onGoogleMapsAPIReady() {
         var $element  = $("<iframe src=\"" + options["url"] + "\" scrolling=\"no\" style=\"width:100%;height:100%;border:0;opacity:0;min-width:0;max-width:none;min-height:0;max-height:none;overflow:hidden\"/>");
         $element.bind("load", function() {
             $element.unbind("load");
-            if("undefined" === typeof options["slideshow"]) {
+            if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
                 $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
             }
         });
@@ -904,7 +917,7 @@ function onGoogleMapsAPIReady() {
                 }
                 var marker = new google.maps.Marker(markerOptions);
             }
-            if("undefined" === typeof options["slideshow"]) {
+            if("undefined" === typeof $element.parents('[data-multibackground]').attr('data-multibackground-slideshow-direction')) {
                 $.fn.multiBackground._transite(options["transitionloaded"], $element, 1);
             }
         };
@@ -930,33 +943,13 @@ function onGoogleMapsAPIReady() {
         if(0 < $element.children(".mb-s").length) {
             return $element;
         }
-        var vnd         = function(s) {
-            var result  = "";
-            var vendors = ["-webkit-", "-moz-", "-ms-", "-o-", ""];
-            for(var i = 0; i < vendors.length; i++) {
-                result  += s.replace(/%v/g, vendors[i]);
-            }
-            return result;
-        };
-        var $spinner    = $("<div class=\"mb-s\"/>");
-        var $dot1       = $("<div class=\"mb-d1\"/>");
-        var $dot2       = $("<div class=\"mb-d2\"/>");
-        var $dot3       = $("<div class=\"mb-d3\"/>");
-        var $dot4       = $("<div class=\"mb-d4\"/>");
-        $spinner.append($dot1);
-        $spinner.append($dot2);
-        $spinner.append($dot3);
-        $spinner.append($dot4);
-        $element.prepend($spinner);
-        if(0 === $("#mb-s").length) {
-            $("head").append('<style id="mb-s" type="text/css">.mb-s{width:40px;height:40px;position:absolute;top:50%;left:50%;margin:-20px 0 0 -20px;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);-ms-transform:rotate(45deg);transform:rotate(45deg)}.mb-s .mb-d1,.mb-s .mb-d2,.mb-s .mb-d3,.mb-s .mb-d4{width:20px;height:20px;position:absolute;top:0;left:0;background:#000}.mb-s .mb-d1{-webkit-animation:mb-a-1 1s infinite;-moz-animation:mb-a-1 1s infinite;-o-animation:mb-a-1 1s infinite;animation:mb-a-1 1s infinite}.mb-s .mb-d2{left:20px;-webkit-animation:mb-a-2 1s infinite;-moz-animation:mb-a-2 1s infinite;-o-animation:mb-a-2 1s infinite;animation:mb-a-2 1s infinite}.mb-s .mb-d3{top:20px;-webkit-animation:mb-a-3 1s infinite;-moz-animation:mb-a-3 1s infinite;-o-animation:mb-a-3 1s infinite;animation:mb-a-3 1s infinite}.mb-s .mb-d4{top:20px;left:20px;-webkit-animation:mb-a-4 1s infinite;-moz-animation:mb-a-4 1s infinite;-o-animation:mb-a-4 1s infinite;animation:mb-a-4 1s infinite}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-1{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,-5px)rotate(0)}66%{-webkit-transform:translate(-5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-1{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(-5px,-5px)rotate(0)}66%{-moz-transform:translate(-5px,-5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-1{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(-5px,-5px)rotate(0)}66%{-o-transform:translate(-5px,-5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-1{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,-5px)rotate(0);-moz-transform:translate(-5px,-5px)rotate(0);-ms-transform:translate(-5px,-5px)rotate(0);transform:translate(-5px,-5px)rotate(0)}66%{-webkit-transform:translate(-5px,-5px)rotate(90deg);-moz-transform:translate(-5px,-5px)rotate(90deg);-ms-transform:translate(-5px,-5px)rotate(90deg);transform:translate(-5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-2{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,-5px)rotate(0)}66%{-webkit-transform:translate(5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-2{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(5px,-5px)rotate(0)}66%{-moz-transform:translate(5px,-5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-2{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(5px,-5px)rotate(0)}66%{-o-transform:translate(5px,-5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-2{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,-5px)rotate(0);-moz-transform:translate(5px,-5px)rotate(0);-ms-transform:translate(5px,-5px)rotate(0);transform:translate(5px,-5px)rotate(0)}66%{-webkit-transform:translate(5px,-5px)rotate(90deg);-moz-transform:translate(5px,-5px)rotate(90deg);-ms-transform:translate(5px,-5px)rotate(90deg);transform:translate(5px,-5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-3{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,5px)rotate(0)}66%{-webkit-transform:translate(-5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-3{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(-5px,5px)rotate(0)}66%{-moz-transform:translate(-5px,5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-3{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(-5px,5px)rotate(0)}66%{-o-transform:translate(-5px,5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-3{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(-5px,5px)rotate(0);-moz-transform:translate(-5px,5px)rotate(0);-ms-transform:translate(-5px,5px)rotate(0);transform:translate(-5px,5px)rotate(0)}66%{-webkit-transform:translate(-5px,5px)rotate(90deg);-moz-transform:translate(-5px,5px)rotate(90deg);-ms-transform:translate(-5px,5px)rotate(90deg);transform:translate(-5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}lesshat-selector{-lh-property:0}@-webkit-keyframes mb-a-4{0%{-webkit-transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,5px)rotate(0)}66%{-webkit-transform:translate(5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg)}}@-moz-keyframes mb-a-4{0%{-moz-transform:translate(0)rotate(0)}33%{-moz-transform:translate(5px,5px)rotate(0)}66%{-moz-transform:translate(5px,5px)rotate(90deg)}100%{-moz-transform:translate(0)rotate(90deg)}}@-o-keyframes mb-a-4{0%{-o-transform:translate(0)rotate(0)}33%{-o-transform:translate(5px,5px)rotate(0)}66%{-o-transform:translate(5px,5px)rotate(90deg)}100%{-o-transform:translate(0)rotate(90deg)}}@keyframes mb-a-4{0%{-webkit-transform:translate(0)rotate(0);-moz-transform:translate(0)rotate(0);-ms-transform:translate(0)rotate(0);transform:translate(0)rotate(0)}33%{-webkit-transform:translate(5px,5px)rotate(0);-moz-transform:translate(5px,5px)rotate(0);-ms-transform:translate(5px,5px)rotate(0);transform:translate(5px,5px)rotate(0)}66%{-webkit-transform:translate(5px,5px)rotate(90deg);-moz-transform:translate(5px,5px)rotate(90deg);-ms-transform:translate(5px,5px)rotate(90deg);transform:translate(5px,5px)rotate(90deg)}100%{-webkit-transform:translate(0)rotate(90deg);-moz-transform:translate(0)rotate(90deg);-ms-transform:translate(0)rotate(90deg);transform:translate(0)rotate(90deg)}}</style>');
-        }
+        $element.prepend('<div class="mb-s" style="width:64px;height:64px;position:absolute;top:50%;left:50%;margin:-32px 0 0 -32px"><svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 100"><g transform="rotate(-45 50 50)"><g><g><g><g transform="translate(50,50)"><g><rect x="0" y="0" width="30" height="30" fill="#ff5722" transform="rotate(45 15 15) translate(-21.21320343559643,0)"><animate attributeName="fill" values="#ff5722;#ff5722;#00bcd4;#ff5722;#8bc34a;#ff5722;#ffc107;#ff5722;#ff5722" keyTimes="0;.125;.25;.375;.5;.625;.75;.875;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="8" repeatCount="indefinite"/></rect><animateTransform attributeName="transform" type="scale" values=".35;.35;1;1;.35;.35" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -28.78679656440357;0 -28.78679656440357;0 0;0 0" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g><animateTransform attributeName="transform" type="rotate" values="0 50 21.21320343559643;0 50 21.21320343559643;180 50 21.21320343559643;360 50 21.21320343559643;360 50 21.21320343559643" keyTimes="0;.1;.5;.9;1" calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 1 .5;0 0 1 .5" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><g transform="rotate(90 50 50)"><g><g><g transform="translate(50,50)"><g><rect x="0" y="0" width="30" height="30" fill="#00bcd4" transform="rotate(45 15 15) translate(-21.21320343559643,0)"><animate attributeName="fill" values="#ff5722;#00bcd4;#00bcd4;#00bcd4;#8bc34a;#00bcd4;#ffc107;#00bcd4;#ff5722" keyTimes="0;.125;.25;.375;.5;.625;.75;.875;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="8" repeatCount="indefinite"/></rect><animateTransform attributeName="transform" type="scale" values=".35;.35;1;1;.35;.35" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -28.78679656440357;0 -28.78679656440357;0 0;0 0" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g><animateTransform attributeName="transform" type="rotate" values="0 50 21.21320343559643;0 50 21.21320343559643;180 50 21.21320343559643;360 50 21.21320343559643;360 50 21.21320343559643" keyTimes="0;.1;.5;.9;1" calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 1 .5;0 0 1 .5" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><g transform="rotate(180 50 50)"><g><g><g transform="translate(50,50)"><g><rect x="0" y="0" width="30" height="30" fill="#8bc34a" transform="rotate(45 15 15) translate(-21.21320343559643,0)"><animate attributeName="fill" values="#ff5722;#8bc34a;#00bcd4;#8bc34a;#8bc34a;#8bc34a;#ffc107;#8bc34a;#ff5722" keyTimes="0;.125;.25;.375;.5;.625;.75;.875;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="8" repeatCount="indefinite"/></rect><animateTransform attributeName="transform" type="scale" values=".35;.35;1;1;.35;.35" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -28.78679656440357;0 -28.78679656440357;0 0;0 0" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g><animateTransform attributeName="transform" type="rotate" values="0 50 21.21320343559643;0 50 21.21320343559643;180 50 21.21320343559643;360 50 21.21320343559643;360 50 21.21320343559643" keyTimes="0;.1;.5;.9;1" calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 1 .5;0 0 1 .5" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><g transform="rotate(270 50 50)"><g><g><g transform="translate(50,50)"><g><rect x="0" y="0" width="30" height="30" fill="#ffc107" transform="rotate(45 15 15) translate(-21.21320343559643,0)"><animate attributeName="fill" values="#ff5722;#ffc107;#00bcd4;#ffc107;#8bc34a;#ffc107;#ffc107;#ffc107;#ff5722" keyTimes="0;.125;.25;.375;.5;.625;.75;.875;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="8" repeatCount="indefinite"/></rect><animateTransform attributeName="transform" type="scale" values=".35;.35;1;1;.35;.35" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><animateTransform attributeName="transform" type="translate" values="0 0;0 0;0 -28.78679656440357;0 -28.78679656440357;0 0;0 0" keyTimes="0;.1;.4;.6;.9;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/></g><animateTransform attributeName="transform" type="rotate" values="0 50 21.21320343559643;0 50 21.21320343559643;180 50 21.21320343559643;360 50 21.21320343559643;360 50 21.21320343559643" keyTimes="0;.1;.5;.9;1" calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 1 .5;0 0 1 .5" begin="0s" dur="2s" repeatCount="indefinite"/></g></g><circle cx="50" cy="50" r="25" fill="#ff5722"><animate attributeName="r" values="25;0;0;25" keyTimes="0;.2;.85;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="2s" repeatCount="indefinite"/><animate attributeName="fill" values="#ff5722;#ff5722;#00bcd4;#00bcd4;#00bcd4;#8bc34a;#8bc34a;#8bc34a;#ffc107;#ffc107;#ffc107;#ff5722;#ff5722" keyTimes="0;.05;.051;.25;.3;.301;.5;.55;.551;.75;.8;.801;1" begin="0s" dur="8s" repeatCount="indefinite"/></circle><animateTransform attributeName="transform" type="rotate" values="-45 50 50;45 50 50;135 50 50;225 50 50;315 50 50" keyTimes="0;.25;.5;.75;1" calcMode="spline" keySplines=".5 0 .5 1;.5 0 .5 1;.5 0 .5 1;.5 0 .5 1" begin="0s" dur="8s" repeatCount="indefinite"/></g></svg></div?');
         return $element;
     };
 
     // Refresh position and size for all attachment types
     // TODO Unit tests
-    $.fn.multiBackground._refreshAttachment = function($element, isFixed, isStatic, isParallax, parallaxSpeed, forceVisible) {
+    $.fn.multiBackground._refreshAttachment = function($element, isFixed, isStatic, isParallax, parallaxSpeed, horizontalAlignment, verticalAlignment, forceVisible) {
         if(true !== forceVisible && (true !== $element.data("mb-ready") || !$.fn.multiBackground._isVisible($element, true))) {
             return this;
         }
@@ -992,7 +985,7 @@ function onGoogleMapsAPIReady() {
         }
 
         var positionLeft    = Math.round((viewportWidth - elementWidth) / 2),
-            positionTop     = 0;
+            positionTop     = Math.round((viewportHeight - elementHeight) / 2);
 
         if(isParallax) {
             var offset      = $element.offset().top,
@@ -1003,7 +996,22 @@ function onGoogleMapsAPIReady() {
         } else if(isStatic) {
             positionTop     = Math.round((windowHeight - elementHeight) / 2) - $element.offset().top + $window.scrollTop();
         } else {
-            positionTop     = Math.round((viewportHeight - elementHeight) / 2);
+            switch(verticalAlignment) {
+                case 'top':
+                    positionTop     = 0;
+                    break;
+                case 'bottom':
+                    positionTop     = viewportHeight - elementHeight;
+                    break;
+            }
+            switch(horizontalAlignment) {
+                case 'left':
+                    positionLeft    = 0;
+                    break;
+                case 'right':
+                    positionLeft    = viewportWidth - elementWidth;
+                    break;
+            }
         }
 
         $element.find("> [data-multibackground-inner]").css({"width": elementWidth + "px", "height": elementHeight + "px", "left": positionLeft + "px", "top": positionTop + "px"});
@@ -1121,7 +1129,6 @@ function onGoogleMapsAPIReady() {
             for(var i = $array.index($element) + $element.find("*").length + 1; i < $array.length; i++) {
                 $i      = $array.eq(i);
                 if(!mark($i) && visible($i, true) && overlap($element, $i, true)) {
-                    console.log($i.get(0));
                     return false;
                 }
             }
@@ -1274,251 +1281,175 @@ function onGoogleMapsAPIReady() {
     };
 
     // Slideshow controllers
-    // TODO Unit tests
-    var MultiBackgroundSlideshow                        = function() {
-        this.run(0);
-    };
-    MultiBackgroundSlideshow.prototype.TYPE_FORWARD     = 0;
-    MultiBackgroundSlideshow.prototype.TYPE_BACKWARD    = 1;
-    MultiBackgroundSlideshow.prototype.TYPE_RANDOM      = 2;
-    MultiBackgroundSlideshow.prototype.runner           = null;
-    MultiBackgroundSlideshow.prototype.layers           = {0: [], 1: [], 2: []}; // Keys must correspond to TYPE_* params
-    MultiBackgroundSlideshow.prototype.currentLayer     = {0: null, 1: null, 2: null}; // Keys must correspond to TYPE_* params
-    MultiBackgroundSlideshow.prototype.playbacks        = { // Keys must correspond to TYPE_* params
-        0: {callback: null, timeout: null},
-        1: {callback: null, timeout: null},
-        2: {callback: null, timeout: null}
-    };
-    MultiBackgroundSlideshow.prototype.loops            = { // Keys must correspond to TYPE_* params
-        0: function(obj) {
-            var loop = {};
-            if(null === obj.currentLayer[obj.TYPE_FORWARD]) {
-                obj.currentLayer[obj.TYPE_FORWARD] = -1;
-                loop.prev = null;
-            } else {
-                loop.prev = obj.currentLayer[obj.TYPE_FORWARD];
-            }
-            obj.currentLayer[obj.TYPE_FORWARD]++;
-            if(obj.currentLayer[obj.TYPE_FORWARD] >= obj.layers[obj.TYPE_FORWARD].length) {
-                obj.currentLayer[obj.TYPE_FORWARD] = 0;
-            }
-            loop.next = obj.currentLayer[obj.TYPE_FORWARD];
-            return loop;
-        },
-        1: function(obj) {
-            var loop = {};
-            if(null === obj.currentLayer[obj.TYPE_BACKWARD]) {
-                obj.currentLayer[obj.TYPE_BACKWARD] = obj.layers[obj.TYPE_BACKWARD].length;
-                loop.prev = null;
-            } else {
-                loop.prev = obj.currentLayer[obj.TYPE_BACKWARD];
-            }
-            obj.currentLayer[obj.TYPE_BACKWARD]--;
-            if(obj.currentLayer[obj.TYPE_BACKWARD] < 0) {
-                obj.currentLayer[obj.TYPE_BACKWARD] = obj.layers[obj.TYPE_BACKWARD].length - 1;
-            }
-            loop.next = obj.currentLayer[obj.TYPE_BACKWARD];
-            return loop;
-        },
-        2: function(obj) {
-            var loop = {};
-            var rand = [];
-            for(var i = 0; i < obj.layers[obj.TYPE_RANDOM].length; i++) {
-                rand.push(i);
-            }
-            if(null === obj.currentLayer[obj.TYPE_RANDOM]) {
-                loop.prev = null;
-            } else {
-                loop.prev = obj.currentLayer[obj.TYPE_RANDOM];
-                rand.splice(loop.prev, 1);
-            }
-            if(0 === rand.length) {
-                loop.next = loop.prev;
-            } else {
-                loop.next = rand[Math.round(Math.random() * (rand.length - 1))];
-                obj.currentLayer[obj.TYPE_RANDOM] = loop.next;
-            }
-            return loop;
-        }
-    };
-    MultiBackgroundSlideshow.prototype.append           = function($layer, options) {
-        if("undefined" === typeof options["slideshow"]["loop"]) {
-            throw "The \"slideshow\" key must be an object, and must specify a \"loop\" with a value of type \"string\".";
-        }
-        switch(options["slideshow"]["loop"]) {
-            case "forward":
-                this.layers[this.TYPE_FORWARD].push($layer);
-                break;
-            case "backward":
-                this.layers[this.TYPE_BACKWARD].push($layer);
-                break;
-            case "random":
-                this.layers[this.TYPE_RANDOM].push($layer);
-                break;
-            default:
-                throw "Unsupported [\"slideshow\"][\"loop\"] value.";
-        }
-        $layer.css("opacity", 0);
-        $layer.data("mb-slideshow", {
-            transition: "undefined" === typeof options["slideshow"]["transition"] ? "linear,500" : options["slideshow"]["transition"],
-            delay:      "undefined" === typeof options["slideshow"]["delay"] ? 2000 : parseInt(options["slideshow"]["delay"])
-        });
-        return this;
-    };
-    MultiBackgroundSlideshow.prototype.prepend          = function($layer, options) {
-        if("undefined" === typeof options["slideshow"]["loop"]) {
-            throw "The \"slideshow\" key must be an object, and must specify a \"loop\" with a value of type \"string\".";
-        }
-        switch(options["slideshow"]["loop"]) {
-            case "forward":
-                this.layers[this.TYPE_FORWARD].unshift($layer);
-                break;
-            case "backward":
-                this.layers[this.TYPE_BACKWARD].unshift($layer);
-                break;
-            case "random":
-                this.layers[this.TYPE_RANDOM].unshift($layer);
-                break;
-            default:
-                throw "Unsupported [\"slideshow\"][\"loop\"] value.";
-        }
-        $layer.css("opacity", 0);
-        $layer.data("mb-slideshow", {
-            transition: "undefined" === typeof options["slideshow"]["transition"] ? "linear,500" : options["slideshow"]["transition"],
-            delay:      "undefined" === typeof options["slideshow"]["delay"] ? 2000 : parseInt(options["slideshow"]["delay"])
-        });
-        return this;
-    };
-    MultiBackgroundSlideshow.prototype.remove           = function($layer) {
-        var idx;
-        if(0 < this.layers[this.TYPE_FORWARD].length) {
-            if(0 <= (idx = this.layers[this.TYPE_FORWARD].indexOf($layer))) {
-                $layer.removeData("mb-slideshow");
-                this.layers[this.TYPE_FORWARD].splice(idx, 1);
-                return this;
-            }
-        }
-        if(0 < this.layers[this.TYPE_BACKWARD].length) {
-            if(0 <= (idx = this.layers[this.TYPE_BACKWARD].indexOf($layer))) {
-                $layer.removeData("mb-slideshow");
-                this.layers[this.TYPE_BACKWARD].splice(idx, 1);
-                return this;
-            }
-        }
-        if(0 < this.layers[this.TYPE_RANDOM].length) {
-            if(0 <= (idx = this.layers[this.TYPE_RANDOM].indexOf($layer))) {
-                $layer.removeData("mb-slideshow");
-                this.layers[this.TYPE_RANDOM].splice(idx, 1);
-                return this;
-            }
-        }
-        return this;
-    };
-    MultiBackgroundSlideshow.prototype.run              = function(retry) {
-        var self = this;
+    var MultiBackgroundSlideshow                        = function($handle) {
+        // Flags & counters
+        this.startForward                               = true;
+        this.manualStarted                              = null;
+        this.currentLayer                               = null;
+        this.autoplay                                   = true;
+        this.tick                                       = 0;
+        this.tickDelay                                  = 10;
 
-        if(null !== self.runner) {
-            clearTimeout(self.runner);
-        }
-
-        var loop = function(type, loop) {
-            if(null !== loop.prev && loop.prev === loop.next) {
-                return 60000;
-            }
-            if(null !== loop.prev) {
-                self.layers[type][loop.prev].after(self.layers[type][loop.next]);
-            }
-            if("undefined" !== typeof self.layers[type][loop.next].data("mb-refresh")) {
-                self.layers[type][loop.next].data("mb-refresh")(true);
-            }
-            var transition = $.fn.multiBackground._transite(self.layers[type][loop.next].data("mb-slideshow").transition, self.layers[type][loop.next], 1);
-            if(null !== loop.prev) {
-                self.layers[type][loop.prev].data("mb-slideshow-hide", setTimeout(function() {
-                    self.layers[type][loop.prev].css("opacity", 0);
-                }, transition.duration + 50));
-            }
-            return transition.duration + self.layers[type][loop.next].data("mb-slideshow").delay;
-        };
-
-        var play = function(type) {
-            if(null === self.playbacks[type].timeout && 0 < self.layers[type].length) {
-                if($.fn.multiBackground._layersReady(self.layers[type])) {
-                    self.playbacks[type].callback = function() {
-                        self.playbacks[type].timeout = setTimeout(self.playbacks[type].callback, loop(type, self.loops[type](self)));
-                    };
-                    self.playbacks[type].callback();
-                } else {
-                    setTimeout(function() {
-                        play(type);
-                    }, 100);
+        // Slideshow direction
+        var autoStartSlideshow                          = true;
+        var direction                                   = $handle.attr('data-multibackground-slideshow-direction');
+        switch(direction) {
+            case 'manual':
+                this.manualStarted                      = false;
+            case 'forward':
+                this.getPrev                            = function(current, total) {
+                    return current <= 0 ? total - 1 : current - 1;
+                };
+                this.getNext                            = function(current, total) {
+                    return current >= total - 1 ? 0 : current + 1;
+                };
+                if('manual' == direction) {
+                    this.autoplay                       = false;
                 }
-            }
-        };
+                break;
 
-        play(self.TYPE_FORWARD);
-        play(self.TYPE_BACKWARD);
-        play(self.TYPE_RANDOM);
+            case 'backward':
+                this.startForward                       = false;
+                this.getPrev                            = function(current, total) {
+                    return current >= total - 1 ? 0 : current + 1;
+                };
+                this.getNext                            = function(current, total) {
+                    return current <= 0 ? total - 1 : current - 1;
+                };
+                break;
 
-        if(100 > retry && (
-            0 === self.layers[self.TYPE_FORWARD].length ||
-            0 === self.layers[self.TYPE_BACKWARD].length ||
-            0 === self.layers[self.TYPE_RANDOM].length
-        )) {
-            self.runner = setTimeout(function() {
-                self.run(retry + 1);
-            }, 100);
+            case 'random':
+                var rand                                = function(current, total) {
+                    var random                          = Math.round(Math.random() * (total - 1));
+                    return current == random ? rand(current, total) : random;
+                };
+                this.getPrev = this.getNext             = rand;
+                break;
+
+            default:
+                throw "Unsupported slideshow direction: \"" + $handle.attr('data-multibackground-slideshow-direction') + "\"";
         }
+
+        // References
+        this.$handle                                    = $handle;
+
+        // Run broker
+        this.run();
     };
-    MultiBackgroundSlideshow.prototype.play             = function() {
-        for(var i in this.playbacks) {
-            this.playbacks[i].timeout = null;
+
+    // Slideshow runner / broker
+    MultiBackgroundSlideshow.prototype.run              = function() {
+        // References
+        var self                                        = this;
+        var $layers                                     = this.$handle.find('[data-multibackground-layer]');
+
+        // Tick
+        self.tick                                       += 10;
+
+        // Wait for all layers to be available and ready
+        if(0 == $layers.length || !$.fn.multiBackground._layersReady($layers)) {
+            self.tick                                   = 0;
+            setTimeout(function() { self.run() }, 10);
+            return;
         }
-        this.run(100);
+
+        // Paused?
+        if(!self.autoplay) {
+            self.tick                                   -= 10;
+
+            // Auto-play is off in two cases: paused / stopped playback or manual mode
+            // If manualStarted is boolean then playback is in manual mode, if it's NULL then it's paused / stopped
+            // In case of manual mode playback should be started just once, for the first slide
+            if(false === self.manualStarted) {
+                self.manualStarted                      = true;
+                self.slide(0);
+            }
+        }
+
+        // Time to auto-play?
+        if(self.tickDelay <= self.tick) {
+            if(null === self.currentLayer) {
+                self.currentLayer                       = self.startForward ? 0 : $layers.length - 1;
+            }
+            self.tick                                   = 0;
+            self.tickDelay                              = self.slide(self.currentLayer);
+            self.currentLayer                           = self.getNext(self.currentLayer, $layers.length)
+        }
+
+        // Reschedule run
+        setTimeout(function() { self.run() }, 10);
+    };
+
+    // Start slideshow auto-play
+    MultiBackgroundSlideshow.prototype.start            = function() {
+        this.tick                                       = 0;
+        this.tickDelay                                  = 10;
+        this.autoplay                                   = true;
         return this;
     };
-    MultiBackgroundSlideshow.prototype.pause            = function() {
-        for(var i in this.playbacks) {
-            if(null !== this.playbacks[i].timeout) {
-                clearTimeout(this.playbacks[i].timeout);
-            }
-        }
-        return this;
-    };
+
+    // Stop slideshow auto-play
     MultiBackgroundSlideshow.prototype.stop             = function() {
-        if(null !== this.runner) {
-            clearTimeout(this.runner);
-        }
-        for(var i in this.playbacks) {
-            if(null !== this.playbacks[i].timeout) {
-                clearTimeout(this.playbacks[i].timeout);
-            }
-            this.currentLayer[i] = null;
-        }
+        this.tick                                       = 0;
+        this.tickDelay                                  = 10;
+        this.autoplay                                   = false;
         return this;
     };
-    MultiBackgroundSlideshow.prototype.destroy          = function($element) {
-        var $layers = $element.find("> [data-multibackground-layer]");
 
-        this.stop();
-        $element.removeData("mb-slideshow");
-        $.fn.multiBackground._transiteStop($layers);
-        $layers.removeData("mb-slideshow").each(function() {
-            var $this = $(this);
-            if("undefined" !== typeof $this.data("mb-slideshow-hide")) {
-                clearTimeout($this.data("mb-slideshow-hide"));
-                $this.removeData("mb-slideshow-hide");
+    // Pause slideshow auto-play
+    MultiBackgroundSlideshow.prototype.pause            = function() {
+        this.autoplay                                   = false;
+        return this;
+    };
+
+    // Resume slideshow auto-play
+    MultiBackgroundSlideshow.prototype.resume           = function() {
+        this.autoplay                                   = true;
+        return this;
+    };
+
+    // Slide to the specified layer number
+    MultiBackgroundSlideshow.prototype.slide            = function(layer, transited) {
+        // Make sure the target layer is on top
+        var $target                                     = this.$handle.find('[data-multibackground-layer="' + layer + '"]');
+        this.$handle.find('[data-multibackground-content]').before($target);
+
+        // Refresh target layer and transite show
+        $target.data('mb-refresh')(true);
+        var transition                                  = $target.data('mb-slideshow').transition;
+        var delay                                       = $target.data('mb-slideshow').delay;
+        var transite                                    = $.fn.multiBackground._transite(transition, $target, 1);
+
+        // Hide top-most (currently under target) layer after target has been fully shown
+        setTimeout(function() {
+            $target.prev().css('opacity', 0);
+            if('function' == typeof transited) {
+                transited();
             }
-        }).sort(function(a, b) {
-            var an  = parseInt(a.getAttribute("data-multibackground-layer")),
-                bn  = parseInt(b.getAttribute("data-multibackground-layer"));
-            if(an > bn) {
-                return 1;
-            }
-            if(an < bn) {
-                return -1;
-            }
-            return 0;
-        }).css("opacity", 1).detach().prependTo($element);
+        }, transite.duration);
+
+        // Total delay until next auto-play
+        return transite.duration + delay;
+    };
+
+    // Slide to the previous layer
+    MultiBackgroundSlideshow.prototype.prev             = function(transited) {
+        return this.slide(this.currentLayer = this.getPrev(this.currentLayer, this.$handle.find('[data-multibackground-layer]').length), transited);
+    };
+
+    // Slide to the next layer
+    MultiBackgroundSlideshow.prototype.next             = function(transited) {
+        return this.slide(this.currentLayer = this.getNext(this.currentLayer, this.$handle.find('[data-multibackground-layer]').length), transited);
+    };
+
+    // Prepend or append a new layer
+    MultiBackgroundSlideshow.prototype.prepend          =
+    MultiBackgroundSlideshow.prototype.append           = function($layer, options) {
+        $layer.css("opacity", 0);
+        $layer.data("mb-slideshow", {
+            transition: "undefined" === typeof options["slideshow"] || "undefined" === typeof options["slideshow"]["transition"] ? "linear,500" : options["slideshow"]["transition"],
+            delay:      "undefined" === typeof options["slideshow"] || "undefined" === typeof options["slideshow"]["delay"] ? 2000 : parseInt(options["slideshow"]["delay"])
+        });
         return this;
     };
 

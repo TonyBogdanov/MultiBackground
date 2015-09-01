@@ -10,7 +10,7 @@
         <!-- Basic page information -->
         <meta name="author" content="http://tonybogdanov.com">
         <meta name="description" content="MultiBackground jQuery plugin for adaptive & powerful background effects.">
-        <title>MultiBackground 1.1.6 :: Free jQuery Backgrounds plugin</title>
+        <title>MultiBackground 1.1.7 :: Free jQuery Backgrounds plugin</title>
 
         <!-- Favicons -->
         <link rel="shortcut icon" href="./img/favicon.ico">
@@ -79,8 +79,9 @@
                                 <li><a href="./examples-youtube.html">YouTube videos</a></li>
                                 <li><a href="./examples-vimeo.html">Vimeo videos</a></li>
                                 <li><a href="./examples-iframe.html">iFrames</a></li>
-                                <li class="active"><a href="./examples-gmap.html">Google Maps</a></li>
-                                <li><a href="./examples-slideshow.html">Slideshow</a></li>
+                                <li><a href="./examples-gmap.html">Google Maps</a></li>
+                                <li class="active"><a href="./examples-slideshow.html">Slideshow</a></li>
+                                <li><a href="./examples-alignment.html">Alignment</a></li>
                             </ul>
                         </li>
                         <li><a href="../download.php" target="_blank">Download</a></li>
@@ -102,18 +103,16 @@
                     <div
                             class="demo-multibackground"
                             data-multibackground="debug"
+                            data-multibackground-slideshow-direction="forward"
                             data-multibackground-layer-0-type="image"
                             data-multibackground-layer-0-attachment="fixed"
                             data-multibackground-layer-0-url="./assets/birds.jpg"
-                            data-multibackground-layer-0-slideshow-loop="forward"
                             data-multibackground-layer-1-type="image"
                             data-multibackground-layer-1-attachment="fixed"
                             data-multibackground-layer-1-url="./assets/rose.jpg"
-                            data-multibackground-layer-1-slideshow-loop="forward"
                             data-multibackground-layer-2-type="image"
                             data-multibackground-layer-2-attachment="fixed"
-                            data-multibackground-layer-2-url="./assets/sunset.jpg"
-                            data-multibackground-layer-2-slideshow-loop="forward">
+                            data-multibackground-layer-2-url="./assets/sunset.jpg">
                         Forward slideshow
                     </div>
                 </div>
@@ -121,39 +120,59 @@
                     <div
                             class="demo-multibackground"
                             data-multibackground="debug"
+                            data-multibackground-slideshow-direction="backward"
                             data-multibackground-layer-0-type="image"
                             data-multibackground-layer-0-attachment="fixed"
                             data-multibackground-layer-0-url="./assets/birds.jpg"
-                            data-multibackground-layer-0-slideshow-loop="backward"
                             data-multibackground-layer-1-type="image"
                             data-multibackground-layer-1-attachment="fixed"
                             data-multibackground-layer-1-url="./assets/rose.jpg"
-                            data-multibackground-layer-1-slideshow-loop="backward"
                             data-multibackground-layer-2-type="image"
                             data-multibackground-layer-2-attachment="fixed"
-                            data-multibackground-layer-2-url="./assets/sunset.jpg"
-                            data-multibackground-layer-2-slideshow-loop="backward">
+                            data-multibackground-layer-2-url="./assets/sunset.jpg">
                         Backward slideshow
                     </div>
                 </div>
-                <div class="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+                <div class="col-lg-6 col-md-6 col-sm-6">
                     <div
                             class="demo-multibackground"
                             data-multibackground="debug"
+                            data-multibackground-slideshow-direction="random"
                             data-multibackground-layer-0-type="image"
                             data-multibackground-layer-0-attachment="fixed"
                             data-multibackground-layer-0-url="./assets/birds.jpg"
-                            data-multibackground-layer-0-slideshow-loop="random"
                             data-multibackground-layer-1-type="image"
                             data-multibackground-layer-1-attachment="fixed"
                             data-multibackground-layer-1-url="./assets/rose.jpg"
-                            data-multibackground-layer-1-slideshow-loop="random"
                             data-multibackground-layer-2-type="image"
                             data-multibackground-layer-2-attachment="fixed"
-                            data-multibackground-layer-2-url="./assets/sunset.jpg"
-                            data-multibackground-layer-2-slideshow-loop="random">
+                            data-multibackground-layer-2-url="./assets/sunset.jpg">
                         Random slideshow
                     </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div
+                            id="multibackground-manual"
+                            class="demo-multibackground"
+                            data-multibackground="debug"
+                            data-multibackground-slideshow-direction="manual"
+                            data-multibackground-layer-0-type="image"
+                            data-multibackground-layer-0-attachment="fixed"
+                            data-multibackground-layer-0-url="./assets/birds.jpg"
+                            data-multibackground-layer-1-type="image"
+                            data-multibackground-layer-1-attachment="fixed"
+                            data-multibackground-layer-1-url="./assets/rose.jpg"
+                            data-multibackground-layer-2-type="image"
+                            data-multibackground-layer-2-attachment="fixed"
+                            data-multibackground-layer-2-url="./assets/sunset.jpg">
+                        Manual slideshow
+                    </div>
+                    <a href="#" onclick="jQuery('#multibackground-manual').multiBackground({action:'startSlideshow'});return false;" class="btn btn-default">Start</a>
+                    <a href="#" onclick="jQuery('#multibackground-manual').multiBackground({action:'stopSlideshow'});return false;" class="btn btn-default">Stop</a>
+                    <a href="#" onclick="jQuery('#multibackground-manual').multiBackground({action:'pauseSlideshow'});return false;" class="btn btn-default">Pause</a>
+                    <a href="#" onclick="jQuery('#multibackground-manual').multiBackground({action:'resumeSlideshow'});return false;" class="btn btn-default">Resume</a>
+                    <a href="#" onclick="jQuery('#multibackground-manual').multiBackground({action:'prevSlideshow'});return false;" class="btn btn-default">Previous</a>
+                    <a href="#" onclick="jQuery('#multibackground-manual').multiBackground({action:'nextSlideshow'});return false;" class="btn btn-default">Next</a>
                 </div>
             </div>
         </div>
