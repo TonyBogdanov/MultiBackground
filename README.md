@@ -3,3 +3,5 @@ MultiBackground is a lightweight and flexible jQuery plugin for creation and man
 Please visit the project's homepage: http://multibackground.tonybogdanov.com
 
 Need a WordPress version? http://multibackground-wp.tonybogdanov.com
+
+test
