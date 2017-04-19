@@ -1,59 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="437a0ed5-743d-484f-b45e-7b2434569854" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-apollo.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-basic.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-clj.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-css.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-dart.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-erlang.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-go.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-hs.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-lisp.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-llvm.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-lua.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-matlab.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-ml.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-mumps.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-n.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-pascal.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-proto.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-r.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-rd.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-scala.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-sql.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-tcl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-tex.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-vb.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-vhdl.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-wiki.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-xq.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/lang-yaml.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/prettify.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/prettify.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/docs/prettify/run_prettify.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/playground.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/plugin/jquery.multibackground.min.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/documentation.html" afterPath="$PROJECT_DIR$/docs/documentation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-alignment.html" afterPath="$PROJECT_DIR$/docs/examples-alignment.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-color.html" afterPath="$PROJECT_DIR$/docs/examples-color.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-gmap.html" afterPath="$PROJECT_DIR$/docs/examples-gmap.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-iframe.html" afterPath="$PROJECT_DIR$/docs/examples-iframe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-image.html" afterPath="$PROJECT_DIR$/docs/examples-image.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-page-background.html" afterPath="$PROJECT_DIR$/docs/examples-page-background.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-pattern.html" afterPath="$PROJECT_DIR$/docs/examples-pattern.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-slideshow.html" afterPath="$PROJECT_DIR$/docs/examples-slideshow.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-video.html" afterPath="$PROJECT_DIR$/docs/examples-video.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-vimeo.html" afterPath="$PROJECT_DIR$/docs/examples-vimeo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-youtube.html" afterPath="$PROJECT_DIR$/docs/examples-youtube.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin/jquery.multibackground.js" afterPath="$PROJECT_DIR$/plugin/jquery.multibackground.js" />
-    </list>
+    <list default="true" id="437a0ed5-743d-484f-b45e-7b2434569854" name="Default" comment="" />
     <ignored path="MultiBackground.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -299,12 +247,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1407487475001</updated>
-      <workItem from="1492637769746" duration="685000" />
+      <workItem from="1492637769746" duration="902000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="685000" />
+    <option name="totallyTimeSpent" value="902000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
