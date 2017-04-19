@@ -1,5 +1,5 @@
 /*!
- * MultiBackground v1.1.7
+ * MultiBackground v1.1.8
  *  - http://multibackground.tonybogdanov.com
  *  - https://github.com/TonyBogdanov/MultiBackground
  *
@@ -744,7 +744,7 @@ function onGoogleMapsAPIReady() {
 
         // Load the YouTube API & wait for it to load
         if(0 === $("#youtube-api").length) {
-            var $script = $("<script src=\"http://www.youtube.com/player_api\" id=\"youtube-api\"/>");
+            var $script = $("<script src=\"//www.youtube.com/player_api\" id=\"youtube-api\"/>");
             $("script").first().before($script);
         }
         var apiLoaded = function() {
@@ -817,7 +817,7 @@ function onGoogleMapsAPIReady() {
         }
 
         // Create video element
-        var $video  = $("<iframe src=\"http://player.vimeo.com/video/" + options["id"] + "?api=1&badge=0&byline=0&title=0&autoplay=" + ($.fn.multiBackground._isTrue(options["video"]["autoplay"]) ? 1 : 0) + "&loop=" + ($.fn.multiBackground._isTrue(options["video"]["loop"]) ? 1 : 0) + "\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen data-multibackground-inner/>");
+        var $video  = $("<iframe src=\"//player.vimeo.com/video/" + options["id"] + "?api=1&badge=0&byline=0&title=0&autoplay=" + ($.fn.multiBackground._isTrue(options["video"]["autoplay"]) ? 1 : 0) + "&loop=" + ($.fn.multiBackground._isTrue(options["video"]["loop"]) ? 1 : 0) + "\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen data-multibackground-inner/>");
 
         // Attach listeners
         var onMessageReceived = function(e) {
