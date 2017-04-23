@@ -24,8 +24,8 @@
       <file leaf-file-name="jquery.multibackground.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/plugin/jquery.multibackground.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="768" column="44" lean-forward="false" selection-start-line="768" selection-start-column="28" selection-end-line="768" selection-end-column="44" />
+            <state relative-caret-position="511">
+              <caret line="767" column="32" lean-forward="true" selection-start-line="767" selection-start-column="32" selection-end-line="767" selection-end-column="32" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1492638286958" expanded="true" signature="4250:4269" ph="..." />
@@ -286,12 +286,12 @@
       <updated>1407487475001</updated>
       <workItem from="1492637769746" duration="902000" />
       <workItem from="1492850542504" duration="486000" />
-      <workItem from="1492950278087" duration="158000" />
+      <workItem from="1492950278087" duration="767000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1546000" />
+    <option name="totallyTimeSpent" value="2155000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -663,8 +663,8 @@
     <entry file="file://$PROJECT_DIR$/playground.html" />
     <entry file="file://$PROJECT_DIR$/plugin/jquery.multibackground.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="768" column="44" lean-forward="false" selection-start-line="768" selection-start-column="28" selection-end-line="768" selection-end-column="44" />
+        <state relative-caret-position="511">
+          <caret line="767" column="32" lean-forward="true" selection-start-line="767" selection-start-column="32" selection-end-line="767" selection-end-column="32" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1492638286958" expanded="true" signature="4250:4269" ph="..." />
