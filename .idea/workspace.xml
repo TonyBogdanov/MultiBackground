@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="437a0ed5-743d-484f-b45e-7b2434569854" name="Default" comment="" />
+    <list default="true" id="437a0ed5-743d-484f-b45e-7b2434569854" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/documentation.html" afterPath="$PROJECT_DIR$/docs/documentation.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-alignment.html" afterPath="$PROJECT_DIR$/docs/examples-alignment.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-color.html" afterPath="$PROJECT_DIR$/docs/examples-color.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-gmap.html" afterPath="$PROJECT_DIR$/docs/examples-gmap.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-iframe.html" afterPath="$PROJECT_DIR$/docs/examples-iframe.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-image.html" afterPath="$PROJECT_DIR$/docs/examples-image.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-page-background.html" afterPath="$PROJECT_DIR$/docs/examples-page-background.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-pattern.html" afterPath="$PROJECT_DIR$/docs/examples-pattern.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-slideshow.html" afterPath="$PROJECT_DIR$/docs/examples-slideshow.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-video.html" afterPath="$PROJECT_DIR$/docs/examples-video.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-vimeo.html" afterPath="$PROJECT_DIR$/docs/examples-vimeo.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-youtube.html" afterPath="$PROJECT_DIR$/docs/examples-youtube.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
+    </list>
     <ignored path="MultiBackground.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -15,29 +29,17 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="MultiBackground" />
   </component>
+  <component name="FileColors">
+    <fileColor scope="Non-Project Files (Material Default)" color="2E3C43" />
+    <fileColor scope="Non-Project Files (Material Darker)" color="323232" />
+    <fileColor scope="Non-Project Files (Material Lighter)" color="eae8e8" />
+    <fileColor scope="Non-Project Files (Material Palenight)" color="2f2e43" />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="jquery.multibackground.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/plugin/jquery.multibackground.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="511">
-              <caret line="767" column="32" lean-forward="true" selection-start-line="767" selection-start-column="32" selection-end-line="767" selection-end-column="32" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <marker date="1492638286958" expanded="true" signature="4250:4269" ph="..." />
-                <marker date="1492638286958" expanded="true" signature="5939:5958" ph="..." />
-                <marker date="1492638286958" expanded="true" signature="31440:31478" ph="..." />
-                <marker date="1492638286958" expanded="true" signature="42273:42386" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -55,6 +57,8 @@
       <find>&lt;script type=&quot;text/javascript&quot; src=&quot;./prettify/run_prettify.js&quot;&gt;&lt;/script&gt;</find>
       <find>&lt;title&gt;MultiBackground 1.1.7</find>
       <find>e.target.stop</find>
+      <find>&lt;script type=&quot;text/javascript&quot;&gt;			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');			ga('create', 'UA-43866318-8', 'auto');			ga('send', 'pageview');		&lt;/script&gt;</find>
+      <find>ua-</find>
     </findStrings>
     <replaceStrings>
       <replace>CW_Page_Profile</replace>
@@ -66,6 +70,7 @@
       <dir>C:\WEB\www\__codecanyon\MultiBackground\plugin</dir>
       <dir>C:\WEB\www\__codecanyon\MultiBackground</dir>
       <dir>C:\WEB\www\__codecanyon\MultiBackground\docs</dir>
+      <dir>C:\WEB\www\github\MultiBackground\docs</dir>
     </dirStrings>
   </component>
   <component name="FindManager">
@@ -81,26 +86,33 @@
       <list>
         <option value="$PROJECT_DIR$/../../loader.svg" />
         <option value="$PROJECT_DIR$/../../loader.php" />
-        <option value="$PROJECT_DIR$/docs/examples-alignment.html" />
-        <option value="$PROJECT_DIR$/docs/examples-video.html" />
-        <option value="$PROJECT_DIR$/docs/examples-pattern.html" />
-        <option value="$PROJECT_DIR$/docs/examples-youtube.html" />
-        <option value="$PROJECT_DIR$/docs/examples-vimeo.html" />
-        <option value="$PROJECT_DIR$/docs/examples-gmap.html" />
-        <option value="$PROJECT_DIR$/docs/examples-page-background.html" />
-        <option value="$PROJECT_DIR$/docs/examples-iframe.html" />
-        <option value="$PROJECT_DIR$/docs/examples-image.html" />
-        <option value="$PROJECT_DIR$/docs/examples-color.html" />
-        <option value="$PROJECT_DIR$/docs/examples-slideshow.html" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/docs/documentation.html" />
         <option value="$PROJECT_DIR$/plugin/jquery.multibackground.js" />
         <option value="$PROJECT_DIR$/docs/index.html" />
+        <option value="$PROJECT_DIR$/docs/examples-youtube.html" />
+        <option value="$PROJECT_DIR$/docs/examples-slideshow.html" />
+        <option value="$PROJECT_DIR$/docs/examples-video.html" />
+        <option value="$PROJECT_DIR$/docs/examples-vimeo.html" />
+        <option value="$PROJECT_DIR$/docs/examples-image.html" />
+        <option value="$PROJECT_DIR$/docs/examples-pattern.html" />
+        <option value="$PROJECT_DIR$/docs/examples-gmap.html" />
+        <option value="$PROJECT_DIR$/docs/examples-iframe.html" />
+        <option value="$PROJECT_DIR$/docs/examples-color.html" />
+        <option value="$PROJECT_DIR$/docs/examples-alignment.html" />
+        <option value="$PROJECT_DIR$/docs/documentation.html" />
+        <option value="$PROJECT_DIR$/docs/examples-page-background.html" />
       </list>
     </option>
   </component>
   <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsFlowSettings">
+    <service-enabled>false</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>false</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
@@ -109,7 +121,7 @@
     <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -134,36 +146,24 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MultiBackground" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MultiBackground" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MultiBackground" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MultiBackground" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="plugin" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
+          <expand>
+            <path>
+              <item name="MultiBackground" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MultiBackground" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="MultiBackground" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MultiBackground" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="docs" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+          </expand>
+          <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -200,6 +200,14 @@
     </option>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+    </configuration>
     <configuration default="true" type="CodeceptionConfigurationType" factoryName="Codeception">
       <PhpTestRunnerSettings />
       <method />
@@ -241,15 +249,6 @@
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-interpreter>project</node-interpreter>
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
       <command value="run" />
       <scripts />
@@ -287,11 +286,12 @@
       <workItem from="1492637769746" duration="902000" />
       <workItem from="1492850542504" duration="486000" />
       <workItem from="1492950278087" duration="767000" />
+      <workItem from="1504017862288" duration="127000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2155000" />
+    <option name="totallyTimeSpent" value="2282000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -315,12 +315,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2336" sideWeight="0.6712095" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23347548" sideWeight="0.6712095" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879046" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3270869" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.987013" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32879046" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25266525" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -334,12 +334,11 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2497332" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.987013" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="processedProjectFiles" value="true" />
+    <option name="version" value="1" />
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -365,10 +364,16 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1492638286958" expanded="true" signature="4250:4269" ph="..." />
-            <marker date="1492638286958" expanded="true" signature="5939:5958" ph="..." />
-            <marker date="1492638286958" expanded="true" signature="31440:31478" ph="..." />
-            <marker date="1492638286958" expanded="true" signature="42273:42386" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/plugin/jquery.multibackground.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -450,13 +455,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/assets/svg/tbox-check.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="17" column="35" lean-forward="false" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/assets/svg/tbox-check.svg" />
     <entry file="file://$PROJECT_DIR$/docs/examples-slideshow.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -464,13 +463,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../tools/tool/image-compressor.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../tools/tool/image-compressor.php" />
     <entry file="file://$PROJECT_DIR$/test/tests.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -513,114 +506,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/classes/Graphic/Loader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="30" column="9" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/classes/Graphic/Image.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="103" column="55" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../tools/tool/image-compressor.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="58" column="26" lean-forward="false" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/assets/svg/tbox-check.svg">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="17" column="35" lean-forward="false" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-alignment.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="83" column="50" lean-forward="false" selection-start-line="83" selection-start-column="50" selection-end-line="83" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-video.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="67" column="95" lean-forward="false" selection-start-line="67" selection-start-column="95" selection-end-line="67" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-pattern.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="67" column="95" lean-forward="false" selection-start-line="67" selection-start-column="95" selection-end-line="67" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-youtube.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="67" column="95" lean-forward="false" selection-start-line="67" selection-start-column="95" selection-end-line="67" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-vimeo.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="67" column="95" lean-forward="false" selection-start-line="67" selection-start-column="95" selection-end-line="67" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-page-background.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="86" column="95" lean-forward="false" selection-start-line="86" selection-start-column="95" selection-end-line="86" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-iframe.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="67" column="95" lean-forward="false" selection-start-line="67" selection-start-column="95" selection-end-line="67" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-image.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="67" column="95" lean-forward="false" selection-start-line="67" selection-start-column="95" selection-end-line="67" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-color.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="65" column="95" lean-forward="false" selection-start-line="65" selection-start-column="95" selection-end-line="65" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-slideshow.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="82" column="50" lean-forward="false" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/classes/Graphic/Loader.php" />
+    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/classes/Graphic/Image.php" />
+    <entry file="file://$PROJECT_DIR$/../../tools/tool/image-compressor.php" />
+    <entry file="file://$PROJECT_DIR$/../../__themeforest/__Framework/assets/svg/tbox-check.svg" />
     <entry file="file://$PROJECT_DIR$/plugin/jquery.multibackground.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3213">
           <caret line="2" column="2515" lean-forward="false" selection-start-line="2" selection-start-column="2515" selection-end-line="2" selection-end-column="2515" />
-          <folding>
-            <marker date="1492638287638" expanded="true" signature="1436:1455" ph="..." />
-            <marker date="1492638287638" expanded="true" signature="2156:2175" ph="..." />
-            <marker date="1492638287638" expanded="true" signature="15256:15290" ph="..." />
-            <marker date="1492638287638" expanded="true" signature="21691:21804" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -629,27 +522,6 @@
         <state relative-caret-position="17">
           <caret line="1" column="5" lean-forward="false" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/examples-gmap.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
-          <caret line="117" column="122" lean-forward="true" selection-start-line="117" selection-start-column="122" selection-end-line="117" selection-end-column="122" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="875">
-          <caret line="344" column="100" lean-forward="false" selection-start-line="344" selection-start-column="100" selection-end-line="344" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/documentation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1224">
-          <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -664,14 +536,114 @@
     <entry file="file://$PROJECT_DIR$/plugin/jquery.multibackground.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="511">
-          <caret line="767" column="32" lean-forward="true" selection-start-line="767" selection-start-column="32" selection-end-line="767" selection-end-column="32" />
+          <caret line="767" column="32" lean-forward="false" selection-start-line="767" selection-start-column="32" selection-end-line="767" selection-end-column="32" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1492638286958" expanded="true" signature="4250:4269" ph="..." />
-            <marker date="1492638286958" expanded="true" signature="5939:5958" ph="..." />
-            <marker date="1492638286958" expanded="true" signature="31440:31478" ph="..." />
-            <marker date="1492638286958" expanded="true" signature="42273:42386" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="439" column="90" lean-forward="false" selection-start-line="439" selection-start-column="90" selection-end-line="439" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-youtube.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="148" column="90" lean-forward="false" selection-start-line="148" selection-start-column="90" selection-end-line="148" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-slideshow.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="184" column="90" lean-forward="false" selection-start-line="184" selection-start-column="90" selection-end-line="184" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-video.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="156" column="90" lean-forward="false" selection-start-line="156" selection-start-column="90" selection-end-line="156" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-vimeo.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="118" column="90" lean-forward="false" selection-start-line="118" selection-start-column="90" selection-end-line="118" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-image.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="148" column="90" lean-forward="false" selection-start-line="148" selection-start-column="90" selection-end-line="148" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-pattern.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="148" column="90" lean-forward="false" selection-start-line="148" selection-start-column="90" selection-end-line="148" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-gmap.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="119" column="90" lean-forward="false" selection-start-line="119" selection-start-column="90" selection-end-line="119" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-iframe.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="116" column="90" lean-forward="false" selection-start-line="116" selection-start-column="90" selection-end-line="116" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-color.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="189" column="90" lean-forward="false" selection-start-line="189" selection-start-column="90" selection-end-line="189" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-alignment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="177" column="90" lean-forward="false" selection-start-line="177" selection-start-column="90" selection-end-line="177" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/documentation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="719">
+          <caret line="876" column="90" lean-forward="false" selection-start-line="876" selection-start-column="90" selection-end-line="876" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/examples-page-background.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="36" column="90" lean-forward="false" selection-start-line="36" selection-start-column="90" selection-end-line="36" selection-end-column="90" />
+          <folding />
         </state>
       </provider>
     </entry>
