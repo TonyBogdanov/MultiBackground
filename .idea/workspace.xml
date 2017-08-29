@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="437a0ed5-743d-484f-b45e-7b2434569854" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/documentation.html" afterPath="$PROJECT_DIR$/docs/documentation.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-alignment.html" afterPath="$PROJECT_DIR$/docs/examples-alignment.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-color.html" afterPath="$PROJECT_DIR$/docs/examples-color.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-gmap.html" afterPath="$PROJECT_DIR$/docs/examples-gmap.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-iframe.html" afterPath="$PROJECT_DIR$/docs/examples-iframe.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-image.html" afterPath="$PROJECT_DIR$/docs/examples-image.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-page-background.html" afterPath="$PROJECT_DIR$/docs/examples-page-background.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-pattern.html" afterPath="$PROJECT_DIR$/docs/examples-pattern.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-slideshow.html" afterPath="$PROJECT_DIR$/docs/examples-slideshow.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-video.html" afterPath="$PROJECT_DIR$/docs/examples-video.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-vimeo.html" afterPath="$PROJECT_DIR$/docs/examples-vimeo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/examples-youtube.html" afterPath="$PROJECT_DIR$/docs/examples-youtube.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/index.html" afterPath="$PROJECT_DIR$/docs/index.html" />
-    </list>
+    <list default="true" id="437a0ed5-743d-484f-b45e-7b2434569854" name="Default" comment="" />
     <ignored path="MultiBackground.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -286,12 +272,12 @@
       <workItem from="1492637769746" duration="902000" />
       <workItem from="1492850542504" duration="486000" />
       <workItem from="1492950278087" duration="767000" />
-      <workItem from="1504017862288" duration="127000" />
+      <workItem from="1504017862288" duration="189000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2282000" />
+    <option name="totallyTimeSpent" value="2344000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
