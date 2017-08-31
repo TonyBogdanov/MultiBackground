@@ -557,6 +557,9 @@ function onGoogleMapsAPIReady() {
                 $.fn.multiBackground._refreshEvents.add(refresh);
                 break;
             case "static":
+                 if (options["type"] === "image") {
+                    break;
+                }
                 var refresh = function(forceVisible) {
                     $.fn.multiBackground._refreshAttachment($element, false, true, false, 0, 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['horizontal'] ? options['alignment']['horizontal'] : 'center', 'undefined' != typeof options['alignment'] && 'undefined' != typeof options['alignment']['vertical'] ? options['alignment']['vertical'] : 'middle', forceVisible);
                     return true;
@@ -595,7 +598,10 @@ function onGoogleMapsAPIReady() {
         if("string" !== typeof options["url"]) {
             throw "Plugin options must specify an \"url\" param with a value of type \"string\"";
         }
-
+        if ("static" === options["attachment"]) {
+          $element.css({ "background-size": "cover", "background-image": "url(\""+ options["url"] + "\")","background-attachment": "fixed" });
+          return $element;
+        }
         // Load image & trigger background refresh once ready
         var image = new Image();
         $(image).bind("load error", function(e) {
